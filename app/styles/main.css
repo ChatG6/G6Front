@@ -952,6 +952,14 @@ flex-direction: column;
   display: inline-flex;
   width: min-content;
 }
+.cite-imp{
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+}
+#citeBTN{
+  width: fit-content;
+}
 .importModal .items {
   display: flex;
   flex-direction: column;
