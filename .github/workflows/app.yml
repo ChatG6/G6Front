@@ -1,0 +1,40 @@
+name: Research Project Deployment
+
+on:
+  push:
+    branches: ["main"]
+
+  #schedule:
+  #    - cron: '30 5 * * 1,3'
+  #    - cron: '30 5 * * 2,4'
+
+jobs:
+  build:
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        node-version: ["20.x"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Install dependencies
+        run: npm ci
+      - name: Add Environment File
+        run: |
+          echo "${{vars.ENV}}" > .env
+          echo "${{secrets.ENV}}" >> .env
+      - name: Refreshing Database Through Prisma
+        run: npx prisma migrate deploy
+      - name: Building the Project
+        run: npm run build --if-present
+      - name: Install PM2
+        run: npm install -g pm2
+      - name: Refresh Deployment Setup
+        if: success()
+        run: |
+          sudo nginx -t && sudo systemctl reload nginx
+          pm2 restart all
