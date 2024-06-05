@@ -186,13 +186,13 @@ export default function Mobile  (){
        
         <div className="flex-row flex flex-wrap content-center justify-center mt-6 gap-x-24">
           <div className="flex flex-col content-center flex-wrap">
-           <Image src={img7} alt="1" width={500} height={300}/>
+           <Image src={img7} alt="1"/>
            <span className={`${inter.className} text-start text-2xl mt-6`}>
             In-text Citations
            </span>
            <span className="text-base  text-start" 
            style={{
-            width:'500px'
+
            }}>
             ChatG6 consults the latest research and your PDF uploads.
             Cite in APA, MLA, IEEE, Chicago, or Harvard style
@@ -205,7 +205,7 @@ export default function Mobile  (){
            </span>
            <span className="text-base text-start " 
            style={{
-            width:'500px'
+
            }}>
             Autocomplete will write alongside you to beat writer &apos; s   block whenever you need a helping hand
            </span>
@@ -220,7 +220,7 @@ export default function Mobile  (){
            </span>
            <span className="text-base  text-start" 
            style={{
-            width:'500px'
+
            }}>
             Quickly understand and summarize your research paperswith our AI chat assistant
            </span>
@@ -232,7 +232,7 @@ export default function Mobile  (){
            </span>
            <span className="text-base text-start " 
            style={{
-            width:'500px'
+
            }}>
             Bring your research papers to life with source-based generation
            </span>
@@ -246,7 +246,7 @@ export default function Mobile  (){
            </span>
            <span className="text-base  text-start" 
            style={{
-            width:'500px'
+
            }}>
             Paraphrase any text in any tone. Rewrite the internet customized to you
            </span>
@@ -257,7 +257,7 @@ export default function Mobile  (){
            </span>
            <span className="text-base text-start " 
            style={{
-            width:'500px'
+
            }}>
            Already saved papers ready to cite? Import a .bib to populate your library in seconds
            </span>
@@ -271,7 +271,7 @@ export default function Mobile  (){
            </span>
            <span className="text-base  text-start" 
            style={{
-            width:'500px'
+
            }}>
             Export your draft to LaTeX, .docx, or HTML without any formatting loss
            </span>
@@ -282,7 +282,7 @@ export default function Mobile  (){
            </span>
            <span className="text-base text-start " 
            style={{
-            width:'500px'
+
            }}>
            Enter your prompt and get a list of section headings ready for you to flesh out
            </span>
@@ -296,7 +296,7 @@ export default function Mobile  (){
            </span>
            <span className="text-base  text-start" 
            style={{
-            width:'500px'
+
            }}>
             ChatG6 can generate in US or British English, Spanish, German, French, or Chinese
            </span>
@@ -307,7 +307,7 @@ export default function Mobile  (){
            </span>
            <span className="text-base text-start " 
            style={{
-            width:'500px'
+
            }}>
             Save and manage research in your library. Easily cite research in any document, fast
            </span>
@@ -453,8 +453,8 @@ export default function Mobile  (){
         </span>
         <div className="flex flex-col justify-center ">
 
-          <div className="flex flex-row  justify-center mt-8 mb-8 gap-8">
-            <div className="w-40 flex flex-col items-start text-start ps-1">
+          <div className="flex flex-row  justify-center mt-8 mb-8">
+            <div className="w-40 flex flex-col items-start text-start ps-1 border-r">
               <Image src={icon1} alt="icon1"/>
               <span className="text-2xl mt-2 mb-2">
                 Essays
@@ -474,8 +474,8 @@ export default function Mobile  (){
             </div>
           </div>
 
-          <div className="flex flex-row  justify-center mt-8 gap-8 mb-24">
-            <div className="w-40 flex flex-col items-start text-start ps-1">
+          <div className="flex flex-row  justify-center mt-8 mb-24">
+            <div className="w-40 flex flex-col items-start text-start ps-1 border-r">
               <Image src={icon4} alt="icon1"/>
               <span className="text-2xl mt-2 mb-2">
                 Personal statements
@@ -494,8 +494,8 @@ export default function Mobile  (){
               </span>
             </div>
           </div>
-          <div className="flex flex-row  justify-center mt-8 gap-8 mb-24">
-            <div className="w-40 flex flex-col items-start text-start ps-1">
+          <div className="flex flex-row  justify-center mt-8  mb-24">
+            <div className="w-40 flex flex-col items-start text-start ps-1 border-r">
               <Image src={icon3} alt="icon3"/>
               <span className="text-2xl mt-2 mb-2">
                 Research Papers
@@ -523,7 +523,7 @@ export default function Mobile  (){
 
       {/* ___________________________________________________________________________ */}
 
-      <div className="div-7 flex flex-wrap content-center justify-center text-start flex-col items-center"
+      {/* <div className="div-7 flex flex-wrap content-center justify-center text-start flex-col items-center"
       style={{
         backgroundColor:'#FAFAFA'
       }}
@@ -577,11 +577,11 @@ export default function Mobile  (){
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-      </div>
+      </div> */}
 
       {/* ___________________________________________________________________________ */}
 
-      <div className="div-8 flex flex-col items-center"
+      {/* <div className="div-8 flex flex-col items-center"
       >
         <span className={`${inter.className} mt-24`}
         style={{
@@ -608,7 +608,7 @@ export default function Mobile  (){
               Start writing
           </Button1>
         </Link>
-      </div>
+      </div> */}
 
       {/* ___________________________________________________________________________ */}
       
