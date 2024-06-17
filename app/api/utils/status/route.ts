@@ -61,7 +61,7 @@ async function handler(req: Request) {
    return NextResponse.json({ statuss: statussub,quota:quota,quotaplg:quotaplg});
 } 
     catch(error) {
-        return NextResponse.json({statuss:'unknown',quota:500});
+        return NextResponse.json({statuss:'unknown',quota:500,error:error});
       }
     
     }
