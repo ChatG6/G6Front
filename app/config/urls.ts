@@ -1,13 +1,14 @@
 import { archive } from "../api/search_utils/literature_utils";
 
-const origin = 'http://localhost:3000'
-//const origin = 'https://chatg6.ai'
+// origin = 'http://localhost:3000'
+const origin = 'https://chatg6.ai'
 const urls = {
   //backendUrl:"http://127.0.0.1:8000",
   backendUrl: "https://api.chatg6.ai",
   verif:`${origin}/authentication/verification`,
   gpt_url:'https://api.openai.com/v1/chat/completions',
-  sem_url:'https://api.semanticscholar.org/graph/v1/paper/search'
+  sem_url:'https://api.semanticscholar.org/graph/v1/paper/search',
+  main:`${origin}`
 };
 
 
