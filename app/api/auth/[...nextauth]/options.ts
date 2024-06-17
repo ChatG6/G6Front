@@ -40,6 +40,11 @@ export const options: NextAuthOptions = {
           token: null,
           isVerified: true,
           expirationTime: null,
+          str: null,
+          subscriptiontype: null,
+          status: null,
+          freequota: 50,
+          freequotaplg: 50
         };
         if (resp.status === 200) {
           return user;
