@@ -5,6 +5,8 @@ import { cfg } from "@/app/config/config";
 import Notify from "../Management/notification";
 import Savemodal from "./savemodelfinished";
 import { parse_author_name } from "@/app/api/search_utils/dep";
+import URLS from "@/app/config/urls";
+import axios from "axios";
 interface props {
   onExit: (e: boolean) => void;
 }
@@ -31,6 +33,8 @@ const LiteraturePopup: FC<props> = ({onExit}) => {
   const [saveM, setSaveM] = useState<boolean>(false);
   const [saveName, setSaveName] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [quota, setquota] = useState(50);
+  const [status, setstatus] = useState('');
   const [formData, setFormData] = useState({
     title: "",
     authors: "",
@@ -115,6 +119,7 @@ const LiteraturePopup: FC<props> = ({onExit}) => {
 
   const handleSendData = async () => {
     try {
+      if (status==='active' || quota!=0) {
       const data = collectedItems.filter(
         (ref) =>
           ref.title.trim().length !== 0 ||
@@ -149,6 +154,11 @@ const LiteraturePopup: FC<props> = ({onExit}) => {
           const response = await literature(data, style, subject);
           setLrOutput(response.data);
           setliter(response.data);
+          if (status != 'active') {
+            const resp = await axios.post(URLS.endpoints.quota);
+            if (resp.data.quota != 500)
+            {setquota(resp.data.quota)}
+          }
           setcontent(true);
           setOutTrigger(true);
         } catch (err) {
@@ -159,7 +169,8 @@ const LiteraturePopup: FC<props> = ({onExit}) => {
         setStatus("Generate");
         button.disabled = false;
         setCollectedItems([]);
-      }
+      }} else { setIsNotif(true)
+        setVerifyMessage("Quota has reached maximum.Upgrade for more content")}
     } catch (error) {
       setOutput(false)
       console.error("Error sending data to API:", error);

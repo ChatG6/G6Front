@@ -31,6 +31,8 @@ import ReferencePopup from "../Search/ReferencePopup";
 import { pdf } from "@/app/lib/helpers";
 import Savemodal from "./sharemodal";
 import { redirect } from "next/navigation";
+import axios from "axios";
+import URLS from "@/app/config/urls";
 const shareAspdf = async (name: string) => {
   const editor = document.querySelector(".ql-editor");
   if (editor && editor?.innerHTML == "<p><br></p>") {  editor.innerHTML = "you can not share an empty doucument";
@@ -141,6 +143,8 @@ if (title) {console.log(title.innerHTML)
     setshareVisible(false);
   };
   const PlagiarismChecker: FC = () => {
+    const [quotaplg, setquotaplg] = useState(50);
+    const [status, setstatus] = useState('');
     const [toastVisible, setToastVisible] = useState(false);
     const [output, setOutput] = useState("");
     const [checking, setCheckingState] = useState<boolean>(false);
@@ -157,11 +161,22 @@ if (title) {console.log(title.innerHTML)
     };
 
     useEffect(() => {
+      const fetchLR = async ()=> {
+        const resp = await axios.post(URLS.endpoints.status);
+        console.log(resp.data.statuss)
+        console.log(resp.data.quotaplg)
+        if (resp.data.statuss != 'unknown') {setstatus(resp.data.statuss)}
+        if (resp.data.quotaplg != 500) {setquotaplg(resp.data.quotaplg)}
+      }
+      fetchLR();
+      },[status,setstatus,quotaplg,setquotaplg])
+    useEffect(() => {
       try {
         const quill = quillRef.current.getEditor();
         const length = quill.getLength();
         const text = quill.getText(0, length);
         if (checking) {
+          if (status==='active' || quotaplg!=0) {
           if (text.length === 1) {
             setOutput("Enter some text please");
           } else {
@@ -176,10 +191,16 @@ if (title) {console.log(title.innerHTML)
               setToastVisible(true);
               setButtonText("Plagiarism Check");
               button.disabled = false;
+              if (status != 'active') {
+                const resp = await axios.post(URLS.endpoints.quotaplg);
+                if (resp.data.quotaplg != 500)
+                {setquotaplg(resp.data.quotaplg)}
+              }
             };
             plgFetch();
           }
-        }
+       } else {setOutput("Quota has reached maximum.Upgrade for more content")
+        setToastVisible(true)} } 
       } catch (error) {
         if (error instanceof Error) {
           setOutput(error.message);
@@ -269,7 +290,10 @@ if (title) {console.log(title.innerHTML)
         setWords(text.split(/\s+/).length-1 );
       }
   };
-
+  const handleupgrade = () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/pricing`
+    
+  };
   // Handler to handle button clicked
   const handler = () => {
     console.log(value);
@@ -342,7 +366,7 @@ if (title) {console.log(title.innerHTML)
             </svg>
             <span className="ml-2">{sharestate}</span>
           </Button1>
-          <Button1 variant="outline" className="upg-btn ml-2 mr-2">
+          <Button1 variant="outline" className="upg-btn ml-2 mr-2" onClick={handleupgrade}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

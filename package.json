@@ -25,6 +25,7 @@
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-tabs": "^1.0.4",
     "@saplingai/sapling-js": "^1.0.32",
+    "@stripe/stripe-js": "^3.5.0",
     "@supabase/supabase-js": "^2.10.0",
     "@types/node": "18.15.0",
     "@types/react": "18.0.28",
@@ -69,6 +70,7 @@
     "react-resizable-panels": "^2.0.18",
     "react-select": "^5.8.0",
     "resend": "^3.2.0",
+    "stripe": "^15.11.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "usehooks-ts": "^3.1.0"

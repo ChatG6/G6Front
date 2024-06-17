@@ -1,14 +1,13 @@
 import { archive } from "../api/search_utils/literature_utils";
 
-//const origin = 'http://localhost:3000'
-const origin = 'https://chatg6.ai'
+const origin = 'http://localhost:3000'
+//const origin = 'https://chatg6.ai'
 const urls = {
   //backendUrl:"http://127.0.0.1:8000",
   backendUrl: "https://api.chatg6.ai",
   verif:`${origin}/authentication/verification`,
   gpt_url:'https://api.openai.com/v1/chat/completions',
-  sem_url:'https://api.semanticscholar.org/graph/v1/paper/search',
-  main:`${origin}`
+  sem_url:'https://api.semanticscholar.org/graph/v1/paper/search'
 };
 
 
@@ -37,7 +36,12 @@ const endpoints = {
   update_import:`${origin}/api/utils/update_import`,
   citation:`${origin}/api/utils/citation`,
   archive:`${origin}/api/utils/archive`,
-  delete:`${origin}/api/utils/delete`
+  delete:`${origin}/api/utils/delete`,
+  stripe_session:`${origin}/api/utils/stripe_session`,
+  stripe_webhook:`${origin}/api/utils/stripe_webhook`,
+  status:`${origin}/api/utils/status`,
+  quota:`${origin}/api/utils/quota_cons`,
+  quotaplg:`${origin}/api/utils/quotaplg_cons`
 };
 
 const URLS = {

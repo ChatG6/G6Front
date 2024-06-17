@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { Switch } from "@/components/ui/switch"
 
@@ -13,18 +14,24 @@ import {
 import Link from "next/link";
 import { EB_Garamond } from 'next/font/google'
 
-
+import URLS from "@/app/config/urls";
 
 const inter = EB_Garamond({
   subsets: ['latin'],
   display: 'swap',
 })
-
+//import { options } from "../api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
 import img from '@/public/Container.svg'
 import icon2 from '@/public/Overlay.svg'
 
 import icon from '@/public/icons/icon.svg'
 import { outline } from "@/app/api/search_utils/literature_utils";
+import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js"
+import { useEffect, useState } from "react";
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
 
 
@@ -32,6 +39,65 @@ import { outline } from "@/app/api/search_utils/literature_utils";
 
 
 export default function  Mobile(){
+  const [subtype,setsubtype] = useState('month')
+  const [price,setprice] = useState('20')
+  const handlesub =  () => {
+    if (subtype === 'month')
+     {setsubtype('year')}
+    else {setsubtype('month')}
+  }
+  useEffect(() => {
+    if (subtype === 'year')
+      {setprice('144')}
+    else {{setprice('20')}}
+   
+  }, [subtype,setsubtype,price,setprice]);
+  //const session = getServerSession(options);
+  const handleCheckoutfree =  () => {
+    //redirect(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/editor`);
+    window.location.href = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/editor`;
+  }
+  const handleCheckout = async () => {
+ 
+   // if (!session) {
+    //  redirect("/api/auth/signin?callbackUrl=/pricing");
+   // }
+   // else {
+    const subscription = true;
+    let priceId;
+    if (subtype === 'year')
+      {priceId = process.env.NEXT_PUBLIC_ANNUAL_SUB}
+    else {priceId = process.env.NEXT_PUBLIC_MONTHLY_SUB}
+    try {
+      const  resp  = await axios.post(URLS.endpoints.stripe_session,
+        { priceId, subscription });
+
+      console.log('data', resp.data)
+      if (resp.data.sessionId === 'Login First') {//window.location.href = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth/signin?callbackUrl=/pricing`; 
+      redirect("/api/auth/signin?callbackUrl=/pricing");
+      return;}
+      if (resp.data.sessionId) {
+        const stripe =  await stripePromise;
+        console.log('stripe', stripe)
+
+        const response = await stripe?.redirectToCheckout({
+          sessionId: resp.data.sessionId,
+        });
+
+        console.log('response', response)
+
+        return response
+      } else {
+        console.error('Failed to create checkout session');
+        //toast('Failed to create checkout session')
+        return
+      }
+    } catch (error) {
+      console.error('Error during checkout:', error);
+      //toast('Error during checkout')
+      return
+    }//}
+  };
   return (
     <section className="home-page overflow-auto flex flex-col justify-center flex-wrap content-center text-center mt-4" >
       
@@ -56,7 +122,7 @@ export default function  Mobile(){
           </span>
         </div>
         <div className="flex flex-row justify-center content-center items-center mt-12 mb-6  flex-wrap">
-          <Switch className='correction-switch' />
+          <Switch className='correction-switch' onClick={handlesub}/>
           <span className=" ml-4 text-xs flex flex-row gap-1 items-center text-left h-full">
             Annual
             <Image src={icon2} alt='7'/>
@@ -94,7 +160,7 @@ export default function  Mobile(){
                     fontSize:'18px'
                   }}                
                   >
-                    /month
+                    /{subtype}
                   </span>
                 </div>
                 <ul className="flex flex-col gap-1">
@@ -104,7 +170,15 @@ export default function  Mobile(){
                       color:'#1722BE',
                     }}
                     />
-                    200 AI words per day
+                    50 AI-generated content
+                  </li>
+                  <li className="  text-xs flex flex-row gap-1 items-center text-left">
+                    <CheckCircledIcon 
+                    style={{
+                      color:'#1722BE',
+                    }}
+                    />
+                    50 Plagiarism Checks
                   </li>
                   <li className="  text-xs flex flex-row gap-1 items-center text-left">
                     <CheckCircledIcon 
@@ -141,6 +215,7 @@ export default function  Mobile(){
                 </ul>
               </div>
               <Button1 
+              onClick={handleCheckoutfree}
               variant={"outline"}
               className=" text-sm w-full" 
               style={{
@@ -173,7 +248,7 @@ export default function  Mobile(){
                     fontSize:'40px'
                   }}
                   >
-                    &#36;20
+                    &#36;{price}
                   </span>
                   <span
                   style={{
@@ -181,7 +256,7 @@ export default function  Mobile(){
                     fontSize:'18px'
                   }}                
                   >
-                    /month
+                    /{subtype}
                   </span>
                 </div>
                 <div className="flex flex-col gap-1">
@@ -192,6 +267,14 @@ export default function  Mobile(){
                     }}
                     />
                     Unlimited AI words 
+                  </span>
+                  <span className="  text-xs flex flex-row gap-1 items-center text-left">
+                    <CheckCircledIcon 
+                    style={{
+                      color:'#1722BE',
+                    }}
+                    />
+                    Unlimited Plagiarism Checks
                   </span>
                   <span className="  text-xs flex flex-row gap-1 items-center text-left">
                     <CheckCircledIcon 
@@ -245,6 +328,7 @@ export default function  Mobile(){
               </div>
               
               <Button1 
+              onClick={handleCheckout}
               className=" text-sm w-full " 
               style={{
                 backgroundColor:'#545CEB',

@@ -11,6 +11,8 @@ import ImportPopup from "@/components/Search/importmodalfinished";
 import { Import,Sparkles,Loader,RefreshCcw,Save,BookMarked,RefreshCcwDot,WandSparkles,Eraser,FileDown } from "lucide-react";
 import Savemodal from "./savemodelfinished";
 import { useOnClickOutside } from 'usehooks-ts'
+import URLS from "@/app/config/urls";
+import axios from "axios";
 
 
 interface props {
@@ -41,7 +43,8 @@ const Article: FC<props> = ({
   const [statusText2, setStatus2] = useState(true);
   const [saveText, setSave] = useState("save");
   const [saveText2, setSave2] = useState("save");
-
+  const [quota, setquota] = useState(50);
+  const [status, setstatus] = useState('');
   //const [statusText4, setStatus4] = useState("Save Outline");
   const [saving, setSaveState] = useState<boolean>(false);
   const [saving2, setSaveState2] = useState<boolean>(false);
@@ -192,6 +195,16 @@ const Article: FC<props> = ({
     setSaveState2(true);
   }
   useEffect(() => {
+    const fetchLR = async ()=> {
+      const resp = await axios.post(URLS.endpoints.status);
+      console.log(resp.data.statuss)
+      console.log(resp.data.quota)
+      if (resp.data.statuss != 'unknown') {setstatus(resp.data.statuss)}
+      if (resp.data.quota != 500) {setquota(resp.data.quota)}
+    }
+    fetchLR();
+    },[status,setstatus,quota,setquota])
+  useEffect(() => {
     console.log('value is'+value)
     console.log('outline is'+outline_o)
     console.log('article is'+articlee)
@@ -207,6 +220,7 @@ const Article: FC<props> = ({
     try {
       if (generating) {
         const fetchLR = async () => {
+          if (status==='active' || quota!=0) {
           if (query.length === 0) {
             setContent("Please write a topic in search bar of search tools!");
             settype('');
@@ -224,6 +238,11 @@ const Article: FC<props> = ({
               setart(response.data);
               settype('art')
               setOutTrigger(true);
+              if (status != 'active') {
+                const resp = await axios.post(URLS.endpoints.quota);
+                if (resp.data.quota != 500)
+                {setquota(resp.data.quota)}
+              }
             } catch (err) {
               setIsNotif(true)
               setVerifyMessage("try again")
@@ -235,10 +254,12 @@ const Article: FC<props> = ({
             //setOut("");
             setIsarxiv(false);
           }
-        };
+        }
+        else { setIsNotif(true)
+          setVerifyMessage("Quota has reached maximum.Upgrade for more content")}}
         fetchLR();
-      }
-    } catch (error) {
+      
+    }} catch (error) {
       if (error instanceof Error) {
         setIsNotif(true)
         setVerifyMessage("try again")
@@ -251,11 +272,12 @@ const Article: FC<props> = ({
     } finally {
       setGenerateState(false);
     }
-  }, [generating, query, refs, outline_o, isarxiv, value, setContent]);
+  }, [generating, query, refs, outline_o, isarxiv, value, setContent,quota,setquota,status,setstatus]);
   useEffect(() => {
     try {
       if (outlinee) {
         const fetchLR = async () => {
+          if (status==='active' || quota!=0) {
           if (query.length === 0) {
             setContent("Please write a topic in Search bar of search tools!")
             settype('')
@@ -276,6 +298,11 @@ const Article: FC<props> = ({
               setart("");
               setRefs(response.data.refs);
               setIsarxiv(response.data.arxiv);
+              if (status != 'active') {
+                const resp = await axios.post(URLS.endpoints.quota);
+                if (resp.data.quota != 500)
+                {setquota(resp.data.quota)}
+              }
               setOutTrigger(true);
             } catch (err) {
               setIsNotif(true)
@@ -284,8 +311,9 @@ const Article: FC<props> = ({
               setGenerateState(false);
             }
             setStatus2(true);
-          }
-        };
+          }}
+          else { setIsNotif(true)
+            setVerifyMessage("Quota has reached maximum.Upgrade for more content")}}
         fetchLR();
       }
     } catch (error) {
@@ -301,7 +329,7 @@ const Article: FC<props> = ({
     } finally {
       setGenerateoutline(false);
     }
-  }, [outlinee, query, refs, isarxiv, setContent]);
+  }, [outlinee, query, refs, isarxiv, setContent,quota,setquota,status,setstatus]);
   useEffect(() => {
     try {
       if (saving) {

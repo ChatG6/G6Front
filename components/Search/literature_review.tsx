@@ -12,6 +12,8 @@ import { Import,Sparkles,Loader,RefreshCcw, Save,FileCog,BookMarked} from "lucid
 import { useOnClickOutside } from 'usehooks-ts'
 import LiteraturePopup from "../Search/literature_popup";
 import ReferencePopup from "../Search/ReferencePopup";
+import URLS from "@/app/config/urls";
+import axios from "axios";
 
 interface props {
   query: string;
@@ -64,7 +66,8 @@ const LiteratureReview: FC<props> = ({
   const [errMsg, setErrMsg] = useState("");
   const [isNotif, setIsNotif] = useState(false);
   const [verifyMessage, setVerifyMessage] = useState("");
-
+  const [quota, setquota] = useState(50);
+  const [status, setstatus] = useState('');
 
 
   const [projectName, setProjectName] = useState("")
@@ -83,7 +86,16 @@ const LiteratureReview: FC<props> = ({
   const handleViewRef = () => {
     setCustomRef(true);
   };
-
+  useEffect(() => {
+    const fetchLR = async ()=> {
+      const resp = await axios.post(URLS.endpoints.status);
+      console.log(resp.data.statuss)
+      console.log(resp.data.quota)
+      if (resp.data.statuss != 'unknown') {setstatus(resp.data.statuss)}
+      if (resp.data.quota != 500) {setquota(resp.data.quota)}
+    }
+    fetchLR();
+    },[status,setstatus,quota,setquota])
 
 
   // function setHasImport(value:boolean) {
@@ -144,6 +156,7 @@ const LiteratureReview: FC<props> = ({
     try {
       if (generating) {
         const fetchLR = async () => {
+          if (status==='active' || quota!=0) {
           if (query.length === 0) {
             setLrContent("Please write a topic in Search bar of search tools!");
             setcontent(false);
@@ -160,6 +173,11 @@ const LiteratureReview: FC<props> = ({
               const response = await searchAndProcess(query, style);
               setLrContent(response.data);
               setliter(response.data);
+              if (status != 'active') {
+                const resp = await axios.post(URLS.endpoints.quota);
+                if (resp.data.quota != 500)
+                {setquota(resp.data.quota)}
+              }
               setOutTrigger(true);
               setcontent(true);
             } catch (err) {
@@ -173,9 +191,9 @@ const LiteratureReview: FC<props> = ({
             setStatus(true);
             button.disabled = false;
             //setcontent(false);
-          }
-        };
-
+          }}
+        else { setIsNotif(true)
+          setVerifyMessage("Quota has reached maximum.Upgrade for more content")}}
         fetchLR();
       }
     } catch (error) {
@@ -189,7 +207,7 @@ const LiteratureReview: FC<props> = ({
     } finally {
       setGenerateState(false);
     }
-  }, [generating, value, query, style, setLrContent, setHasImportLr]);
+  }, [generating, value, query, style, setLrContent, setHasImportLr,quota,setquota,status,setstatus]);
   useEffect(() => {
     try {
       if (saving) {

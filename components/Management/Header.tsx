@@ -59,7 +59,10 @@ export default function Header() {
   const loading = status === "loading";
   const username=session?.user?.name || '';
   const isBreakpoint = useMediaQuery(768)
-  
+  const handleupgrade = () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/pricing`
+    
+  };
   return (
     <header 
     style={ pathname==='/editor'||pathname==='/account'? {display:'none'}:{display:'flex'}}
@@ -113,7 +116,7 @@ export default function Header() {
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
-                        <Button1 variant='outline' className="upg-btn ml-2 mr-2"
+                        <Button1 variant='outline' onClick={handleupgrade} className="upg-btn ml-2 mr-2"
                         style={{ 
                         backgroundColor:'#545CEB',
                         }}>

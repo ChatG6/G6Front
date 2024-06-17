@@ -137,8 +137,8 @@ export const Projects = () => {
       setShowModal(true);
     }
     const handlesearch = (name:any)=>{
-        console.log(projects)
-        console.log(name)
+        //console.log(projects)
+       // console.log(name)
         setfailed(false)
         //const newProjectName = prompt("Enter project name:");
         setFilename2(name);
@@ -197,13 +197,14 @@ export const Projects = () => {
       }, []);
       useEffect(() => {
         const Fetch = async () => {
-            if(filename2 =='' ||filename2 ==' ') {
+            if(filename2 =='' ||filename2 ==' ' && projects[0]?.name === '' ) {
           const resp = await Import_editor("html");
           if (resp.data) {
             console.log(resp.data.imports);
             setProjects(resp.data.imports);
             setProjects2(resp.data.imports)
             setfailed(false);
+            //setFilename2('eg. Title')
           }}
         };
         Fetch();
@@ -211,32 +212,32 @@ export const Projects = () => {
       useEffect(() => {
         if (search) {
        setsearch(true);
-       console.log(filename2)
-       console.log(projects2)
+      //console.log(filename2)
+       //console.log(projects2)
          // Filter the projects array based on the name
   const filteredProjects = projects2.filter(project => project.name === filename2);
   projects2.forEach(project => console.log(project.name));
   //options = filteredProjects;
   // Update the filteredProjects array or however you wish to use the filtered data
   // For example, setting it to a state variable or logging it
-  console.log(filteredProjects);
+  //console.log(filteredProjects);
   if (filteredProjects.length !=0)
   {setProjects(filteredProjects);}
   else {setfailed(true)
-    console.log(filename2)
+    //console.log(filename2)
   }
  // setsearch(false)
 }
       }, [setFilename2,filename2,projects2,search]);
       const handleFilenameSubmit = async () => {
-        console.log("Filename submitted:", filename);
+        //console.log("Filename submitted:", filename);
         // Here you can handle the filename, e.g., save the file to the server
         setShowModal(false); // Hide the modal
         let res;
         if (filename) {
                 const res = await newfile(filename);
                 const now = new Date();
-                console.log(now)
+               // console.log(now)
                 const newpro = {name: filename, type: "html", recieveDate: res.date }
                 setProjects([...projects, newpro]); // Add new project to the array
         } 

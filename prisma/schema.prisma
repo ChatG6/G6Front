@@ -45,9 +45,14 @@ model User {
   image          String?
   isVerified     Boolean?  @default(false)
   password       String?
+  str             String?
   token          String?
   expirationTime DateTime?
   emailVerified  DateTime?
+  subscriptiontype String?
+  status           String?
+  freequota       Int?    @default(50)
+  freequotaplg       Int?    @default(50)
   accounts       Account[]
   sessions       Session[]
 }
@@ -148,6 +153,12 @@ model SubScription {
   Credits          Int?
   paymentmethod      String?
   plantype        String?
+  subscription_id String?
+  stripe_user_id String?
+  status     String?
+  start_date DateTime?
+  plan_id    String?
+  user_id    String?
 }
 model Payments {
   id          String    @id @default(cuid())
