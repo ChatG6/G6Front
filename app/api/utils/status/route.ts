@@ -18,7 +18,6 @@ async function handler(req: Request) {
     where: selection2,
     select: {
       id:true,
-      status:true
     },
   });
   let selection3 = { user_id: ids[0].id };
