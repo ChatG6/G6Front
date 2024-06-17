@@ -199,8 +199,8 @@ const Article: FC<props> = ({
       const resp = await axios.post(URLS.endpoints.status);
       console.log(resp.data.statuss)
       console.log(resp.data.quota)
-      if (resp.data.statuss != 'unknown') {setstatus(resp.data.statuss)}
-      if (resp.data.quota != 500) {setquota(resp.data.quota)}
+      if (resp.data.statuss != 'unknown') {setstatus(resp.data.statuss); console.log(resp.data.error)}
+      if (resp.data.quota != 500) {setquota(resp.data.quota);console.log(resp.data.error)}
     }
     fetchLR();
     },[status,setstatus,quota,setquota])
