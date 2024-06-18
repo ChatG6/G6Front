@@ -45,12 +45,9 @@ model User {
   image          String?
   isVerified     Boolean?  @default(false)
   password       String?
-  str             String?
   token          String?
   expirationTime DateTime?
   emailVerified  DateTime?
-  subscriptiontype String?
-  status           String?
   freequota       Int?    @default(50)
   freequotaplg       Int?    @default(50)
   accounts       Account[]

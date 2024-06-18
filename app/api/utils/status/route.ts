@@ -14,6 +14,7 @@ async function handler(req: Request) {
   console.log(`EMAIL:${email}\nNAME:${username}\n`);
   let selection = { username: username };
   let selection2 = { name: username };
+  /*
   let ids = await db.user.findMany({
     where: selection2,
     select: {
@@ -56,11 +57,12 @@ async function handler(req: Request) {
   if (quotasplg.length != 0) {
     quotaplg = quotasplg[0].freequotaplg
   }
-  else {quotaplg = 50}
-   return NextResponse.json({ statuss: statussub,quota:quota,quotaplg:quotaplg});
+  else {quotaplg = 50}*/
+   //return NextResponse.json({ statuss: statussub,quota:quota,quotaplg:quotaplg});
+   return NextResponse.json({ statuss: 'k',quota:'q',quotaplg:'q2'});
 } 
     catch(error) {
-        return NextResponse.json({statuss:'unknown',quota:500,error:error});
+        return NextResponse.json({statuss:'unknown',quota:500,error:'pr'});
       }
     
     }
