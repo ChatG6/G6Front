@@ -1,6 +1,6 @@
 import { archive } from "../api/search_utils/literature_utils";
 
-//origin = 'http://localhost:3000'
+//const origin = 'http://localhost:3000'
 const origin = 'https://chatg6.ai'
 const urls = {
   //backendUrl:"http://127.0.0.1:8000",

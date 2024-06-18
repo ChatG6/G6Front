@@ -214,7 +214,7 @@ async function webhooksHandler(
   reqText: string,
   request: NextRequest
 ): Promise<NextResponse> {
-  const sig = request.headers.get('Stripe-Signature');
+  const sig = request.headers.get('stripe-signature');
 
   try {
     const event = await stripe.webhooks.constructEventAsync(
