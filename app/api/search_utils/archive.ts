@@ -22,7 +22,7 @@ export async function searchInArchive(
       },
     });
     const res = [];
-    console.log(response.data);
+    //console.log(response.data);
     for (const e of response.data.response.docs) {
       const details = await getInternetArchiveItemDetails(e.identifier);
       const r: resData = {
@@ -34,7 +34,7 @@ export async function searchInArchive(
       };
       res.push(r);
     }
-    console.log(res);
+    //console.log(res);
     return res;
   } catch (error) {
     if (retries > 0) {

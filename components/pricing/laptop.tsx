@@ -78,22 +78,22 @@ export default function  Laptop(){
       return;}
       if (resp.data.sessionId) {
         const stripe =  await stripePromise;
-        console.log('stripe', stripe)
+        //console.log('stripe', stripe)
 
         const response = await stripe?.redirectToCheckout({
           sessionId: resp.data.sessionId,
         });
 
-        console.log('response', response)
+       // console.log('response', response)
 
         return response
       } else {
-        console.error('Failed to create checkout session');
+        //console.error('Failed to create checkout session');
         //toast('Failed to create checkout session')
         return
       }
     } catch (error) {
-      console.error('Error during checkout:', error);
+      //console.error('Error during checkout:', error);
       //toast('Error during checkout')
       return
     }//}

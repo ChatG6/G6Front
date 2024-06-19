@@ -180,7 +180,7 @@ const LiteraturePopup: FC<props> = ({onExit}) => {
   };
   useEffect(() => {
     try {
-      console.log(content);
+      //console.log(content);
       if (saving) {
         const fetchSR = async () => {
           if (!content) {
@@ -193,11 +193,11 @@ const LiteraturePopup: FC<props> = ({onExit}) => {
             //setLrOutput(`Writing a literature review about the topic ${query} ...`);
             try{
               //console.log(lrOutput);
-              console.log(style);
-              console.log(liter);
-              console.log(subject);
+             // console.log(style);
+             // console.log(liter);
+              //console.log(subject);
               const response = await save(saveName,'lr',subject,liter,style,'null');
-              console.log(response.data);
+              //console.log(response.data);
               if (response.data.error) {
                 setIsNotif(true);
                 setVerifyMessage(response.data.error);

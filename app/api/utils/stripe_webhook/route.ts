@@ -4,6 +4,7 @@ import Stripe from 'stripe';
 import { db } from "@/app/lib/db";
 import { getServerSession } from "next-auth";
 import { options } from "../../auth/[...nextauth]/options";
+import { sendMail } from '@/app/lib/mail';
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY!);
 
 async function handler(req: NextRequest) {
@@ -28,9 +29,9 @@ async function handleSubscriptionEvent(
 ) {
   const subscription = event.data.object as Stripe.Subscription;
   const customerEmail = await getCustomerEmail(subscription.customer as string);
-  const session = await getServerSession(options)
-  const username = session?.user?.name
-  console.log(username)
+  //const session = await getServerSession(options)
+  //const username = session?.user?.name
+  //console.log(username)
   if (!customerEmail) {
     return NextResponse.json({
       status: 500,
@@ -46,13 +47,12 @@ async function handleSubscriptionEvent(
     plan_id: subscription.items.data[0]?.price.id,
     user_id: subscription.metadata?.userId || '',
     email: customerEmail,
-    username:username
   };
  console.log(subscription.metadata?.userId)
   let newkey,keys,selection;
   if (type === 'deleted') {
     console.log('d')
-    selection = { username: username};
+    selection = { user_id: subscription.metadata?.userId};
     keys = await db.subScription.findMany({
       where: selection,
       select: {
@@ -63,7 +63,6 @@ async function handleSubscriptionEvent(
     newkey = await db.subScription.update({
         where: {id:keys[0].id},
         data:{
-          username:username,
           subscription_id: subscription.id,
           stripe_user_id: subscription.customer.toString(),
           status: subscription.status,
@@ -74,9 +73,9 @@ async function handleSubscriptionEvent(
         }
       })
       console.log(newkey)}
-  } else {
+  } else if (type =='updated' && subscription.metadata?.userId ) {
     console.log('ui')
-  selection = { username: username};
+  selection = { user_id: subscription.metadata?.userId};
   keys = await db.subScription.findMany({
     where: selection,
     select: {
@@ -86,7 +85,6 @@ async function handleSubscriptionEvent(
     if (keys.length === 0) {
      newkey = await db.subScription.create({
         data:{
-          username:username,
           subscription_id: subscription.id,
           stripe_user_id: subscription.customer.toString(),
           status: subscription.status,
@@ -100,7 +98,6 @@ async function handleSubscriptionEvent(
       else {newkey = await db.subScription.update({
         where: {id:keys[0].id},
         data:{
-          username:username,
           subscription_id: subscription.id,
           stripe_user_id: subscription.customer.toString(),
           status: subscription.status,
@@ -131,14 +128,16 @@ async function handleInvoiceEvent(
 ) {
   const invoice = event.data.object as Stripe.Invoice;
   const customerEmail = await getCustomerEmail(invoice.customer as string);
-
+  console.log(customerEmail)
+  console.log(invoice.customer)
   if (!customerEmail) {
     return NextResponse.json({
       status: 500,
       error: 'Customer email could not be fetched',
     });
   }
-
+  
+ /*
   const invoiceData = {
     invoice_id: invoice.id,
     subscription_id: invoice.subscription as string,
@@ -148,12 +147,57 @@ async function handleInvoiceEvent(
     status,
     user_id: invoice.metadata?.userId,
     email: customerEmail,
-  };
-
-  return NextResponse.json({
+  };*/
+  let newkey;
+  let selection = { stripe_user_id: invoice.customer?.toString()};
+  let keys = await db.subScription.findMany({
+    where: selection,
+    select: {
+      id:true,
+      user_id:true
+    },
+  }); 
+  if (status==='succeeded') {newkey = await db.subScription.update({
+    where: {id:keys[0].id},
+    data:{
+      status: 'active',
+    }
+  })
+  
+  console.log(newkey)}
+  else {newkey = await db.subScription.update({
+    where: {id:keys[0].id},
+    data:{
+      status: 'canceled',
+    }
+  })
+  console.log(newkey)
+  if (keys[0].user_id) {
+  let selection2 = {id:keys[0].user_id}
+  let keys2 = await db.user.findMany({
+    where: selection2,
+    select: {
+      id:true,
+      email:true,
+      name:true
+    },
+  }); 
+if (keys2[0].email && keys2[0].name) {
+  let mess = 'ChatG6 failed to process payment from your credit card. Your subscription is paused temprarly. You can renew it anytime'
+  sendMail(keys2[0].email,'Payment Completion',mess,keys2[0].name)}
+}
+  //sendMail()
+  }
+  if (newkey) 
+  //await stripe.invoices.update(invoice.id as string,status);
+  {return NextResponse.json({
     status: 200,
     message: `Invoice payment ${status}`,
-  });
+  });}
+  else {return NextResponse.json({
+    status: 500,
+    message: `Invoice payment ${status}`,
+  });}
 }
 
 async function handleCheckoutSessionCompleted(
@@ -161,7 +205,7 @@ async function handleCheckoutSessionCompleted(
 ) {
   const session = event.data.object as Stripe.Checkout.Session;
   const metadata = session.metadata;
-  console.log(metadata)
+  //console.log(metadata)
   if (metadata?.subscription === 'true') {
     const subscriptionId = session.subscription;
     try {
@@ -215,8 +259,8 @@ async function webhooksHandler(
   request: NextRequest
 ): Promise<NextResponse> {
   const sig = request.headers.get('Stripe-Signature');
-  console.log(sig)
-  console.log(request.headers)
+  //console.log(sig)
+  //console.log(request.headers)
   try {
     const event = await stripe.webhooks.constructEventAsync(
       reqText,

@@ -45,7 +45,7 @@ export default async function searchInArxiv(
   } catch (error) {
     if (errNum < 3) {
       errNum++;
-      console.log(error);
+      //console.log(error);
       return searchInArxiv(searchQuery, maxResults);
     } else {
       throw error;

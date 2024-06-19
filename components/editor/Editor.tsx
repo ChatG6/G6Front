@@ -51,11 +51,11 @@ const shareAspdf = async (name: string) => {
   if (editor?.innerHTML) {
     try {
 
-        console.log(editor.innerHTML);
+        //console.log(editor.innerHTML);
       const s = await pdf(editor.innerHTML);
-      console.log(s);
+     // console.log(s);
       const { download_url, status, total_pages } = s;
-      console.log(download_url);
+      //console.log(download_url);
       let res = await savedocs("pdf", download_url, status, total_pages, "now",name);
       if (res.data.message=="Saved") {
       return { success: true,link:download_url };}}
@@ -99,11 +99,11 @@ export const Editor = () => {
 const title = document.querySelector('.font-bold.flex.flex-col.justify-center') as HTMLElement;
 const button = document.querySelector('.upg-btn.ml-2.mr-2') as HTMLButtonElement;
 button.disabled = true;
-if (title) {console.log(title.innerHTML)
+if (title) {//console.log(title.innerHTML)
       const res = await shareAspdf(title.innerHTML)
     if (res?.success){
-      console.log(res?.success)
-      console.log(res?.link)
+     // console.log(res?.success)
+      //console.log(res?.link)
       setsharelink(res?.link)
      setshareVisible(true)
      setsharestate("Share");
@@ -163,8 +163,8 @@ if (title) {console.log(title.innerHTML)
     useEffect(() => {
       const fetchLR = async ()=> {
         const resp = await axios.post(URLS.endpoints.status);
-        console.log(resp.data.statuss)
-        console.log(resp.data.quotaplg)
+        //console.log(resp.data.statuss)
+        //console.log(resp.data.quotaplg)
         if (resp.data.statuss != 'unknown') {setstatus(resp.data.statuss)}
         if (resp.data.quotaplg != 500) {setquotaplg(resp.data.quotaplg)}
       }

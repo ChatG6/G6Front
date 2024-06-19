@@ -29,7 +29,7 @@ export async function searchAndProcess(
     try {
       res = await searchInSemantic(query, 15);
     } catch (error) {
-      console.error("Error in searchInSemantic:", error);
+      //console.error("Error in searchInSemantic:", error);
       res = await searchInArxiv(query, 10);
     }
     let filteredResults = res.filter((r) => r.abstract !== null);
@@ -44,9 +44,9 @@ export async function searchAndProcess(
       };
       spRes.push(item);
     });
-    console.log(spRes);
+    //console.log(spRes);
     const res1 = await literature(spRes, style, query);
-    console.log(res1);
+    //console.log(res1);
     return res1;
   } catch (error) {
     if (retries > 0) {
@@ -78,7 +78,7 @@ export async function literature(
     return axios
       .post(`${URLS.urls.backendUrl}/${URLS.endpoints.literature}`, reqData)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         return res;
       });
   } catch (error) {
@@ -110,7 +110,7 @@ export async function documentation(
     return axios
       .post(`${URLS.urls.backendUrl}/${URLS.endpoints.documentation}`, reqData)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         return res;
       });
   } catch (error) {
@@ -130,7 +130,7 @@ export async function documentation(
 
 
 export async function plagiarism(text: string, retries = 3, delay = 500) {
-  console.log(text);
+  //console.log(text);
   const new1 = await axios.post(
     URLS.endpoints.tokens,
     { upd:{'access_token': '', '.issued': '', '.expires': ''}}
@@ -192,9 +192,9 @@ export async function searchAndDoc(
       };
       sdRes.push(item);
     });
-    console.log(sdRes);
+    //console.log(sdRes);
     const re = await documentation(sdRes, style);
-    console.log(re);
+    //console.log(re);
     return re;
   } catch (error) {
     if (retries > 0) {
@@ -227,7 +227,7 @@ export async function article(
       // If an error occurs, assign an empty array to res
       res = [];
     }
-    console.log(res);
+   // console.log(res);
     filteredResults = res.filter(
       (r) => r.abstract !== null && r.pdf_url !== ""
     );
@@ -245,7 +245,7 @@ export async function article(
     return axios
       .post(`${URLS.urls.backendUrl}/${URLS.endpoints.article}`, reqData)
       .then((res) => {
-        console.log(res);
+       // console.log(res);
         return res;
       });
   } catch (error) {
@@ -266,11 +266,11 @@ export async function outline(query: string, retries = 3, delay = 500) {
   try {
     res = await searchInSemantic(query, 40);
   } catch (error) {
-    console.error("Error in searchInSemantic:", error);
+    //console.error("Error in searchInSemantic:", error);
     // If an error occurs, assign an empty array to res
     res = [];
   }
-  console.log(res);
+  //console.log(res);
   let filteredResults = res.filter(
     (r) => r.abstract !== null && r.pdf_url !== ""
   );
@@ -282,7 +282,7 @@ export async function outline(query: string, retries = 3, delay = 500) {
     return axios
       .post(`${URLS.urls.backendUrl}/${URLS.endpoints.outline}`, reqData)
       .then((res) => {
-        console.log(res);
+       // console.log(res);
         return res;
       });
   } catch (error) {
@@ -367,8 +367,8 @@ export async function savedocs(type: string,link : string,status:string,total_pa
     URLS.endpoints.upload,
     {name:fileName});
     fileName = docs.data.key;
-    console.log(docs.data);
-    console.log(process.env.AWS_S3_BUCKET_NAME);
+    //console.log(docs.data);
+    //console.log(process.env.AWS_S3_BUCKET_NAME);
   try {
       const params = {
       Bucket: process.env.AWS_S3_BUCKET_NAME ?? 'g6-group',
@@ -379,7 +379,7 @@ export async function savedocs(type: string,link : string,status:string,total_pa
   
     const command = new PutObjectCommand(params);
     const response = await s3Client.send(command);
-    console.log('Upload response:', response.$metadata);
+    //console.log('Upload response:', response.$metadata);
     const m = response.$metadata;
      if(m) return {data:{success:true}};
      return {data:{success:false}}
@@ -402,7 +402,7 @@ export async function savedocs(type: string,link : string,status:string,total_pa
     //{name:fileName});
     fileName = 'y';
     //console.log(docs.data);
-    console.log(process.env.AWS_S3_BUCKET_NAME);
+    //console.log(process.env.AWS_S3_BUCKET_NAME);
   try {
       const params = {
       Bucket: process.env.AWS_S3_BUCKET_NAME ?? 'g6-group',
@@ -413,7 +413,7 @@ export async function savedocs(type: string,link : string,status:string,total_pa
   
     const command = new PutObjectCommand(params);
     const response = await s3Client.send(command);
-    console.log('Upload response:', response.$metadata);
+    //console.log('Upload response:', response.$metadata);
     const m = response.$metadata;
      if(m) return {data:{success:true}};
      return {data:{success:false}}
@@ -433,8 +433,8 @@ export async function savedocs(type: string,link : string,status:string,total_pa
  export async function update(file: any, fileName: string, retries = 3, delay = 500) {
   const docs = await axios.post(URLS.endpoints.upload, { name: fileName });
   fileName = docs.data.key;
-  console.log(docs.data);
-  console.log(process.env.AWS_S3_BUCKET_NAME);
+ // console.log(docs.data);
+  //console.log(process.env.AWS_S3_BUCKET_NAME);
 
   try {
     // Define parameters for deleting the existing file
@@ -446,7 +446,7 @@ export async function savedocs(type: string,link : string,status:string,total_pa
     // Attempt to delete the existing file
     await s3Client.send(new DeleteObjectCommand(deleteParams));
 
-    console.log('Old file deleted');
+   // console.log('Old file deleted');
 
     // Proceed with uploading the new file
     const params = {
@@ -458,7 +458,7 @@ export async function savedocs(type: string,link : string,status:string,total_pa
 
     const command = new PutObjectCommand(params);
     const response = await s3Client.send(command);
-    console.log('Upload response:', response.$metadata);
+    //console.log('Upload response:', response.$metadata);
 
     if (response.$metadata) return { data: { success: true } };
     return { data: { success: false } };
@@ -503,8 +503,8 @@ export async function savedocs(type: string,link : string,status:string,total_pa
  // Assuming s3Client is already defined and configured elsewhere in your code
  
  export async function uplo(fileName:string, retries = 3, delay = 500) {
-  console.log('N');
-  console.log(fileName);
+ // console.log('N');
+ // console.log(fileName);
   const docs = await axios.post(
     URLS.endpoints.get,
     {name:fileName});
@@ -512,7 +512,7 @@ export async function savedocs(type: string,link : string,status:string,total_pa
       return { data: { message: '' } };
     }
     fileName = docs.data.key;
-    console.log(docs.data);
+    //console.log(docs.data);
   try {
      const client = s3Client;
  
@@ -634,7 +634,7 @@ export async function Import_editor(type:string,retries = 3,delay = 500) {
   try {
     const importResp = await axios.post(
       URLS.endpoints.Import_edits, {type:'html'}
-    );console.log(importResp.data.imports[0])
+    ); //console.log(importResp.data.imports[0])
     if (importResp.status === 200) return { data: { message: "Imported",imports:importResp.data.imports }};
     return { data: { message: "Something went wrong" } };
   } catch (error:any) {
@@ -673,8 +673,8 @@ export async function save_cite(authors:string,title:string,year:string,link:str
   }
 }
 export async function delete_docs(fileName:string, retries = 3, delay = 500) {
-  console.log('N');
-  console.log(fileName);
+  //console.log('N');
+  //console.log(fileName);
   const docs = await axios.post(
     URLS.endpoints.delete,
     {name:fileName});
@@ -682,7 +682,7 @@ export async function delete_docs(fileName:string, retries = 3, delay = 500) {
       return { data: { message: '' } };
     }
     fileName = docs.data.key;
-    console.log(docs.data);
+    //console.log(docs.data);
     try {
       // Define parameters for deleting the existing file
       const deleteParams = {
@@ -693,7 +693,7 @@ export async function delete_docs(fileName:string, retries = 3, delay = 500) {
       // Attempt to delete the existing file
       const response = await s3Client.send(new DeleteObjectCommand(deleteParams));
   
-      console.log('Old file deleted');
+     // console.log('Old file deleted');
   
      // Ensure to await the transformation of the stream to a string
      if (response.$metadata) return { data: { success: true } };

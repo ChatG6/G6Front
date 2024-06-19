@@ -171,7 +171,7 @@ const ReferencePopup: FC<props> = ({
         setCollectedItems([]);
       }
     } catch (error) {
-      console.error("Error sending data to API:", error);
+      //console.error("Error sending data to API:", error);
       setOutputshow(true)
     }
   };
@@ -188,7 +188,7 @@ const ReferencePopup: FC<props> = ({
     }
   };
   const handleUpdateButton = async () => {
-    console.log(`project:${projectName}, updated to:${Ref}`);
+   // console.log(`project:${projectName}, updated to:${Ref}`);
     const resp = await updateImport(projectName, Ref, "ref");
     console.log(resp);
     if (resp.data.message ==='updated') {
@@ -228,7 +228,7 @@ const ReferencePopup: FC<props> = ({
                 "null"
               );
               //setLrOutput('');
-              console.log(`RESP:${response}`);
+             // console.log(`RESP:${response}`);
               if (response.data.error) {
                 setIsNotif(true)
                 //setVerifyMessage(`Error while saving ${formData.project}`);

@@ -89,8 +89,8 @@ const LiteratureReview: FC<props> = ({
   useEffect(() => {
     const fetchLR = async ()=> {
       const resp = await axios.post(URLS.endpoints.status);
-      console.log(resp.data.statuss)
-      console.log(resp.data.quota)
+      //console.log(resp.data.statuss)
+      //console.log(resp.data.quota)
       if (resp.data.statuss != 'unknown') {setstatus(resp.data.statuss)}
       if (resp.data.quota != 500) {setquota(resp.data.quota)}
     }
@@ -127,7 +127,7 @@ const LiteratureReview: FC<props> = ({
     else {  setIsNotif(true);
       setVerifyMessage(`error while updating ${projectName}`)}
 
-    console.log(resp);
+   // console.log(resp);
   };
   function handleImportButton(t: string) {
     importType(t);
@@ -223,9 +223,9 @@ const LiteratureReview: FC<props> = ({
             //setOutput(`Writing a literature review about the topic ${query} ...`);
             try {
               //console.log(value);
-              console.log(style);
-              console.log(`lr to send:\n ${liter}`);
-              console.log(`query:${query}`);
+             // console.log(style);
+             // console.log(`lr to send:\n ${liter}`);
+             // console.log(`query:${query}`);
               const response = await save(
                 saveName,
                 "lr",
@@ -234,7 +234,7 @@ const LiteratureReview: FC<props> = ({
                 style,
                 "null"
               );
-              console.log(response.data);
+             // console.log(response.data);
               if (response.data.error) {
                 setErrMsg(response.data.error);
                 setIsNotif(true);

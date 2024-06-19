@@ -176,7 +176,7 @@ const complet = async function () {
       button.disabled = false;
     } else {
       const content = editor.innerHTML;
-      console.log(content);
+      //console.log(content);
       button.disabled = true;
       const paraphrasedContent = await complete(content);
       editor.innerHTML = paraphrasedContent;
@@ -207,7 +207,7 @@ const paraphras = async function () {
       button.disabled = false;
     } else {
       const content = editor.innerHTML;
-      console.log(content);
+      //console.log(content);
       button.disabled = true;
       const paraphrasedContent = await paraphrase(content);
       editor.innerHTML = paraphrasedContent;
@@ -239,7 +239,7 @@ const summariz = async function () {
       button.disabled = false;
     } else {
       const content = editor.innerHTML;
-      console.log(content);
+      //console.log(content);
       button.disabled = true;
       const paraphrasedContent = await summarize(content);
       editor.innerHTML = paraphrasedContent;
@@ -254,7 +254,7 @@ const insert = async function (textToInsert: any) {
   ) as HTMLButtonElement;
   if (editor) {
     const content = editor.innerHTML;
-    console.log(content);
+    //console.log(content);
     button.disabled = true;
 
     // Create a new text node with the text to insert
@@ -287,9 +287,9 @@ const saveAspdf = async (name: string) => {
   if (editor?.innerHTML) {
     try {
       const s = await pdf(editor.innerHTML);
-      console.log(s);
+      //console.log(s);
       const { download_url, status, total_pages } = s;
-      console.log(download_url);
+      //console.log(download_url);
 
       // Fetch the file as a blob
       const response = await fetch(download_url);
@@ -341,15 +341,15 @@ const saveToFile = async (name: string) => {
     if (content.innerHTML != "<p><br></p>") {
       let c = content.innerHTML;
       const blob = new Blob([c], { type: "text/html" });
-      console.log(c);
+      //console.log(c);
 
       // Assuming uplo is an async function that returns a promise
       try {
         const message = await upload(blob, name); // Await the uplo function
-        console.log(message.data);
+       // console.log(message.data);
         return { success: true };
       } catch (error) {
-        console.error("Error uploading or retrieving HTML content:", error);
+        //console.error("Error uploading or retrieving HTML content:", error);
         return { success: false };
       }
     } else {
@@ -372,12 +372,12 @@ const getFile = async (name: string) => {
   document.head.appendChild(katexScript);
   if (content?.innerHTML) {
     content.innerHTML = "loading document...";
-    console.log(name);
+    //console.log(name);
     // Assuming uplo is an async function that returns a promise
     try {
-      console.log(name);
+     // console.log(name);
       const message = await uplo(name); // Await the uplo function
-      console.log(message.data);
+      //console.log(message.data);
       // Assuming the message contains the HTML content you want to display
       if (message.data.message) {
         content.innerHTML = message.data.message;
@@ -386,7 +386,7 @@ const getFile = async (name: string) => {
     } catch (error) {
       content.innerHTML = "Error uploading or retrieving HTML content";
       return { success: false };
-      console.error("Error uploading or retrieving HTML content:", error);
+      //console.error("Error uploading or retrieving HTML content:", error);
     }
   }
 };
@@ -407,19 +407,19 @@ const updateFile = async (name: string) => {
     if (content.innerHTML != "<p><br></p>") {
       let c = content.innerHTML;
       const blob = new Blob([c], { type: "text/html" });
-      console.log(c);
+     // console.log(c);
 
       // Assuming uplo is an async function that returns a promise
       try {
         const message = await update(blob, name); // Await the uplo function
-        console.log(message.data);
+        //console.log(message.data);
         if (message.data.success) {
           return { success: true };
         } else {
           return { success: false };
         }
       } catch (error) {
-        console.error("Error uploading or retrieving HTML content:", error);
+       // console.error("Error uploading or retrieving HTML content:", error);
         return { success: false };
       }
     } else {
@@ -566,17 +566,17 @@ export const QuillToolbar = () => {
   const [verifyMessage, setVerifyMessage] = useState("");
   //const quill = useContext(QuillContext);
   const handleChange = (selectedOption: any) => {
-    console.log(selectedOption.value);
+    //console.log(selectedOption.value);
     setLatex(latex + selectedOption.value);
   };
   const handlesave = () => {
-    console.log("done");
+    //console.log("done");
     // red(); // Assuming red() is a function defined elsewhere
     setShowModal(true); // Show the modal
   };
 
   const handleFilenameSubmit = async () => {
-    console.log("Filename submitted:", filename);
+    //console.log("Filename submitted:", filename);
     // Here you can handle the filename, e.g., save the file to the server
     setShowModal(false); // Hide the modal
     let res;
@@ -597,7 +597,7 @@ export const QuillToolbar = () => {
     setFilename(""); // Reset the filename input field
   };
   const handleFilenameSubmit3 = async () => {
-    console.log("Filename submitted:", filename3);
+   // console.log("Filename submitted:", filename3);
     // Here you can handle the filename, e.g., save the file to the server
     setShowModal3(false); // Hide the modal
     let res;
@@ -646,7 +646,7 @@ export const QuillToolbar = () => {
       ".font-bold.flex.flex-col.justify-center"
     ) as HTMLElement;
     if (title) {
-      console.log(title.innerHTML);
+      //console.log(title.innerHTML);
       const n = await updateFile(title.innerHTML);
       if (n?.success) {
         setIsNotif(true);
@@ -655,28 +655,28 @@ export const QuillToolbar = () => {
     }
   };
   const handlegetliters = () => {
-    console.log("done");
+    //console.log("done");
     setShowModalliter(true); // Show the modal
   };
   const handlegetrefs = () => {
-    console.log("done");
+    //console.log("done");
     setShowModalrefs(true); // Show the modal
   };
   const handlegetarts = () => {
-    console.log("done");
+    //console.log("done");
     setShowModalarts(true); // Show the modal
   };
   const handlegetcites = () => {
-    console.log("done");
+    //console.log("done");
     setShowModalcites(true); // Show the modal
   };
   const handlegeteq = () => {
-    console.log("done");
+    //console.log("done");
     setShowModaleq(true); // Show the modal
   };
   const handleOptionSelect = async (option: any) => {
     //setSelectedOption(option);
-    console.log("Selected option:", option);
+    //console.log("Selected option:", option);
     // Perform the action based on the selected option
     let res = await getFile(option);
     setShowModal2(false);
@@ -705,7 +705,7 @@ export const QuillToolbar = () => {
     }
   };
   const handleCiteSelect = async (option: any) => {
-    console.log("Selected option:", option);
+   // console.log("Selected option:", option);
     // Perform the action based on the selected option
     let res;
     console.log(option.style);
@@ -805,14 +805,14 @@ export const QuillToolbar = () => {
   Cites = collectedcites;
   options = collectedItems;
   const handleqd = () => {
-    console.log("done");
+    //console.log("done");
     setLatex("");
   };
   useEffect(() => {
     const Fetch = async () => {
       const resp = await Import_editor("html");
       if (resp.data) {
-        console.log(resp.data.imports);
+        //console.log(resp.data.imports);
         setCollectedItems(resp.data.imports);
       }
     };
@@ -822,7 +822,7 @@ export const QuillToolbar = () => {
     const Fetch = async () => {
       const resp = await Import("lr");
       if (resp.data) {
-        console.log(resp.data.imports);
+        //console.log(resp.data.imports);
         setCollectedliters(resp.data.imports);
       }
     };
@@ -832,7 +832,7 @@ export const QuillToolbar = () => {
     const Fetch = async () => {
       const resp = await Import("art");
       if (resp.data) {
-        console.log(resp.data.imports);
+        //console.log(resp.data.imports);
         setCollectedarts(resp.data.imports);
       }
     };
@@ -842,7 +842,7 @@ export const QuillToolbar = () => {
     const Fetch = async () => {
       const resp = await Import("out");
       if (resp.data) {
-        console.log(resp.data.imports);
+      //  console.log(resp.data.imports);
         setCollectedouts(resp.data.imports);
       }
     };
@@ -852,7 +852,7 @@ export const QuillToolbar = () => {
     const Fetch = async () => {
       const resp = await Import("ref");
       if (resp.data) {
-        console.log(resp.data.imports);
+       // console.log(resp.data.imports);
         setCollectedrefs(resp.data.imports);
       }
     };
@@ -862,7 +862,7 @@ export const QuillToolbar = () => {
     const Fetch = async () => {
       const resp = await Import("cite");
       if (resp.data) {
-        console.log(resp.data.imports);
+       // console.log(resp.data.imports);
         setCollectedcites(resp.data.imports);
       }
     };
@@ -873,7 +873,7 @@ export const QuillToolbar = () => {
       if (update) {
         const resp = await Import_editor("html");
         if (resp.data) {
-          console.log(resp.data.imports);
+         // console.log(resp.data.imports);
           setCollectedItems(resp.data.imports);
         }
         updateItems(false);

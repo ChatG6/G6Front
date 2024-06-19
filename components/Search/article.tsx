@@ -104,7 +104,7 @@ const Article: FC<props> = ({
   const handleGenerateButton = () => {
     setOutput("");
     setGenerateState(true);
-    console.log('test');
+    //console.log('test');
     
   };
   const handleGenerateoutlie = () => {
@@ -118,8 +118,8 @@ const Article: FC<props> = ({
 
   const handleUpdateButton = async () => {
     const resp = await updateImport(projectName, articlee, "art");
-    console.log(projectName)
-    console.log(resp);
+    //console.log(projectName)
+    //console.log(resp);
     if (resp.data.message === "updated") {
       setIsNotif(true);
       setVerifyMessage(`${projectName} updated successfully`);
@@ -139,7 +139,7 @@ const Article: FC<props> = ({
       setIsNotif(true);
       setVerifyMessage(`error while updating ${projectName},it is article not outline`);
     }
-    console.log(resp.data);
+    //console.log(resp.data);
     setHasImportOutl(false);
     //setOut("");
   };
@@ -197,21 +197,24 @@ const Article: FC<props> = ({
   useEffect(() => {
     const fetchLR = async ()=> {
       const resp = await axios.post(URLS.endpoints.status);
-      console.log(resp.data.statuss)
-      console.log(resp.data.quota)
-      console.log(resp.data.error)
-      console.log(resp.data.error)
-      if (resp.data.statuss != 'unknown') {setstatus(resp.data.statuss); console.log(resp.data.error)}
-      if (resp.data.quota != 500) {setquota(resp.data.quota);console.log(resp.data.error)}
+      //console.log(resp.data.statuss)
+      //console.log(resp.data.quota)
+      //console.log(resp.data.error)
+      //console.log(resp.data.error)
+      if (resp.data.statuss != 'unknown') {setstatus(resp.data.statuss); 
+       // console.log(resp.data.error)
+      }
+      if (resp.data.quota != 500) {setquota(resp.data.quota);//console.log(resp.data.error)
+        }
     }
     fetchLR();
     },[status,setstatus,quota,setquota])
   useEffect(() => {
-    console.log('value is'+value)
-    console.log('outline is'+outline_o)
-    console.log('article is'+articlee)
-    console.log('savename is'+saveName)
-    console.log('query is'+query)
+    //console.log('value is'+value)
+    //console.log('outline is'+outline_o)
+    //console.log('article is'+articlee)
+    //console.log('savename is'+saveName)
+    //console.log('query is'+query)
     },[articlee, outline_o, query, saveName, value])
     useEffect(() => {
     if(value && type === 'art') {
@@ -346,10 +349,10 @@ const Article: FC<props> = ({
             setSave("saving...");
             //setOutput(`Writing a literature review about the topic ${query} ...`);
             try {
-              console.log(outline_o);
+              //console.log(outline_o);
               if (articlee != "") {
-                console.log("pro:" + projectName);
-                console.log(outline_o)
+               // console.log("pro:" + projectName);
+               // console.log(outline_o)
                 const response = await save(
                   saveName,
                   "ar",
@@ -415,7 +418,7 @@ const Article: FC<props> = ({
   useEffect(() => {
     try {
       if (saving2) {
-        console.log(content);
+       // console.log(content);
         const fetchSR = async () => {
           if (!content) {
             setIsNotif(true);
@@ -425,9 +428,9 @@ const Article: FC<props> = ({
             setSave2("saving...");
             //setOutput(`Writing a literature review about the topic ${query} ...`);
             try {
-              console.log(outline_o);
+             // console.log(outline_o);
               if (outline_o != "") {
-                console.log("pro:" + projectName);
+               // console.log("pro:" + projectName);
                 const response = await save(
                   saveName,
                   "out",

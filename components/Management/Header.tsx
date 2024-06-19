@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import Image from 'next/image'
 import logo from '@/public/Logo.svg'
 import { Button1 } from "../ui/upg-btn";
@@ -61,7 +61,7 @@ export default function Header() {
   const isBreakpoint = useMediaQuery(768)
   const handleupgrade = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/pricing`
-    
+    //redirect(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/pricing`)
   };
   return (
     <header 
@@ -189,7 +189,7 @@ export default function Header() {
                       Start writing
                     </Button1>
                     </Link>      
-                  <Button1 variant='outline' className="upg-btn ml-2 mr-2"
+                  <Button1  onClick={handleupgrade} variant='outline' className="upg-btn ml-2 mr-2"
                   style={{ 
                   backgroundColor:'#545CEB',
                   }}>

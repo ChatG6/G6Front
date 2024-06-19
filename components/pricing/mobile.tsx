@@ -72,28 +72,28 @@ export default function  Mobile(){
       const  resp  = await axios.post(URLS.endpoints.stripe_session,
         { priceId, subscription });
 
-      console.log('data', resp.data)
+     // console.log('data', resp.data)
       if (resp.data.sessionId === 'Login First') {//window.location.href = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth/signin?callbackUrl=/pricing`; 
       redirect("/api/auth/signin?callbackUrl=/pricing");
       return;}
       if (resp.data.sessionId) {
         const stripe =  await stripePromise;
-        console.log('stripe', stripe)
+       // console.log('stripe', stripe)
 
         const response = await stripe?.redirectToCheckout({
           sessionId: resp.data.sessionId,
         });
 
-        console.log('response', response)
+       // console.log('response', response)
 
         return response
       } else {
-        console.error('Failed to create checkout session');
+        //console.error('Failed to create checkout session');
         //toast('Failed to create checkout session')
         return
       }
     } catch (error) {
-      console.error('Error during checkout:', error);
+      //console.error('Error during checkout:', error);
       //toast('Error during checkout')
       return
     }//}

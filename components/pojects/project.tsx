@@ -31,15 +31,15 @@ const updateFile = async (name: string) => {
     if (content.innerHTML != "<p><br></p>") {
       let c = content.innerHTML;
       const blob = new Blob([c], { type: "text/html" });
-      console.log(c);
+     // console.log(c);
 
       // Assuming uplo is an async function that returns a promise
       try {
         const message = await update(blob, name); // Await the uplo function
-        console.log(message.data);
+       // console.log(message.data);
         return { success: true };
       } catch (error) {
-        console.error("Error uploading or retrieving HTML content:", error);
+        //console.error("Error uploading or retrieving HTML content:", error);
         return { success: false };
       }
     } else {
@@ -62,12 +62,12 @@ const getFile = async (name: string) => {
     document.head.appendChild(katexScript);
     if (content?.innerHTML) {
       content.innerHTML = "loading document...";
-      console.log(name);
+      //console.log(name);
       // Assuming uplo is an async function that returns a promise
       try {
-        console.log(name);
+       // console.log(name);
         const message = await uplo(name); // Await the uplo function
-        console.log(message.data);
+       // console.log(message.data);
         // Assuming the message contains the HTML content you want to display
         if (message.data.message) {
           content.innerHTML = message.data.message;
@@ -87,11 +87,11 @@ const deleteContents = async function (name:string) {
     const button = document.querySelector(".ql-paraphrasebtn") as HTMLButtonElement;
     const title = document.querySelector('.font-bold.flex.flex-col.justify-center') as HTMLElement;
     const r= await archive(name);
-    console.log(r.data)
-    console.log(title)
+   // console.log(r.data)
+   // console.log(title)
     if (editor) {
       const content = editor.innerHTML; // Store the current content for logging or other purposes
-      console.log(content);
+      //console.log(content);
       if (title)
         {title.innerHTML=name;}
       // Clear the editor's content
@@ -107,7 +107,7 @@ const deleteContents = async function (name:string) {
     //if (title)
 //{title.innerHTML=name;}
     const r= await archive(name);
-    console.log(r.data)
+    //console.log(r.data)
    // console.log(title)
     return { success: true,date:r.data.date }; // Indicate success
     
@@ -188,7 +188,7 @@ export const Projects = () => {
         const Fetch = async () => {
           const resp = await Import_editor("html");
           if (resp.data) {
-            console.log(resp.data.imports);
+           // console.log(resp.data.imports);
             setProjects(resp.data.imports);
             setfailed(false)
           }
@@ -200,7 +200,7 @@ export const Projects = () => {
             if((filename2 =='' ||filename2 ==' ') && projects[0]?.name === '' ) {
           const resp = await Import_editor("html");
           if (resp.data) {
-            console.log(resp.data.imports);
+            //console.log(resp.data.imports);
             setProjects(resp.data.imports);
             setProjects2(resp.data.imports)
             setfailed(false);

@@ -82,7 +82,9 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
           await merger.add(file);
           const res = await savedocs('pdf','null','Chat',file.size,'now',file.name)
           if (res.data.message=='Saved') {console.log('done')}
-          else {console.log('error')}
+          else {
+            //console.log('error')
+            }
         }
   
         await merger.setMetadata({
@@ -186,7 +188,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
         },
         data: { query: value, apiKey: process.env.NEXT_PUBLIC_OPEN_AI_KEY , matches: 5 }
       });
-      console.log('embed',embedRes);
+     // console.log('embed',embedRes);
       
       const prompt = `
       Use the following text to provide an answer to the query: "${value}"
@@ -218,7 +220,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
         const { value, done: doneReading } = await reader.read();
         done = doneReading;
         const chunkValue = decoder.decode(value);
-        console.log(chunkValue);
+       // console.log(chunkValue);
 
         setMessageList(pre => {
           return [
@@ -236,7 +238,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
       scrollToBottom();
     } catch (error) {
       setLoading(false);
-      console.log(error);
+     // console.log(error);
     }
   };
 
@@ -260,12 +262,12 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
         setShowSettingModal(false);
       })
       .catch(info => {
-        console.log('Validate Failed:', info);
+       // console.log('Validate Failed:', info);
       });
   };
   async function generateEmbedding(sentenceList: any[]) {
     setLoading2(true);
-    console.log('test1');
+   // console.log('test1');
 
     const res = await axios('/api/utils/split', {
       method: 'POST',
@@ -276,7 +278,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
     });
     const { chunkList } = res.data;
     const chunkSize = 2; // 每组的元素个数
-    console.log(chunkList);
+   // console.log(chunkList);
     
 
     
@@ -305,11 +307,11 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
   const toglle =()=>{
     if(library==0){
       setLibrary(1);
-      console.log('library',library);
+      //console.log('library',library);
       
     }else{
       setLibrary(0);
-      console.log('library',library);
+      //console.log('library',library);
     }
   }
 
