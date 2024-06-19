@@ -26,7 +26,7 @@ const SignInPage = (props: Props) => {
     <>
       <form className="form" onSubmit={onSubmit}>
         <h1>Login</h1>
-        {/*!!props.error && <p className='error'>Authentication Failed</p>*/}
+        {/*!!props.er && <p className='error'>Authentication Failed</p>*/}
         <input
           name="usr"
           type="text"
