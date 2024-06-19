@@ -197,7 +197,7 @@ export const Projects = () => {
       }, []);
       useEffect(() => {
         const Fetch = async () => {
-            if(filename2 =='' ||filename2 ==' ' && projects[0]?.name === '' ) {
+            if((filename2 =='' ||filename2 ==' ') && projects[0]?.name === '' ) {
           const resp = await Import_editor("html");
           if (resp.data) {
             console.log(resp.data.imports);
