@@ -27,6 +27,7 @@ async function handleSubscriptionEvent(
   event: Stripe.Event,
   type: 'created' | 'updated' | 'deleted'
 ) {
+  try {
   const subscription = event.data.object as Stripe.Subscription;
   const customerEmail = await getCustomerEmail(subscription.customer as string);
   //const session = await getServerSession(options)
@@ -119,6 +120,10 @@ async function handleSubscriptionEvent(
     status: 500,
     message: `Subscription ${type} failed`,
     newkey,
+  });}}catch (error)
+  {return NextResponse.json({
+    status: 500,
+    error: error
   });}
 }
 
@@ -147,7 +152,7 @@ async function handleInvoiceEvent(
     status,
     user_id: invoice.metadata?.userId,
     email: customerEmail,
-  };*/
+  };
   let newkey;
   let selection = { stripe_user_id: invoice.customer?.toString()};
   let keys = await db.subScription.findMany({
@@ -157,7 +162,11 @@ async function handleInvoiceEvent(
       user_id:true
     },
   }); 
-  if (status==='succeeded') {newkey = await db.subScription.update({
+  if (keys.length==0) {return NextResponse.json({
+    status: 200,
+    message: `Invoice payment ${status}`,
+  });}
+  if (status==='succeeded'&& keys.length!=0) {newkey = await db.subScription.update({
     where: {id:keys[0].id},
     data:{
       status: 'active',
@@ -188,16 +197,18 @@ if (keys2[0].email && keys2[0].name) {
 }
   //sendMail()
   }
-  if (newkey) 
+  if (newkey) */
   //await stripe.invoices.update(invoice.id as string,status);
-  {return NextResponse.json({
+  return NextResponse.json({
     status: 200,
     message: `Invoice payment ${status}`,
-  });}
-  else {return NextResponse.json({
+  });
+ // else {
+ return NextResponse.json({
     status: 500,
     message: `Invoice payment ${status}`,
-  });}
+  });
+//}
 }
 
 async function handleCheckoutSessionCompleted(

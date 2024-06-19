@@ -19,10 +19,10 @@ export default function Sub() {
     useEffect(() => {
         const fetchLR = async ()=> {
           const resp = await axios.post(URLS.endpoints.status);
-          //console.log(resp.data.statuss)
-          //console.log(resp.data.quota)
-          //console.log(resp.data.error)
-          //console.log(resp.data.error)
+          console.log(resp.data.statuss)
+          console.log(resp.data.quota)
+          console.log(resp.data.error)
+          console.log(resp.data.error)
           if (resp.data.statuss != 'unknown') {setstatus('Your Subscription is:'+resp.data.statuss); 
            // console.log(resp.data.error)  
            }
