@@ -48,7 +48,7 @@ const useMediaQuery = (width: number) => {
   };*/
 export default function Main () {
 
-  const Ismobile = useMediaQuery(1024)
+  const Ismobile = useMediaQuery(1080)
   //window.resizeBy(window.innerWidth,window.innerHeight)
   return (
     <>

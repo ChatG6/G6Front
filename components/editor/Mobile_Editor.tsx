@@ -548,7 +548,7 @@ const handlegetprojs = () => {
       { /*OpenAIOutlined,OpenAIFilled,ApiFilled,RobotFilled,RobotOutlined*/}
       <OpenAIFilled/>
           </button>
-          <div ref={ref1}>
+          
                   <button onClick={handlenew}>
                   <FilePlusIcon />
                       </button>
@@ -568,8 +568,7 @@ const handlegetprojs = () => {
                           </div>{" "}
                         </Savemodal>
                       )}
-                    </div>
-          <div ref={ref2}>
+                  
         <button
             title="import saved projects to editor"
             className="ql-getprojs"
@@ -623,7 +622,6 @@ const handlegetprojs = () => {
               </div>
             </Savemodal>
           )}
-        </div>
           <button  onClick={handleshare}>
           <svg
               xmlns="http://www.w3.org/2000/svg"
