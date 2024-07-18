@@ -513,11 +513,11 @@ const Article: FC<props> = ({
         width:'100%',
         backgroundColor:'white',
       }}>
-        <section className="flex flex-row justify-between items-center h-12">
+        <section className="flex flex-row justify-between items-center">
         {isNotif && (
           <Notify message={verifyMessage} dur={30} display={setIsNotif} />
         )}
-        <div className="flex flex-row gap-4">
+        <div className="flex flex-row flex-wrap gap-4 h-fit w-full">
             <button className="rf-btn" onClick={handleRefreshButton} title="Clear">
               <Eraser color="#52525b"/>
             </button>

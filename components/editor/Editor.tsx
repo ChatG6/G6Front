@@ -349,6 +349,12 @@ if (title) {//console.log(title.innerHTML)
           }}>
           Untitteled
         </span>
+        <span className="font-bold flex flex-col flex-wrap justify-center "
+        style={{
+            display:'none'
+          }}>
+          Untitteled
+        </span>
         <div className="btn-div-editor">
           {/* <Button1 onClick={handleredirect} variant="outline" className="upg-btn ml-2 mr-2">
             <span className="ml-2">Home</span>
@@ -356,8 +362,8 @@ if (title) {//console.log(title.innerHTML)
           <Button1 onClick={handleshare} variant="outline" className="upg-btn ml-2 mr-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="12"
+              height="12"
               fill="currentColor"
               className="bi bi-share-fill"
               viewBox="0 0 16 16"
@@ -366,11 +372,11 @@ if (title) {//console.log(title.innerHTML)
             </svg>
             <span className="ml-2">{sharestate}</span>
           </Button1>
-          <Button1 variant="outline" className="upg-btn ml-2 mr-2" onClick={handleupgrade}>
+          { <Button1 variant="outline" className="upg-btn ml-2 mr-2" onClick={handleupgrade}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="12"
+              height="12"
               fill="currentColor"
               className="bi bi-lightning-charge-fill"
               viewBox="0 0 16 16"
@@ -378,7 +384,23 @@ if (title) {//console.log(title.innerHTML)
               <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z" />
             </svg>
             <span className="ml-2">Upgrade</span>
-          </Button1>
+          </Button1>}
+      {/*<button
+        style={{ color: "var(--mantine-color-white)"}}
+        className="mantine-focus-auto mantine-active rounded-md m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root" 
+        onClick={handleupgrade} // Add onClick handler if provided
+      >
+        <span className="m_80f1301b mantine-Button-inner">
+        
+          <span className="m_a74036a mantine-Button-section" >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon" className="w-4 h-4">
+            <path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z" clip-rule="evenodd"></path>
+        </svg>
+          </span>
+          <span className="m_811560b9 mantine-Button-label">Upgarde</span>
+        </span>
+      </button>*/}
+    
           <Sheet>
             <SheetTrigger className="ml-2 mr-2">
               <GearIcon className="w-6 h-6 " style={{ color: "#52525b" }} />
@@ -419,8 +441,8 @@ if (title) {//console.log(title.innerHTML)
         />
       </div>
 
-      <div className="flex justify-between  center-div">
-        <div className="content-center flex flex-row">
+      <div className="flex justify-between  center-div flex-wrap">
+        <div className="content-center flex flex-row" >
           <div className="ml-3 text-base flext content-center ">
             {number} character
           </div>

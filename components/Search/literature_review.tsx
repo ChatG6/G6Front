@@ -6,7 +6,7 @@ import {
 } from "@/app/api/search_utils/literature_utils";
 import ImportPopup from "@/components/Search/importmodalfinished";
 
-import Savemodal from "./savemodelfinished";
+import Savemodal from "./savemodalfinished2";
 import Notify from "../Management/notification";
 import { Import,Sparkles,Loader,RefreshCcw, Save,FileCog,BookMarked} from "lucide-react";
 import { useOnClickOutside } from 'usehooks-ts'
@@ -274,10 +274,10 @@ const LiteratureReview: FC<props> = ({
     }
   }, [saving, value, query, style, content, setOutput, liter, saveName]);
   return (
-    <div
+    <div 
     style={{
       height:'100%',
-      width:'100%',
+      width:'100%'
     }}
     >
       <h1 className="text-lg mb-1"
@@ -292,7 +292,7 @@ const LiteratureReview: FC<props> = ({
         width:'100%',
         backgroundColor:'white',
       }}>
-        <section className="flex flex-row justify-between items-center h-12">
+        <section className="flex flex-row items-center h-fit w-fit ">
           {isNotif && <Notify message={verifyMessage} dur={30} display={setIsNotif} />}
 
 
@@ -314,9 +314,8 @@ const LiteratureReview: FC<props> = ({
               <option value="mhra">MHRA</option>
               <option value="oscola">OSCOLA</option>
             </select>
-            <div className="flex flex-row gap-4 items-center">
-        
-        {statusText?
+            <div className="flex flex-row gap-4 items-center h-fit w-full">
+            {statusText?
           <button className="gener-lr" onClick={handleGenerateButton} title="Generate a literature">
             <Sparkles color="#52525b"/>
           </button>
@@ -325,7 +324,7 @@ const LiteratureReview: FC<props> = ({
             <Loader color="#52525b"/>
           </button>
           }
-        <div className="std-cont" ref={ref1}>
+        <div ref={ref1}>
           {hasImportLr ? (
             <button className="save-lr" onClick={handleUpdateButton} title="Update literature ">
               <RefreshCcw color="#52525b"/>
@@ -369,7 +368,7 @@ const LiteratureReview: FC<props> = ({
             <ImportPopup  setProjectName={setProjectName} hasImported={setHasImportLr} onExit={setShowPopup} onSetTitle={getQuery} type={type} onSend={setText} />
           )}
         </div>
-        <button className="view-custom-lr-btn" onClick={handleViewLiterature} title="Custom Literature">
+        <button className="view-custom-lr-btn1" onClick={handleViewLiterature} title="Custom Literature">
           <FileCog color="#52525b"/>
         </button>
         <button className="view-custom-lr-btn" onClick={handleViewRef} title="Reference List">

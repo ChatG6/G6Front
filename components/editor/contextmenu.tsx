@@ -139,8 +139,8 @@ const ContextMenu: FC<contextmenuprops> = ({x,y,closeContextMenu}) => {
 
   return (
     <div 
-    className='absolute z-20' 
-    style={{ top: `${y}px`, left: `${x}px`,border:'1px solid rgba(0,0,0,0.5)',borderRadius:'16px',backgroundColor:'white' ,width:'200px',height:'100px',display:'flex',flexDirection:'column',justifyContent:'space-around',alignItems:'start',}}
+    className='contextmenu absolute z-20' 
+    style={{ top: `${y}px`,right: `${x}px`, left: `${x}px`,border:'1px solid rgba(0,0,0,0.5)',borderRadius:'16px',backgroundColor:'white' ,width:'200px',height:'100px',display:'flex',flexDirection:'column',justifyContent:'space-around',alignItems:'start'}}
     ref={ContextMenuRef}
     onContextMenu={(e) => e.preventDefault()}
     >   

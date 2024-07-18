@@ -337,7 +337,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
     <> 
         
       <Card
-        style={{ width: 500 }}
+        style={{ width: '100%'}}
         className={className}
         styles={{
           body: {
@@ -380,9 +380,11 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
                     </Fragment>
                   ))}
                 </div>
-                
-                <div className=" pb-0 border-t border-t-gray-200 border-solid border-x-0 border-b-0 rounded "  style={{ display: 'flex', alignItems: 'center' ,backgroundColor: '#fcfaff', height: '5.0625rem' ,justifyContent:'center', }}>
-                    
+          
+                <div className=" pb-0 border-t border-t-gray-200 border-solid border-x-0 border-b-0 rounded mainchat"  
+                //style={{ display: 'flex',width:'100%', alignItems: 'center' ,backgroundColor: '#fcfaff', height: '5.0625rem' ,justifyContent:'center', }}
+                >
+                 
                     {loading2? (
                           <Button className='ml-4' variant="outline" disabled>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -399,9 +401,13 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
                   <div style={{ display: 'flex', alignItems: 'center'}}>
                       <div className="upload-btn-wrapper" style={{ marginRight: '10px' }}>
                   </div>
-                  <div>
+                  <div 
+                  //style={{width:'60%'}}
+                  >
                     <Input.Search
-                      enterButton="Ask your Library"
+                      enterButton="Ask"
+                      className='mainsearch_chat'
+                     //style={{width:'60%'}}
                       size="large"
                       value={query}
                       placeholder="input your question"

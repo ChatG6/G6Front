@@ -7,7 +7,7 @@ interface ModalProps {
  children: ReactNode;
 }
 
-const Savemodal: React.FC<ModalProps> = ({children ,role,visible, onClose}) => {
+const Savemodalshare: React.FC<ModalProps> = ({children ,role,visible, onClose}) => {
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
     
@@ -26,4 +26,4 @@ const Savemodal: React.FC<ModalProps> = ({children ,role,visible, onClose}) => {
  );
 };
 
-export default Savemodal;
+export default Savemodalshare;

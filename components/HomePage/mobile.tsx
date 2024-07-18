@@ -187,27 +187,53 @@ export default function Mobile  (){
         <div className="flex-row flex flex-wrap content-center justify-center mt-6 gap-x-24">
           <div className="flex flex-col content-center flex-wrap">
            <Image src={img7} alt="1"/>
-           <span className={`${inter.className} text-start text-2xl mt-6`}>
+           <span className={`${inter.className} text-start text-2xl mt-6`} style={{
+            position: 'relative',
+            display: 'inline-block', // Change to inline-block to allow horizontal alignment
+            textAlign: 'center', // Center-align the text
+            marginRight: 'auto', // Pushes the block to the center
+            marginLeft: 'auto',
+           }}>
             In-text Citations
            </span>
            <span className="text-base  text-start" 
            style={{
-
+            position: 'relative',
+            justifyContent:'center',
+    display: 'inline-block', // Block-level element for content
+    textAlign: 'left', // Aligns text to the left
+    marginTop: '20px', // Adds some space between the title and content
+    maxWidth: '80%', // Adjusts the maximum width of the content
+    margin: 'auto',
            }}>
             ChatG6 consults the latest research and your PDF uploads.
             Cite in APA, MLA, IEEE, Chicago, or Harvard style
            </span>
           </div>
+          </div>
+          <div className="flex-row flex flex-wrap content-center justify-center mt-6 gap-x-24">
           <div className="flex flex-col content-center flex-wrap">
            <Image src={img8} alt="2" width={500} height={300}/>
-           <span className={`${inter.className} text-start text-2xl mt-6`}>
+           <span className={`${inter.className} text-start text-2xl mt-6`} style={{
+            position: 'relative',
+            display: 'inline-block', // Change to inline-block to allow horizontal alignment
+            textAlign: 'center', // Center-align the text
+            marginRight: 'auto', // Pushes the block to the center
+            marginLeft: 'auto',
+           }}>
             AI Autocomplete
            </span>
            <span className="text-base text-start " 
            style={{
-
+            position: 'relative',
+            justifyContent:'center',
+    display: 'inline-block', // Block-level element for content
+    textAlign: 'left', // Aligns text to the left
+    marginTop: '20px', // Adds some space between the title and content
+    maxWidth: '80%', // Adjusts the maximum width of the content
+    margin: 'auto',
            }}>
-            Autocomplete will write alongside you to beat writer &apos; s   block whenever you need a helping hand
+         Autocomplete will write alongside you to beat writer &apos; s block whenever you need a helping hand
            </span>
           </div>
         </div>
@@ -215,24 +241,50 @@ export default function Mobile  (){
         <div className="flex-row flex flex-wrap content-center justify-center mt-6 gap-x-24">
           <div className="flex flex-col content-center flex-wrap">
            <Image src={img9} alt="1" width={500} height={300}/>
-           <span className={`${inter.className} text-start text-2xl mt-6`}>
+           <span className={`${inter.className} text-start text-2xl mt-6`} style={{
+             position: 'relative',
+             display: 'inline-block', // Change to inline-block to allow horizontal alignment
+             textAlign: 'center', // Center-align the text
+             marginRight: 'auto', // Pushes the block to the center
+             marginLeft: 'auto',
+           }}>
             Chat to Your Research
            </span>
            <span className="text-base  text-start" 
            style={{
-
+            position: 'relative',
+            justifyContent:'center',
+    display: 'inline-block', // Block-level element for content
+    textAlign: 'left', // Aligns text to the left
+    marginTop: '20px', // Adds some space between the title and content
+    maxWidth: '80%', // Adjusts the maximum width of the content
+    margin: 'auto', // Centers the content block
            }}>
-            Quickly understand and summarize your research paperswith our AI chat assistant
+            Quickly understand and summarize your research papers with our AI chat assistant
            </span>
           </div>
+          </div>
+          <div className="flex-row flex flex-wrap content-center justify-center mt-6 gap-x-24">
           <div className="flex flex-col content-center flex-wrap">
            <Image src={img10} alt="2" width={500} height={300}/>
-           <span className={`${inter.className} text-start text-2xl mt-6`}>
+           <span className={`${inter.className} text-start text-2xl mt-6`} style={{
+          position: 'relative',
+          display: 'inline-block', // Change to inline-block to allow horizontal alignment
+          textAlign: 'center', // Center-align the text
+          marginRight: 'auto', // Pushes the block to the center
+          marginLeft: 'auto',
+           }}>
             Generate From Your Files
            </span>
-           <span className="text-base text-start " 
+           <span className="text-base text-start" 
            style={{
-
+            position: 'relative',
+            justifyContent:'center',
+    display: 'inline-block', // Block-level element for content
+    textAlign: 'left', // Aligns text to the left
+    marginTop: '20px', // Adds some space between the title and content
+    maxWidth: '80%', // Adjusts the maximum width of the content
+    margin: 'auto', // Centers the content block
            }}>
             Bring your research papers to life with source-based generation
            </span>
@@ -241,23 +293,50 @@ export default function Mobile  (){
 
         <div className="flex-row flex flex-wrap content-center justify-center mt-8 gap-x-24 ">
           <div className="flex flex-col content-center justify-center flex-wrap border-t">
-           <span className={`${inter.className} text-start text-2xl mt-6`}>
+           <span className={`${inter.className} text-start text-2xl mt-6`} style={{
+            position: 'relative',
+            display: 'inline-block', // Change to inline-block to allow horizontal alignment
+            textAlign: 'center', // Center-align the text
+            marginRight: 'auto', // Pushes the block to the center
+            marginLeft: 'auto',
+           }}>
            Paraphrase & Rewrite
            </span>
            <span className="text-base  text-start" 
            style={{
-
+            position: 'relative',
+            justifyContent:'center',
+    display: 'inline-block', // Block-level element for content
+    textAlign: 'left', // Aligns text to the left
+    marginTop: '20px', // Adds some space between the title and content
+    maxWidth: '80%', // Adjusts the maximum width of the content
+    margin: 'auto', // Centers the content block
            }}>
             Paraphrase any text in any tone. Rewrite the internet customized to you
            </span>
           </div>
+          </div>
+          <div className="flex-row flex flex-wrap content-center justify-center mt-8 gap-x-24 ">
           <div className="flex flex-col content-center justify-center flex-wrap border-t">
-           <span  className={`${inter.className} text-start text-2xl mt-6`}>
+           <span  className={`${inter.className} text-start text-2xl mt-6`}
+            style={{
+              position: 'relative',
+          display: 'inline-block', // Change to inline-block to allow horizontal alignment
+          textAlign: 'center', // Center-align the text
+          marginRight: 'auto', // Pushes the block to the center
+          marginLeft: 'auto',
+              }}>
            Bulk Import Sources via .bib
            </span>
-           <span className="text-base text-start " 
+           <span className="text-base text-start" 
            style={{
-
+            position: 'relative',
+            justifyContent:'center',
+    display: 'inline-block', // Block-level element for content
+    textAlign: 'left', // Aligns text to the left
+    marginTop: '20px', // Adds some space between the title and content
+    maxWidth: '80%', // Adjusts the maximum width of the content
+    margin: 'auto', // Centers the content block
            }}>
            Already saved papers ready to cite? Import a .bib to populate your library in seconds
            </span>
@@ -266,53 +345,104 @@ export default function Mobile  (){
 
         <div className="flex-row flex flex-wrap content-center justify-center mt-8 gap-x-24 ">
           <div className="flex flex-col content-center justify-center flex-wrap border-t">
-           <span className={`${inter.className} text-start text-2xl mt-6`}>
+           <span className={`${inter.className} text-start text-2xl mt-6`} style={{
+          position: 'relative',
+           display: 'inline-block', // Change to inline-block to allow horizontal alignment
+           textAlign: 'center', // Center-align the text
+           marginRight: 'auto', // Pushes the block to the center
+           marginLeft: 'auto',
+           }}>
            LaTeX and Word Export
            </span>
            <span className="text-base  text-start" 
            style={{
-
+           position: 'relative',
+            justifyContent:'center',
+    display: 'inline-block', // Block-level element for content
+    textAlign: 'left', // Aligns text to the left
+    marginTop: '20px', // Adds some space between the title and content
+ maxWidth: '80%', // Adjusts the maximum width of the content
+   margin: 'auto', // Centers the content block
            }}>
-            Export your draft to LaTeX, .docx, or HTML without any formatting loss
+    Export your draft to LaTeX, .docx, or HTML without any formatting loss
            </span>
           </div>
-          <div className="flex flex-col content-center justify-center flex-wrap border-t">
-           <span className={`${inter.className} text-start text-2xl mt-6`} >
-           Outline Builder
-           </span>
-           <span className="text-base text-start " 
-           style={{
-
-           }}>
-           Enter your prompt and get a list of section headings ready for you to flesh out
-           </span>
           </div>
-        </div>
-        
-        <div className="mb-24 flex-row flex flex-wrap content-center justify-center mt-8 gap-x-24">
+          <div className="flex-row flex flex-wrap content-center justify-center mt-8 gap-x-24 ">
           <div className="flex flex-col content-center justify-center flex-wrap border-t">
-           <span className={`${inter.className} text-start text-2xl mt-6`}>
+           <span className={`${inter.className} text-start text-2xl mt-6`}  style={{
+            position: 'relative',
+            display: 'inline-block', // Change to inline-block to allow horizontal alignment
+            textAlign: 'center', // Center-align the text
+            marginRight: 'auto', // Pushes the block to the center
+            marginLeft: 'auto',
+           }}>
             Multilingual Support
            </span>
-           <span className="text-base  text-start" 
+           <span className="text-base  text-start " 
            style={{
-
+            position: 'relative',
+            justifyContent:'center',
+    display: 'inline-block', // Block-level element for content
+    textAlign: 'left', // Aligns text to the left
+    marginTop: '20px', // Adds some space between the title and content
+    maxWidth: '80%', // Adjusts the maximum width of the content
+    margin: 'auto', // Centers the content block
            }}>
-            ChatG6 can generate in US or British English, Spanish, German, French, or Chinese
+            ChatG6 can generate in US or British English,Spanish, German, French, or Chinese
            </span>
-          </div>
+          </div></div>
+          <div className="flex-row flex flex-wrap content-center justify-center mt-8 gap-x-24 ">
           <div className="flex flex-col content-center justify-center flex-wrap border-t">
-           <span className={`${inter.className} text-start text-2xl mt-6`}>
+           <span className={`${inter.className} text-start text-2xl mt-6`} style={{
+            position: 'relative',
+            display: 'inline-block', // Change to inline-block to allow horizontal alignment
+            textAlign: 'center', // Center-align the text
+            marginRight: 'auto', // Pushes the block to the center
+            marginLeft: 'auto',
+           }}>
             Research Library
            </span>
            <span className="text-base text-start " 
            style={{
-
+            position: 'relative',
+            justifyContent:'center',
+    display: 'inline-block', // Block-level element for content
+    textAlign: 'left', // Aligns text to the left
+    marginTop: '20px', // Adds some space between the title and content
+   maxWidth: '80%', // Adjusts the maximum width of the content
+    margin: 'auto', // Centers the content block
            }}>
             Save and manage research in your library. Easily cite research in any document, fast
            </span>
           </div>
-        </div>        
+        </div>  
+      <div className="flex-row flex flex-wrap content-center justify-center mt-8 gap-x-24 ">
+          <div className="flex flex-col content-center justify-center flex-wrap border-t">
+           <span className={`${inter.className} text-start text-2xl mt-6`} style={{
+            position: 'relative',
+            display: 'inline-block', // Change to inline-block to allow horizontal alignment
+            textAlign: 'center', // Center-align the text
+            marginRight: 'auto', // Pushes the block to the center
+            marginLeft: 'auto',
+           }}>
+            Outline Builder
+           </span>
+           <span className="text-base text-start " 
+           style={{
+            position: 'relative',
+            justifyContent:'center',
+    display: 'inline-block', // Block-level element for content
+    textAlign: 'left', // Aligns text to the left
+    marginTop: '20px', // Adds some space between the title and content
+   maxWidth: '80%', // Adjusts the maximum width of the content
+    margin: 'auto', // Centers the content block
+    //fontSize: '1rem '
+           }}>
+            Save and manage research in your library. Easily cite research in any document, fast
+           </span>
+          </div>
+        </div>  
       </div>
 
       {/* ___________________________________________________________________________ */}
@@ -808,4 +938,3 @@ export default function Mobile  (){
     </section>
   )
 }
-

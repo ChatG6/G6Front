@@ -46,6 +46,7 @@ const ReferencePopup: FC<props> = ({
   const [outTriggr, setOutTrigger] = useState(false);
   const [isEdited, setIsEdited] = useState("");
   const [saveText, setSave] = useState("save");
+  const [saveText1, setSave1] = useState("Save");
   const [isNotif, setIsNotif] = useState(false);
   const [verifyMessage, setVerifyMessage] = useState("");
   const [outputshow,setOutputshow] = useState<boolean>(false)
@@ -75,6 +76,9 @@ const ReferencePopup: FC<props> = ({
       pdf_url.trim().length !== 0 &&
       published.trim().length !== 0
     ) {
+      const button: any = document.querySelector(".s-btn");
+      button.disabled = true;
+      setSave1("Saving...");
       setMessage("");
       const authors2 = authors.includes(",")
       ? authors.split(",").map((author) => author.trim())
@@ -92,8 +96,11 @@ const ReferencePopup: FC<props> = ({
       };
       if (!validateAuthors(authors)) {
         setMessageAuthor("Invalid Author Names");
+        button.disabled = false;
       } else {
         if (cite.data.message == 'Saved') {
+        button.disabled = false;
+        setSave1("Save");
         setMessageAuthor("");
         setCollectedItems((prevData) => [...prevData, newData]);
         // Clear the input values
@@ -103,10 +110,13 @@ const ReferencePopup: FC<props> = ({
           authors: "",
           pdf_url: "",
           published: "",
-        });}
+        });
+        }
         else { setMessage(
           "error while saving, try again"
-        );}
+        );
+        setSave1("Save");
+        button.disabled = false;}
       }
     } else {
       setMessage(
@@ -294,10 +304,8 @@ const ReferencePopup: FC<props> = ({
         // borderRadius:'16px 0 0 0px',
       }}
       >
-        <span 
+        <span className="mainlabel"
         style={{
-          marginLeft:'24px',
-          // marginTop:'20px',
         }}
         >
           {'>>'} &nbsp; &nbsp; Custom Reference
@@ -311,7 +319,7 @@ const ReferencePopup: FC<props> = ({
           )}
           <p className="is-edited">{isEdited}</p>
           <div
-            className=" output-lr lroutput mr-2 ml-2 rounded-lg mb-5 px-3 py-2 text-black output-lr2"
+            className=" output-lr lroutput rounded-lg mb-5 px-3 py-2 text-black output-lr2"
             style={{
               backgroundColor:'#f9fafb',
               maxHeight:'200px',
@@ -376,6 +384,7 @@ const ReferencePopup: FC<props> = ({
             width: '100%',
             justifyContent: 'space-between',
             alignItems: 'center',
+            justifySelf:'center'
           }}
           >
             <label htmlFor="Citation Type" 
@@ -446,28 +455,19 @@ const ReferencePopup: FC<props> = ({
 
 
         <section className="flex flex-row items-center justify-center">
-          <button id="btn" onClick={() => handleImportButton("ref")}
+          <button id="btn" className="s-btn" onClick={handleSave}
           style={{
-            height:'40px',
-            width:'75px',
-            fontSize:'14px',
-          }}
-          >
-            Import
-          </button>
-          <button id="btn" onClick={handleSave}
-          style={{
-            height:'40px',
+            height:'30px',
             width:'75px',
             fontSize:'14px',
 
           }}
           >
-            Save
+            {saveText1}
           </button>
           <button id="btn" className="ref-btn" onClick={handleSendData}
           style={{
-            height:'40px',
+            height:'30px',
             width:'75px',
             fontSize:'14px',
           }}
@@ -476,7 +476,7 @@ const ReferencePopup: FC<props> = ({
           </button>
           <button id="btn" className="exit-lr-btn" onClick={handleExit}
           style={{
-            height:'40px',
+            height:'30px',
             width:'75px',
             fontSize:'14px',
 

@@ -9,7 +9,7 @@ const Savemodal: React.FC<ModalProps> = ({children ,role}) => {
  return (
     <div id='modal' className={role}
     style={{
-      left:'10px',
+  
     }}>
       {children}
     </div>

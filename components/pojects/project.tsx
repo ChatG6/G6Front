@@ -8,7 +8,6 @@ import { Import_editor, archive, delete_docs, update, uplo, upload } from "@/app
 import { parse_date } from "@/app/lib/utils";
 import Savemodal from "./savemodelfinished";
 import Notify from "../Management/notification";
-import { Console } from "console";
 import Link from "next/link";
 import { MagnifyingGlassIcon,Cross2Icon} from "@radix-ui/react-icons";
 
@@ -151,13 +150,16 @@ export const Projects = () => {
       if (current!="Untitteled") {
        const n = await updateFile(current);
        if(n?.success) {setIsNotif(true);
+       // let c1 = current.length > 14? `${current.substring(0, 14)}...` : current;
          setVerifyMessage(`${current} updated successfully`)
        }}
        const c = await getFile(name);
 
         const title = document.querySelector('.font-bold.flex.flex-col.justify-center') as HTMLElement;
+        const title2 = document.querySelector('.font-bold.flex.flex-col.flex-wrap.justify-center') as HTMLElement;
         if (title)
-            {title.innerHTML=name;}
+            {title.innerHTML=name.length > 14? `${name.substring(0, 14)}...` : name;}
+        if (title2) {title2.innerHTML=name;}
         setcurrent(name);
         
       }
@@ -336,7 +338,7 @@ export const Projects = () => {
                             }}
                             >
                               <FileText stroke="#71717a" />
-                              {option.name.length > 20? `${option.name.substring(0, 20)}...` : option.name}<br/> 
+                              {option.name.length > 10? `${option.name.substring(0, 10)}...` : option.name}<br/> 
                             </span>
                             <span className="project-buttons" 
                             style={{

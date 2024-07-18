@@ -9,9 +9,15 @@ interface props{
 
 const SearchBar:FC<props> = ({value,onChange,handleClear}) => {
   return (
-    <div className="flex flex-row bg-white p-1 proj-search items-center"
+    <div className="flex flex-row bg-white p-1 proj-search items-center "
     style={{
-      width:'380px'
+      width:'80%',
+      //maxWidth:'40%',
+      //position:'fixed',
+      //right:'50%',
+      //left:'50%',
+      //top:'8%'
+      //right:'50px'
     }}
     >
       <MagnifyingGlassIcon color="rgba(0, 0, 0, 0.5)"/>
@@ -22,7 +28,7 @@ const SearchBar:FC<props> = ({value,onChange,handleClear}) => {
       className="search-input ml-2"
       style={{
         width:'90%',
-        height:'30px',
+        height:'15px',
       }}
       onChange={onChange}
       />

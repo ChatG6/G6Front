@@ -25,17 +25,6 @@ const ToastNotification: React.FC<ToastNotificationProps> = ({ visible, onClose 
         <div
           id="toast"
           style={{
-            width: '380px',
-            height: '90px',
-            padding: '20px',
-            backgroundColor: '#ffffff',
-            boxShadow: '0 10px 20px rgba(75, 50, 50, 0.05)',
-            borderLeft: '8px solid #545CEB',
-            borderRadius: '7px',
-            display: 'grid',
-            gridTemplateColumns: '1.2fr 6fr 0.5fr',
-            transform: 'translate(0)',
-            transition: '1s',
           }}
         >
           <div className="container-1" style={{ alignSelf: 'center' }}>

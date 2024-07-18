@@ -3,7 +3,7 @@ import { literature,save, save_cite, updateImport} from "@/app/api/search_utils/
 import { validateAuthors } from "@/app/lib/formVaild";
 import { cfg } from "@/app/config/config";
 import Notify from "../Management/notification";
-import Savemodal from "./savemodelfinished";
+import Savemodal from "./savemodalfinished3";
 import { parse_author_name } from "@/app/api/search_utils/dep";
 import URLS from "@/app/config/urls";
 import axios from "axios";
@@ -379,41 +379,7 @@ const LiteraturePopup: FC<props> = ({onExit}) => {
               <li key={i}>Saved Data item: {i + 1}</li>
             ))}
           </ul> */}
-          <div 
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            width: '100%',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-          >
-            <label htmlFor="Citation Type" 
-            className="citation"
-            style={{
-              width:'fit-content',
-              marginBottom:'0px',
-            }}
-            >
-              Citation Type
-            </label>
-            <select
-            onChange={handleSelectedStyle}
-            value={style}
-            className="cite-lr"
-            >
-              <option value="apa">APA</option>
-              <option value="ieee">IEEE</option>
-              <option value="mla">MLA</option>
-              <option value="ama">AMA</option>
-              <option value="asa">ASA</option>
-              <option value="aaa">AAA</option>
-              <option value="apsa">APSA</option>
-              <option value="mhra">MHRA</option>
-              <option value="oscola">OSCOLA</option>
-            </select>
-          </div>
+         
         <label htmlFor="subject">Subject</label>
         <input
           name="subject"
@@ -454,6 +420,41 @@ const LiteraturePopup: FC<props> = ({onExit}) => {
           onChange={handleDataChange}
           placeholder="http://website.com/file.pdf"
         />
+         <div 
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            flexDirection: 'row',
+            width: '100%',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+          >
+            <label htmlFor="Citation Type" 
+            className="citation"
+            style={{
+              width:'fit-content',
+              marginBottom:'0px',
+            }}
+            >
+              Citation Type
+            </label>
+            <select
+            onChange={handleSelectedStyle}
+            value={style}
+            className="cite-lr"
+            >
+              <option value="apa">APA</option>
+              <option value="ieee">IEEE</option>
+              <option value="mla">MLA</option>
+              <option value="ama">AMA</option>
+              <option value="asa">ASA</option>
+              <option value="aaa">AAA</option>
+              <option value="apsa">APSA</option>
+              <option value="mhra">MHRA</option>
+              <option value="oscola">OSCOLA</option>
+            </select>
+          </div>
         <label htmlFor="abstract">Abstract</label>
         <textarea
           className="abstract-lr"

@@ -87,7 +87,7 @@ const Search = () => {
   return (
     <main className="search-main-editor">
       <SearchBar value={query} onChange={handleSearchInputChange} handleClear={handleClear} />
-      <Container>
+      {<Container>
           <div className="flex flex-col p-2 items-center"      
           style={{
             border:'1px solid #d9d9d9',
@@ -95,8 +95,13 @@ const Search = () => {
             height:'100%',
             width:'100%',
             backgroundColor:'white',
+            justifySelf:'center'
+            //position:'relative',
+           // right:'10%',
+           //left:'10%',
+            //top:'15%'
           }}>
-            <div className="flex felx-row items-center justify-center content-between h-12 w-full">
+            <div className="flex flex-row items-center justify-center content-between h-fit w-fit">
               <div className="search-buttons">
                 <SearchButton label="arxiv" onClick={handleSearchButtonClick} />
                 <SearchButton label="archive" onClick={handleSearchButtonClick} />
@@ -111,9 +116,9 @@ const Search = () => {
             />
           </div>
           
-        </Container>
+        </Container>}
 
-        <Container>
+       <Container>
           <LiteratureReview
             projectName={projectName}
             setHasImport={setHasImport}

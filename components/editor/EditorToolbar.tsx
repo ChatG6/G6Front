@@ -489,6 +489,7 @@ export const formats = [
   "color",
   "code-block",
   "paraphrasebtn",
+  "direction",
   "summarizebtn",
   "formula",
   "font",
@@ -645,9 +646,10 @@ export const QuillToolbar = () => {
     const title = document.querySelector(
       ".font-bold.flex.flex-col.justify-center"
     ) as HTMLElement;
-    if (title) {
-      //console.log(title.innerHTML);
-      const n = await updateFile(title.innerHTML);
+    const title2 = document.querySelector('.font-bold.flex.flex-col.flex-wrap.justify-center') as HTMLElement;
+    if (title2 && title) {
+      console.log(title2.innerHTML);
+      const n = await updateFile(title2.innerHTML);
       if (n?.success) {
         setIsNotif(true);
         setVerifyMessage(`${title.innerHTML} updated successfully`);

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useCallback, useEffect, useState } from 'react'
-import Laptop from './laptop';
+import Laptop from './labtop';
 import Mobile from './mobile';
 
 {/*const useMediaQuery = (width: number) => {
@@ -58,7 +58,7 @@ export default function Main () {
       <Mobile/>
       : 
       Istablet?
-      <Laptop/>
+      <Mobile/>
       :
       <Laptop/>
     }
