@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Laptop from './labtop';
 import Mobile from './mobile';
 
-{/*const useMediaQuery = (width: number) => {
+const useMediaQuery = (width: number) => {
     const [targetReached, setTargetReached] = useState(false);
   
     const updateTarget = useCallback((e: MediaQueryListEvent) => {
@@ -27,8 +27,8 @@ import Mobile from './mobile';
     }, []);
   
     return targetReached;
-  };*/}
-  const useMediaQuery = (minWidth:number) => {
+  };
+ /* const useMediaQuery = (minWidth:number) => {
     const [state, setState] = useState({
       windowWidth: window.innerWidth,
       isDesiredWidth: false,
@@ -45,19 +45,15 @@ import Mobile from './mobile';
     }, [state.windowWidth]);
     console.log(window.innerWidth)
     return state.isDesiredWidth;
-  };
+  };*/
 export default function Main () {
 
-  const Ismobile = useMediaQuery(768)
-  const Istablet = useMediaQuery(1024)
-  
+  const Ismobile = useMediaQuery(1024)
+  //window.resizeBy(window.innerWidth,window.innerHeight)
   return (
     <>
     {
       Ismobile?
-      <Mobile/>
-      : 
-      Istablet?
       <Mobile/>
       :
       <Laptop/>

@@ -126,7 +126,7 @@ body {
     background-color: #fcfaff;
     padding: 8px;
     width:100%;
-    height: 105%;
+    height: 50%;
     position: relative;
     left:45%;
     display: flex;
@@ -1410,29 +1410,6 @@ button.search {
   display: inline;
   margin: 5px;
 }
-@media only screen and (max-width:1024px) {
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-}
-.output-lr {
-  border: 1px solid #d9d9d9;
-  border-radius: 8px;
-  width: 100%;
-  height: 300px;
-  overflow-y: auto;
-  overflow-wrap: break-word;
-  padding: 10px;
-  white-space: pre-line;
-  background-color: #fff;
-}
-}
 .output-lr {
   border: 1px solid #d9d9d9;
   border-radius: 8px;
@@ -1444,6 +1421,29 @@ button.search {
   white-space: pre-line;
   background-color: #fff;
 }
+@media only screen and (max-width:1024px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+  }
+  .output-lr {
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    width: 100%;
+    height: 200px;
+    overflow-y: auto;
+    overflow-wrap: break-word;
+    padding: 10px;
+    white-space: pre-line;
+    background-color: #fff;
+  }
+  }
 [contenteditable] {
   outline: 0px solid transparent;
 }
