@@ -1445,14 +1445,14 @@ button.search {
     align-items: center;
     gap: 10px;
     width: 100%;
-    height: 100%;
+    height:40%;
     padding: 10px;
   }
   .output-lr {
     border: 1px solid #d9d9d9;
     border-radius: 8px;
     width: 100%;
-    height: 200px;
+    height: 100px;
     overflow-y: auto;
     overflow-wrap: break-word;
     padding: 10px;
@@ -1537,9 +1537,9 @@ button.search {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: fixed;
+    /*position: fixed;
     left:50%;
-    right:50%;
+    right:50%;*/
     top:10%;
     justify-self: center;
     gap: 10px;
