@@ -86,6 +86,7 @@ const Search = () => {
 
   return (
     <main className="search-main-editor">
+      <SearchBar value={query} onChange={handleSearchInputChange} handleClear={handleClear} />
        <Container>
           <LiteratureReview
             projectName={projectName}
