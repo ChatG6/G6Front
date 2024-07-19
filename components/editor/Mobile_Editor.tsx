@@ -8,7 +8,7 @@ import { Sapling } from "@saplingai/sapling-js/observer";
 import { useEffect } from "react";
 import { addStyles, EditableMathField } from "react-mathquill";
 import ReactDOM from "react-dom/client";
-import Search from "@/components/editor/Search-tools";
+import Search from "@/components/editor/Mobile_Search_tools";
 import {OpenAIOutlined,OpenAIFilled} from "@ant-design/icons"
 import { useOnClickOutside } from "usehooks-ts";
 import { GearIcon, Share2Icon,TrashIcon,FileTextIcon, FilePlusIcon,ChatBubbleIcon } from "@radix-ui/react-icons";
