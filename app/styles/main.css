@@ -126,7 +126,7 @@ body {
     background-color: #fcfaff;
     padding: 8px;
     width:100%;
-    height: 60%;
+    height: 70%;
     position: relative;
     left:45%;
     display: flex;
@@ -1561,9 +1561,9 @@ button.search {
   .mainlabel {
     justify-content:center;
     justify-self:center;
-    position:fixed;
+    /*position:fixed;
     left:50%;
-    right:50%;
+    right:50%;*/
   }
   .custom-lr-data1 {
     display: flex;
