@@ -714,8 +714,8 @@ const handlegetprojs = () => {
         />
       </div>
 
-      <div className="flex justify-between  center-div flex-wrap">
-        <div className="content-center flex flex-row" style={{height:'35px'}}>
+      <div className="flex justify-between items-center  center-div flex-wrap">
+        <div className="content-center items-center flex flex-row" style={{height:'35px'}}>
           <div className="ml-3 text-base flext content-center ">
             {number} character
           </div>
@@ -723,8 +723,8 @@ const handlegetprojs = () => {
             {words} words
           </div>
         </div>
-
-        <PlagiarismChecker />
+           
+          <PlagiarismChecker />
       </div>
           
             <Savemodalshare role="saveModal" visible={shareVisible} onClose={closeshare}>
