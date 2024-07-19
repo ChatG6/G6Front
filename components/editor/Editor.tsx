@@ -340,12 +340,12 @@ if (title) {//console.log(title.innerHTML)
       {/* <ModeToggle /> */}
       <div className=" flex justify-between flex-row pe-2 ps-4 h-14 bg-white"
       style={{
-        height:'5%'
+        height:'50px'
       }}
       >
         <span className="font-bold flex flex-col justify-center "
         style={{
-            width:'50%',
+            width:'40%',
           }}>
           Untitteled
         </span>
@@ -372,6 +372,14 @@ if (title) {//console.log(title.innerHTML)
             </svg>
             <span className="ml-2">{sharestate}</span>
           </Button1>
+          {/*<div className="button">
+           <button  className="content">
+           <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon" 
+            className="w-4 h-4"><path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z" 
+            clip-rule="evenodd"></path></svg></span>
+            <span className="button-text">Upgrade</span>
+           </button>
+          </div>*/}
           { <Button1 variant="outline" className="upg-btn ml-2 mr-2" onClick={handleupgrade}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -385,21 +393,17 @@ if (title) {//console.log(title.innerHTML)
             </svg>
             <span className="ml-2">Upgrade</span>
           </Button1>}
-      {/*<button
-        style={{ color: "var(--mantine-color-white)"}}
-        className="mantine-focus-auto mantine-active rounded-md m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root" 
-        onClick={handleupgrade} // Add onClick handler if provided
-      >
+      {/*<div class="pl-2"><button 
+      style={{ color: 'var(--mantine-color-white)'}}
+      className="mantine-focus-auto mantine-active rounded-md m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root" 
+      data-with-left-section="true" type="button">
         <span className="m_80f1301b mantine-Button-inner">
-        
-          <span className="m_a74036a mantine-Button-section" >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon" className="w-4 h-4">
-            <path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z" clip-rule="evenodd"></path>
-        </svg>
-          </span>
-          <span className="m_811560b9 mantine-Button-label">Upgarde</span>
-        </span>
-      </button>*/}
+          <span className="m_a74036a mantine-Button-section" data-position="left">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon" 
+            className="w-fit h-fit"><path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143Z" 
+            clip-rule="evenodd"></path></svg></span>
+            <span className="m_811560b9 mantine-Button-label">Upgrade</span></span>
+            </button></div>*/}
     
           <Sheet>
             <SheetTrigger className="ml-2 mr-2">
