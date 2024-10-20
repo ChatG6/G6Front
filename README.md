@@ -4,10 +4,10 @@ This project is the latest version of chatg6.ai, an AI-powered scientific resear
 - Academic statements auto-completion
 - References management
 - Chat with documents
-- Storing, sharing and managing options for projects
+- Storing, sharing and managing options for projects.
 Many techniques were used in platform development:                     
 - Figma for UI/UX designing
 - Next.js and Tailwindcss for Front-end
-- Django for Back-end
+- Django for Back-end.
 ﻿# Research Platform By G6 Team
 # G6_Research_Front
