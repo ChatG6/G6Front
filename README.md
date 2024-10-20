@@ -10,5 +10,6 @@ Many techniques were used in platform development:
 - Figma for UI/UX designing
 - Next.js and Tailwindcss for Front-end
 - Django for Back-end
+  
 ﻿# Research Platform By G6 Team
 # G6_Research_Front
