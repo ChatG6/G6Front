@@ -35,18 +35,18 @@ async function signup(req: NextRequest) {
     data: {
       name: usr,
       email: email,
-      isVerified: false,
+      isVerified: true,
       password: hashedPwd,
       token: token,
       expirationTime: expire,
       image:dImg
     }
   });
-  const verifyUrl = new URL(URLS.urls.verif);
-  verifyUrl.searchParams.append("token", token);
-  verifyUrl.searchParams.append("email", email);
-  const res = await sendVerificationMail(email, verifyUrl, usr, expDur);
-  if (newUser && res) {
+  //const verifyUrl = new URL(URLS.urls.verif);
+  //verifyUrl.searchParams.append("token", token);
+ // verifyUrl.searchParams.append("email", email);
+  //const res = await sendVerificationMail(email, verifyUrl, usr, expDur);
+  if (newUser) {
     return Response.json(
       { user: newUser, message: "User created successfully" },
       { status: 201 }

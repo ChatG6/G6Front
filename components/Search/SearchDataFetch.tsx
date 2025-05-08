@@ -33,9 +33,6 @@ const SearchDataFetch: FC<props> = ({
             setLoading(true);
             let response: unknown = "";
             switch (searchEngine) {
-              case "semantic":
-                response = await searchInSemantic(query);
-                break;
               case "arxiv":
                 response = await searchInArxiv(query);
                 break;

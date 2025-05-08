@@ -370,7 +370,7 @@ const LiteraturePopup: FC<props> = ({onExit}) => {
           {isNotif && (
             <Notify message={verifyMessage} dur={10} display={setIsNotif} />
           )}
-          <p className="error-msg-popup">{errorMessage}</p>
+          
 
           {/* <h1>Saved Data</h1>
           <ul className="output-lr">
@@ -392,7 +392,7 @@ const LiteraturePopup: FC<props> = ({onExit}) => {
           name="title"
           value={formData.title}
           onChange={handleDataChange}
-          placeholder="Fourier Conversion"
+          placeholder="Fourier Transform"
         />
         <label htmlFor="authors">
           Authors <span className="error-msg-popup">{errorMessageAuthor}</span>
@@ -464,7 +464,7 @@ const LiteraturePopup: FC<props> = ({onExit}) => {
           placeholder="Abstract"
         ></textarea>
         
-        
+        <p className="error-msg-popup">{errorMessage}</p>
         <section className="flex flex-row items-center justify-center">
           <button id="btn" onClick={handleSave}
           style={{

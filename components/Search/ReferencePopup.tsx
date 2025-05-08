@@ -453,7 +453,7 @@ const ReferencePopup: FC<props> = ({
           placeholder="https://website/file.pdf"
         />
 
-
+      <p className="err-lr-save">{errorMessage}</p>
         <section className="flex flex-row items-center justify-center">
           <button id="btn" className="s-btn" onClick={handleSave}
           style={{

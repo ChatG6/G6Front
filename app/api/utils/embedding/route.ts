@@ -25,7 +25,7 @@ export async function POST (req: NextRequest, res: NextResponse) {
       const [{ embedding }] = embeddingResponse.data;
 
       const { error } = await supabaseClient
-        .from('chatgpt')
+        .from('document_chunks')
         .insert({
           content,
           content_length,

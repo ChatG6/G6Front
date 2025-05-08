@@ -947,7 +947,7 @@ div.lroutput::-webkit-scrollbar-thumb {
   width: fit-content;
   position: absolute;
   right: 22%;
-  top: 270%;
+  top: 2%;
   z-index: 10;
   background-color: #fcfaff;
 }

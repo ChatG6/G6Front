@@ -100,6 +100,7 @@ export const pdf = async function (text:string) {
 			textTocomplete: userText,
 		});
 		const { aiPrompt } = data;
+		console.log(aiPrompt)
 		return aiPrompt;
 	} else {
 		alert("Please enter some text");

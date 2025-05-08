@@ -179,6 +179,7 @@ const complet = async function () {
       //console.log(content);
       button.disabled = true;
       const paraphrasedContent = await complete(content);
+      console.log(paraphrasedContent)
       editor.innerHTML = paraphrasedContent;
       button.disabled = false;
     }

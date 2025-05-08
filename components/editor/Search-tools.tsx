@@ -42,12 +42,7 @@ const Search = () => {
     getQuery(query);
     setSearchState(true);
   };
-  const handleViewLiterature = () => {
-    setCustomLR(true);
-  };
-  const handleViewRef = () => {
-    setCustomRef(true);
-  };
+
   const handleClear=()=>{
     getQuery("");
   };
@@ -105,7 +100,6 @@ const Search = () => {
               <div className="search-buttons">
                 <SearchButton label="arxiv" onClick={handleSearchButtonClick} />
                 <SearchButton label="archive" onClick={handleSearchButtonClick} />
-                <SearchButton label="semantic" onClick={handleSearchButtonClick} />
               </div>
             </div>
             <SearchDataFetch

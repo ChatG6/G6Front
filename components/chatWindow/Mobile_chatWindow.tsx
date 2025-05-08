@@ -201,7 +201,8 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ prompt, apiKey: process.env.NEXT_PUBLIC_OPEN_AI_KEY  })
+        body: JSON.stringify({ prompt, 
+          apiKey: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY  })
       });
       setLoading(false);
 

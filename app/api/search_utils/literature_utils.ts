@@ -27,10 +27,12 @@ export async function searchAndProcess(
     let res: any[] = [];
 
     try {
-      res = await searchInSemantic(query, 15);
-    } catch (error) {
-      //console.error("Error in searchInSemantic:", error);
+      //res = await searchInSemantic(query, 15);
       res = await searchInArxiv(query, 10);
+    } catch (error) {
+      console.error("Error in searchInArxiv:", error);
+
+      //res = await searchInArxiv(query, 10);
     }
     let filteredResults = res.filter((r) => r.abstract !== null);
     filteredResults = filteredResults.slice(0, 5);
@@ -136,7 +138,6 @@ export async function plagiarism(text: string, retries = 3, delay = 500) {
     { upd:{'access_token': '', '.issued': '', '.expires': ''}}
   );
   console.log(new1.data.token);
-  //const token = {'access_token': 'CB456498027F6EE6CEB83D321099BA0D13BB093A23477498230BBF6FE40DA85B', '.issued': '2024-04-13T18:19:27.9318686Z', '.expires': '2024-04-15T18:19:27.9318686Z'}
   const reqData = {
     text: text,
     token: new1.data.token
@@ -221,7 +222,8 @@ export async function article(
   if (refs.length == 0 && arxiv == false) {
     let res: any[] = [];
     try {
-      res = await searchInSemantic(query, 40);
+      //res = await searchInSemantic(query, 40);
+      res = await searchInArxiv(query, 10);
     } catch (error) {
       console.error("Error in searchInSemantic:", error);
       // If an error occurs, assign an empty array to res
@@ -264,7 +266,8 @@ export async function article(
 export async function outline(query: string, retries = 3, delay = 500) {
   let res: any[] = [];
   try {
-    res = await searchInSemantic(query, 40);
+    //res = await searchInSemantic(query, 40);
+    res = await searchInArxiv(query, 10);
   } catch (error) {
     //console.error("Error in searchInSemantic:", error);
     // If an error occurs, assign an empty array to res
@@ -508,6 +511,8 @@ export async function savedocs(type: string,link : string,status:string,total_pa
   const docs = await axios.post(
     URLS.endpoints.get,
     {name:fileName});
+    console.log("key:");
+    console.log(docs.data.key);
     if (docs.data.key=='') {
       return { data: { message: '' } };
     }
@@ -522,6 +527,7 @@ export async function savedocs(type: string,link : string,status:string,total_pa
      });
  
      const response = await client.send(command);
+     console.log(response)
      // Ensure to await the transformation of the stream to a string
      const htmlContent = await response.Body?.transformToString();
      if (htmlContent) {
