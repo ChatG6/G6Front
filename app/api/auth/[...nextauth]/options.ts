@@ -1,8 +1,6 @@
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import LinkedInProvider from "next-auth/providers/linkedin";
-import Github from "next-auth/providers/github";
 import { login } from "@/app/lib/Auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "@/app/lib/db";
@@ -53,38 +51,7 @@ export const options: NextAuthOptions = {
       id: "google",
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    }),
-    Github({
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
-      id: "github",
-      name: "GitHub",
-      authorization: {
-        url: "https://github.com/login/oauth/authorize",
-        params: { scope: "read:user user:email" },
-      },
-    }),
-    LinkedInProvider({
-      clientId: process.env.LINKEDIN_CLIENT_ID as string,
-      clientSecret: process.env.LINKEDIN_CLIENT_SECRET as string,
-      id: "linkedin",
-      name: "LinkedIn",
-      client: { token_endpoint_auth_method: "client_secret_post" },
-      issuer: "https://www.linkedin.com",
-      profile: (profile) => ({
-        id: profile.sub,
-        name: profile.name,
-        email: profile.email,
-        image: profile.picture,
-      }),
-      wellKnown:
-        "https://www.linkedin.com/oauth/.well-known/openid-configuration",
-      authorization: {
-        params: {
-          scope: "openid profile email",
-        },
-      },
-    }),
+    })
   ],
  /* pages: {
     signIn: "/login",

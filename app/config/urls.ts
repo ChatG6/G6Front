@@ -1,4 +1,3 @@
-import { archive } from "../api/search_utils/literature_utils";
 const origin = 'http://localhost:3000'
 //const origin = 'https://chatg6.ai'
 const urls = {
