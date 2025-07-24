@@ -18,4 +18,4 @@ Many techniques were used in platform development:
 
 # G6_Research_Front
 
-<h6>upload 1</h6>
+<h6>Upload #2</h6>
