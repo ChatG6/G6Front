@@ -374,7 +374,7 @@ export async function savedocs(type: string,link : string,status:string,total_pa
     //console.log(process.env.AWS_S3_BUCKET_NAME);
   try {
       const params = {
-      Bucket: process.env.AWS_S3_BUCKET_NAME ?? 'g6-group',
+      Bucket: process.env.AWS_S3_BUCKET_NAME ?? 'g6bucket2',
       Key: fileName,
       Body: file,
       ContentType: "text/html"
@@ -408,7 +408,7 @@ export async function savedocs(type: string,link : string,status:string,total_pa
     //console.log(process.env.AWS_S3_BUCKET_NAME);
   try {
       const params = {
-      Bucket: process.env.AWS_S3_BUCKET_NAME ?? 'g6-group',
+      Bucket: process.env.AWS_S3_BUCKET_NAME ?? 'g6bucket2',
       Key: fileName,
       Body: file,
       ContentType: "application/pdf"
@@ -442,7 +442,7 @@ export async function savedocs(type: string,link : string,status:string,total_pa
   try {
     // Define parameters for deleting the existing file
     const deleteParams = {
-      Bucket: process.env.AWS_S3_BUCKET_NAME?? 'g6-group',
+      Bucket: process.env.AWS_S3_BUCKET_NAME?? 'g6bucket2',
       Key: fileName,
     };
 
@@ -453,7 +453,7 @@ export async function savedocs(type: string,link : string,status:string,total_pa
 
     // Proceed with uploading the new file
     const params = {
-      Bucket: process.env.AWS_S3_BUCKET_NAME?? 'g6-group',
+      Bucket: process.env.AWS_S3_BUCKET_NAME?? 'g6bucket2',
       Key: fileName,
       Body: file,
       ContentType: "text/html"
@@ -522,7 +522,7 @@ export async function savedocs(type: string,link : string,status:string,total_pa
      const client = s3Client;
  
      const command = new GetObjectCommand({
-       Bucket: "g6-group",
+       Bucket: "g6bucket2",
        Key: fileName,
      });
  
@@ -564,7 +564,7 @@ export async function savedocs(type: string,link : string,status:string,total_pa
      const client = s3Client;
  
      const command = new GetObjectCommand({
-       Bucket: "g6-group",
+       Bucket: "g6bucket2",
        Key: fileName,
      });
  
@@ -692,7 +692,7 @@ export async function delete_docs(fileName:string, retries = 3, delay = 500) {
     try {
       // Define parameters for deleting the existing file
       const deleteParams = {
-        Bucket: process.env.AWS_S3_BUCKET_NAME?? 'g6-group',
+        Bucket: process.env.AWS_S3_BUCKET_NAME?? 'g6bucket2',
         Key: fileName,
       };
   
