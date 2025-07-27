@@ -90,7 +90,6 @@ export default function  Laptop(){
                 Start writing
               </Button1>
             </Link>
-
           </div>
           
           <div className="flex flex-col flex-wrap justify-center content-center items-start  gap-4 w-40">
