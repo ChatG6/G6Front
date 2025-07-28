@@ -59,6 +59,7 @@ async function handler(req: Request) {
     default:
       return Response.json({ error: "Invalid document type" }, { status: 400 });
   }
+  
   console.log(`IMPORTS:${imports}`);
   return Response.json(
     { message: "Working!", imports: imports },
