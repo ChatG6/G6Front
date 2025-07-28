@@ -28,7 +28,6 @@ const endpoints = {
   import: `${origin}/api/utils/import`,
   get: `${origin}/api/utils/get`,
   Import_edits: `${origin}/api/utils/import_edits`,
-  complete:`${origin}/complete`,
   upload: `${origin}/api/utils/upload`,
   documents: `${origin}/api/utils/documents`,
   tokens: `${origin}/api/utils/tokens`,

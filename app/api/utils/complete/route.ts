@@ -6,6 +6,6 @@ import URLS from "@/app/config/urls";
 export async function POST(request: Request) {
     const { textTocomplete } = await request.json();
     const statement = textTocomplete
-    const response = await axios.post(`${URLS.endpoints.complete}`, { statement});
+    const response = await axios.post(`${URLS.urls.backendUrl}/complete`, { statement});
     console.log(response);
     return NextResponse.json({ aiPrompt: response.data });}
