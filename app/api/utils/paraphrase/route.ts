@@ -5,7 +5,7 @@ export async function POST(request: Request) {
     const { textToParaphrase } = await request.json();
     console.log(textToParaphrase);
     
-    const anthropic_api_key = process.env.ANTHROPIC_API_KEY;
+    const anthropic_api_key = process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY
     
     const options = {
         method: "POST",

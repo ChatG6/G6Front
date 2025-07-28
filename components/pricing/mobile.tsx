@@ -48,8 +48,8 @@ export default function  Mobile(){
   }
   useEffect(() => {
     if (subtype === 'year')
-      {setprice('144')}
-    else {{setprice('20')}}
+      {setprice('22')}
+    else {{setprice('30')}}
    
   }, [subtype,setsubtype,price,setprice]);
   //const session = getServerSession(options);
@@ -160,7 +160,7 @@ export default function  Mobile(){
                     fontSize:'18px'
                   }}                
                   >
-                    /{subtype}
+                    /month
                   </span>
                 </div>
                 <ul className="flex flex-col gap-1">
@@ -256,7 +256,7 @@ export default function  Mobile(){
                     fontSize:'18px'
                   }}                
                   >
-                    /{subtype}
+                    /month
                   </span>
                 </div>
                 <div className="flex flex-col gap-1">

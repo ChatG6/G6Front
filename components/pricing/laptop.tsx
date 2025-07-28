@@ -48,8 +48,8 @@ export default function  Laptop(){
   }
   useEffect(() => {
     if (subtype === 'year')
-      {setprice('144')}
-    else {{setprice('20')}}
+      {setprice('22')}
+    else {{setprice('30')}}
    
   }, [subtype,setsubtype,price,setprice]);
   //const session = getServerSession(options);
@@ -73,8 +73,9 @@ export default function  Laptop(){
         { priceId, subscription });
 
       console.log('data', resp.data)
-      if (resp.data.sessionId === 'Login First') {//window.location.href = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth/signin?callbackUrl=/pricing`; 
-      redirect("/api/auth/signin?callbackUrl=/pricing");
+      if (resp.data.sessionId === 'Login First') {
+      window.location.href = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/auth/signin?callbackUrl=/pricing`; 
+      //redirect("/api/auth/signin?callbackUrl=/pricing");
       return;}
       if (resp.data.sessionId) {
         const stripe =  await stripePromise;
@@ -161,7 +162,7 @@ export default function  Laptop(){
                     fontSize:'18px'
                   }}                
                   >
-                    /{subtype}
+                    /month
                   </span>
                 </div>
                 <ul className="flex flex-col gap-1">
@@ -257,7 +258,7 @@ export default function  Laptop(){
                     fontSize:'18px'
                   }}                
                   >
-                    /{subtype}
+                    /month
                   </span>
                 </div>
                 <div className="flex flex-col gap-1">
