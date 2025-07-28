@@ -16,6 +16,7 @@ import "react-pdf/dist/Page/TextLayer.css";
 import { Button } from "../ui/button";
 import { FileTextIcon } from "@radix-ui/react-icons";
 import { savedocs } from "@/app/api/search_utils/literature_utils";
+import URLS from "@/app/config/urls";
 
 function finDomByText(text: string, parent: any) {
   const elements = parent.querySelectorAll("span"); // 获取文档中的所有span元素
@@ -201,7 +202,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
       ${embedRes.data?.map((d: any) => d.content).join("\n\n")}
       `;
 
-      const answerResponse = await fetch("/api/utils/search-answer", {
+      const answerResponse = await fetch(URLS.endpoints.searchAnswer, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -209,7 +210,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
         body: JSON.stringify({
           prompt,
           //apiKey: process.env.NEXT_PUBLIC_OPEN_AI_KEY,
-          apiKey: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY,
+          apiKey: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY!!,
         }),
       });
       setLoading(false);

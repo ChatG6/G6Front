@@ -2,7 +2,6 @@ import { db } from "@/app/lib/db";
 import { getServerSession } from "next-auth";
 import { options } from "../../auth/[...nextauth]/options";
 import { NextResponse } from "next/server";
-import { message } from "antd";
 
 
 async function handler(req: Request) {

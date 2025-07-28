@@ -41,6 +41,7 @@ const endpoints = {
   status: `${origin}/api/utils/status`,
   quota: `${origin}/api/utils/quota_cons`,
   quotaplg: `${origin}/api/utils/quotaplg_cons`,
+  searchAnswer:`${origin}/api/utils/search-answer`
 };
 
 const URLS = {
