@@ -213,7 +213,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
           apiKey: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY!!,
         }),
       });
-      console.log(answerResponse)
+      
       setLoading(false);
  
       if (!answerResponse.ok) {
@@ -221,6 +221,8 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
       }
 
       const data = answerResponse.body;
+      console.log(data)
+      console.log(embedRes)
       if (!data) {
         throw new Error("No data");
       }
@@ -231,7 +233,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
         const { value, done: doneReading } = await reader.read();
         done = doneReading;
         const chunkValue = decoder.decode(value);
-        // console.log(chunkValue);
+        console.log(chunkValue);
 
         setMessageList((pre) => {
           return [
@@ -243,6 +245,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
             },
           ];
         });
+        console.log(messageList)
         requestAnimationFrame(() => scrollToBottom());
       }
 
