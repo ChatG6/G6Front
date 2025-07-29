@@ -34,7 +34,7 @@ export async function POST (req: NextRequest) {
       console.error(error);
       return NextResponse.json({Error:'Error'}, { status: 500 })
     }
-    
+    console.log('done embedding')
     return NextResponse.json(chunks, { status: 200 })
   } catch (error) {
     console.error(error);

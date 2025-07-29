@@ -201,7 +201,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
 
       ${embedRes.data?.map((d: any) => d.content).join("\n\n")}
       `;
-
+      console.log(process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY)
       const answerResponse = await fetch(URLS.endpoints.searchAnswer, {
         method: "POST",
         headers: {
@@ -213,8 +213,9 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
           apiKey: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY!!,
         }),
       });
+      console.log(answerResponse)
       setLoading(false);
-
+ 
       if (!answerResponse.ok) {
         throw new Error(answerResponse.statusText);
       }

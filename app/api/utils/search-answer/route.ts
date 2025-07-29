@@ -7,9 +7,10 @@ export async function POST(req: NextRequest): Promise<Response> {
       prompt: string;
       apiKey: string;
     };
-
+    console.log(prompt)
+    console.log(apiKey)
     const stream = await AnthropicStream(prompt, apiKey);
-
+    console.log('done answering')
     return new NextResponse(stream);
   } catch (error) {
     console.error(error);
