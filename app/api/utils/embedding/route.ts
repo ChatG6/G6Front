@@ -44,6 +44,7 @@ export async function POST (req: NextRequest, res: NextResponse) {
       // 防止触发openai的每分钟限制
       await new Promise(resolve => setTimeout(resolve, 1500));
     }
+    console.log('done embedding')
     return NextResponse.json({message:'ok'}, { status: 200 })
 
   } catch (error) {

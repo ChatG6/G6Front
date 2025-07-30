@@ -43,7 +43,8 @@ export async function POST(req: NextRequest, res: NextResponse)  {
   try {
     const { sentenceList } = await req.json();
     const chunkList =<any>await generateNewChunkList(sentenceList);   
-
+    console.log(chunkList)
+    console.log('done split')
     return NextResponse.json({chunkList}, {
       status: 200
   })

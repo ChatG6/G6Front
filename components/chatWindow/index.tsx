@@ -202,7 +202,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
       ${embedRes.data?.map((d: any) => d.content).join("\n\n")}
       `;
       console.log(process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY)
-      const answerResponse = await fetch(URLS.endpoints.searchAnswer, {
+      const answerResponse = await fetch("/api/utils/search-answer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -224,6 +224,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
       console.log(data)
       console.log(embedRes)
       if (!data) {
+         console.log('No data')
         throw new Error("No data");
       }
       const reader = data.getReader();
