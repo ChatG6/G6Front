@@ -213,7 +213,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
           apiKey: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY!!,
         }),
       });
-      
+      console.log(answerResponse)
       setLoading(false);
  
       if (!answerResponse.ok) {

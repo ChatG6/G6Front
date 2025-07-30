@@ -204,14 +204,19 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
         body: JSON.stringify({ prompt, 
           apiKey: process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY  })
       });
+      console.log(answerResponse)
       setLoading(false);
 
       if (!answerResponse.ok) {
+          console.log('No resp')
         throw new Error(answerResponse.statusText);
       }
 
       const data = answerResponse.body;
+        console.log(data)
+      console.log(embedRes)
       if (!data) {
+           console.log('No data')
         throw new Error('No data');
       }
       const reader = data.getReader();
