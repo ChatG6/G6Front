@@ -32,7 +32,9 @@ export const AnthropicStream = async (prompt: string, apiKey: string) => {
   });
 
   if (res.status !== 200) {
+    console.log(res.status)
     const errorData = await res.json().catch(() => ({}));
+    console.log(errorData)
     throw new Error(`Anthropic API returned an error: ${JSON.stringify(errorData)}`);
   }
 
@@ -73,6 +75,6 @@ export const AnthropicStream = async (prompt: string, apiKey: string) => {
       }
     }
   });
-
+  console.log(stream)
   return stream;
 };

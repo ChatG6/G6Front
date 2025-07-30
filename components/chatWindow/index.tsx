@@ -217,6 +217,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
       setLoading(false);
  
       if (!answerResponse.ok) {
+          console.log('No resp')
         throw new Error(answerResponse.statusText);
       }
 
@@ -253,7 +254,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
       scrollToBottom();
     } catch (error) {
       setLoading(false);
-      // console.log(error);
+      console.log(error);
     }
   };
 
