@@ -1,5 +1,47 @@
 // Replace all "Jennie AI" words with "ChatG6"
+// Remove Jennie AI Header
+(function () {
+  //console.log("Ban-content 🚫 script loaded");
 
+  function clearContainers() {
+    document.querySelectorAll("div.framer-fchehk-container").forEach((el) => {
+      if (el.innerHTML !== "") {
+        el.innerHTML = "";
+        //console.log("Ban-content 🚫 cleared content in:", el);
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    clearContainers();
+
+    const observer = new MutationObserver((mutations) => {
+      clearContainers();
+
+      for (let m of mutations) {
+        for (let node of m.addedNodes) {
+          if (node.nodeType === 1) {
+            if (node.matches && node.matches("div.framer‑fchehk‑container")) {
+              node.innerHTML = "";
+            }
+            node.querySelectorAll &&
+              node
+                .querySelectorAll("div.framer‑fchehk‑container")
+                .forEach((el) => {
+                  el.innerHTML = "";
+                });
+          }
+        }
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: false,
+    });
+  });
+})();
 (function () {
   // console.log("Overrides 🎯 text‑node version loaded");
 
@@ -96,49 +138,7 @@
   });
 })();
 
-// Remove Jennie AI Header
-(function () {
-  //console.log("Ban-content 🚫 script loaded");
 
-  function clearContainers() {
-    document.querySelectorAll("div.framer-fchehk-container").forEach((el) => {
-      if (el.innerHTML !== "") {
-        el.innerHTML = "";
-        //console.log("Ban-content 🚫 cleared content in:", el);
-      }
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    clearContainers();
-
-    const observer = new MutationObserver((mutations) => {
-      clearContainers();
-
-      for (let m of mutations) {
-        for (let node of m.addedNodes) {
-          if (node.nodeType === 1) {
-            if (node.matches && node.matches("div.framer‑fchehk‑container")) {
-              node.innerHTML = "";
-            }
-            node.querySelectorAll &&
-              node
-                .querySelectorAll("div.framer‑fchehk‑container")
-                .forEach((el) => {
-                  el.innerHTML = "";
-                });
-          }
-        }
-      }
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: false,
-    });
-  });
-})();
 
 // Links Replacer
 

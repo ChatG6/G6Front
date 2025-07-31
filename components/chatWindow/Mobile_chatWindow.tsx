@@ -287,7 +287,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className,onClose }) => {
         // On mobile (default): fixed to cover the screen.
         // On medium screens and up (md:): becomes a relative block with a max width/height.
         className={`flex flex-col
-          fixed inset-0 z-50
+           fixed inset-0 z-50 
     
           ${className}`
         }
@@ -298,7 +298,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className,onClose }) => {
             display: 'flex',
             flexDirection: 'column',
             padding: '0px 0',
-            backgroundClip: 'content-box',
+          //  backgroundClip: 'content-box',
           }
         }}
        // title=">>     Chat with PDF"
