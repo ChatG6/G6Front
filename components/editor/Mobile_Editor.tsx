@@ -179,6 +179,14 @@ export const Editor = () => {
   const [filename, setFilename] = useState("");
   const ref1 = React.useRef<HTMLDivElement>(null);
   const ref2 = React.useRef<HTMLDivElement>(null);
+   // 1. State to control the open/closed state of the Sheet.
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+  // 2. This function is passed to the ChatWindow and will be called
+  // by its internal "Return to editor" button to close the sheet.
+  const handleClose = () => {
+    setIsSheetOpen(false);
+  };
   useOnClickOutside(ref1, handlecancel);
   useOnClickOutside(ref2, handlecancelpr);
   // const [home, sethome] = useState(false)
@@ -456,6 +464,7 @@ const handlegetprojs = () => {
     let y = 50;
     setContextMenu({ show: true, x, y });
   }
+ 
   return (
     <div className="Editor relative mx-auto flex flex-col">
        {isNotif && (
@@ -515,9 +524,9 @@ const handlegetprojs = () => {
           </Sheet>
           </div>}
          <div className="flex flex-col justify-center">
-         <Sheet>
+         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger className="ml-2 mr-2">
-              <ChatBubbleIcon/>
+              <ChatBubbleIcon />
             </SheetTrigger>
             <SheetContent
               className="options-sheet"
@@ -535,7 +544,7 @@ const handlegetprojs = () => {
                   &gt;&gt; &nbsp; &nbsp; Document Settings
                 </SheetTitle>
                 <SheetDescription className="mobile_sheet_description1">
-                 {<ChatWindow/>}
+                 {<ChatWindow onClose={handleClose}/>}
                 </SheetDescription>
               </SheetHeader>
             </SheetContent>

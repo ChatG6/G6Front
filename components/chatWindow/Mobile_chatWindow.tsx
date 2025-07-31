@@ -39,6 +39,7 @@ function addHighlightText(element: HTMLElement) {
 
 interface ChatWindowProps {
   className?: string;
+   onClose?: () => void;
 }
 
 interface MessageItem {
@@ -48,7 +49,7 @@ interface MessageItem {
 }
 
 const { Dragger } = Upload;
-const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
+const ChatWindow: FC<ChatWindowProps> = ({ className,onClose }) => {
   const disabledUpload = false;
   const chatWindowRef = useRef<HTMLDivElement>(null);
   const settings = useRef<any>(null);
@@ -136,7 +137,9 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
       allSentenceList.push(...sentenceList.map((item: string) => ({ sentence: item, pageNum })));
     }
     sentenceRef.current = allSentenceList.filter(item => item.sentence);
-    setNumPages(numPages);
+    setNumPages(numPages)
+    console.log(doc)
+   message.success(`file uploaded successfully.`);
   }
 
   const props: UploadProps = {
@@ -149,9 +152,9 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
     onChange(info) {
       const { status } = info.file;
       if (status === 'done') {
-        void message.success(`${info.file.name} file uploaded successfully.`);
+         message.success(`${info.file.name} file uploaded successfully.`);
       } else if (status === 'error') {
-        void message.error(`${info.file.name} file upload failed.`);
+        message.error(`${info.file.name} file upload failed.`);
       }
     },
   };
@@ -237,9 +240,11 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
                 }
             });
         }
+        console.log("Document has been read and is ready for questions.")
         message.success("Document has been read and is ready for questions.");
     } catch (error) {
         console.error(error);
+        console.log("Failed to process the document.")
         message.error("Failed to process the document.");
     } finally {
         setLoading2(false);
@@ -264,7 +269,17 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
     </Upload>
   ) : null;
 
-
+  // Conditionally render the title node based on the existence of the `onClose` prop.
+  const titleNode = onClose ? (
+    <button onClick={onClose} className="flex items-center w-full p-2 text-base font-normal text-gray-700 transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" className="bi bi-chevron-left mr-2" viewBox="0 0 16 16">
+        <path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+      </svg>
+      Return To Editor
+    </button>
+  ) : (
+    ">>     Chat with PDF"
+  );
   return (
     <>
       <Card
@@ -273,7 +288,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
         // On medium screens and up (md:): becomes a relative block with a max width/height.
         className={`flex flex-col
           fixed inset-0 z-50
-          md:relative md:inset-auto md:z-auto md:max-w-md md:h-auto md:max-h-[calc(100vh-4rem)]
+    
           ${className}`
         }
         styles={{
@@ -286,7 +301,8 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
             backgroundClip: 'content-box',
           }
         }}
-        title=">>     Chat with PDF"
+       // title=">>     Chat with PDF"
+       title={titleNode}
         bordered={false}
         extra={
           <Button variant="outline" onClick={toggleLibrary}>
