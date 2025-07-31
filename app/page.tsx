@@ -8,8 +8,12 @@ const Main = dynamic(
   () => import('@/components/HomePage/main'),
   { ssr: false }
 );
-
+/*
 export default async function HomePage() {
   const session = await getServerSession(options);
   return (<Main/>);
+}*/
+export default function Frame() {
+
+  return <iframe className="w-full h-full" src="/Home/index.html" ></iframe>
 }

@@ -43,6 +43,7 @@
     "eslint-config-next": "13.2.4",
     "eventsource-parser": "^0.1.0",
     "file-saver": "^2.0.5",
+    "framer-motion": "^12.23.12",
     "gpt-tokenizer": "^2.1.2",
     "html2pdf": "^0.0.11",
     "jspdf": "^2.5.1",

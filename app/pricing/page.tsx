@@ -1,12 +1,19 @@
-//import Main from "@/components/pricing/main";
-//import Main from "@/components/HomePage/main";
 import dynamic from 'next/dynamic';
 
 // Dynamically import the component without SSR
 const Main = dynamic(
-  () => import('@/components/pricing/main'),
+  () => import('@/components/Emergency/Pricing'),
   { ssr: false }
 );
+/*
 export default async function pricing() {
   return <Main />;
+}*/
+export default function pricing() {
+  return (
+    <>
+      <iframe className="w-full h-full" src="/Pricing/pricing.html"></iframe>
+    </>
+  );
 }
+
