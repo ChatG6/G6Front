@@ -126,7 +126,7 @@ export default function Header() {
       {isBreakpoint ? (
         <>
           <div
-            className="pt-2 auth-options flex justify-end items-center"
+            className="pt-0 auth-options flex justify-end items-center"
             style={{ width: "30%",gap:"16px" }}
           >
             <Link className="" href={"/editor"}>

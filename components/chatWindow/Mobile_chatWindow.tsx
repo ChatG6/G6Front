@@ -6,7 +6,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pd
 import {  Card, Form, Input, message, Modal } from 'antd';
 import axios from 'axios';
 import { FC, Fragment, useEffect, useRef, useState } from 'react';
-import Message from './Message';
+import Message from './Mobile_Message';
 import { UploadProps } from 'antd';
 import { Upload } from 'antd';
 import { type TextItem } from 'pdfjs-dist/types/src/display/api';

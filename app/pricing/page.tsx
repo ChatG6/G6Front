@@ -12,7 +12,7 @@ export default async function pricing() {
 export default function pricing() {
   return (
     <>
-      <iframe className="w-full h-full" src="/Pricing/pricing.html"></iframe>
+      <iframe className="w-full h-full" src="/temp_pricing/pricing.html"></iframe>
     </>
   );
 }

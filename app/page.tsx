@@ -15,5 +15,5 @@ export default async function HomePage() {
 }*/
 export default function Frame() {
 
-  return <iframe className="w-full h-full" src="/Home/index.html" ></iframe>
+  return <iframe className="w-full h-full" src="/temp_home/index.html" ></iframe>
 }
