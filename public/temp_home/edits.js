@@ -371,6 +371,18 @@
       oldUrl: "https://i.ytimg.com/vi_webp/EGgdGLYdoLg/sddefault.webp",
       newPath: "/temp_home/vid.jpg",
     },
+    {
+      oldUrl: "https://i.ytimg.com/vi_webp/nUKjEsBo0ho/sddefault.webp",
+      newPath: "/temp_home/vid.jpg",
+    },
+    {
+      oldUrl: "https://i.ytimg.com/vi_webp/LdYJgpzOvtI/sddefault.webp",
+      newPath: "/temp_home/vid.jpg",
+    },
+    {
+      oldUrl: "https://i.ytimg.com/vi_webp/E4WjguR2y94/sddefault.webp",
+      newPath: "/temp_home/vid.jpg",
+    },
   ];
 
   // 2) Replace on a single element if its inline bg contains any oldUrl
@@ -514,4 +526,3 @@
     });
   });
 })();
-

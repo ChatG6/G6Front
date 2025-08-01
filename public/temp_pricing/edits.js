@@ -217,9 +217,10 @@ window.addEventListener("DOMContentLoaded", () => {
   ];
 
   // Your URLs
-  const PAID_BASE_URL = "http://localhost:3000/paid";
-  const FREE_URL = "http://localhost:3000/editor";
-
+  //const PAID_BASE_URL = "http://localhost:3000/paid";
+  const PAID_BASE_URL = "https://chatg6.ai/paid";
+ // const FREE_URL = "http://localhost:3000/editor";
+  const FREE_URL = "https://chatg6.ai/editor";
   // Determine current billing mode
   function getBillingMode() {
     const el = document.querySelector(`.${ANNUAL_SWITCH}`);
