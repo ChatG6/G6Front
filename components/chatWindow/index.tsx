@@ -1,5 +1,5 @@
 "use client";
-import { BookOutlined } from "@ant-design/icons";
+import { BookOutlined, CompassOutlined } from "@ant-design/icons";
 import { Loader2 } from "lucide-react";
 import { Document, Page, pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
@@ -89,7 +89,9 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
         );
         if (res.data.message == "Saved") {
           console.log("done");
+                message.success(`file uploaded successfully.`);
         } else {
+          message.error(`file upload failed, try again`);
           //console.log('error')
         }
       }
@@ -163,6 +165,8 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
 
     sentenceRef.current = allSentenceList.filter((item) => item.sentence);
     setNumPages(numPages);
+
+
   }
 
   const props: UploadProps = {
@@ -254,6 +258,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
       scrollToBottom();
     } catch (error) {
       setLoading(false);
+      message.error('An error occurred while getting the answer.');
       console.log(error);
     }
   };
@@ -312,6 +317,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className }) => {
       });
     }
     setLoading2(false);
+    message.success("Document has been read and is ready for questions.");
   }
 
   const handleClick = (index: number) => {

@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input } from 'antd';
 import { FilePlus,FileText,Search} from "lucide-react"; 
-import logo from '@/public/Logo.svg'
+//import logo from '@/public/Logo.svg'
+import logo from '@/public/logo-chatg6-svg.svg'
 import Image from 'next/image'
 import { Import_editor, archive, delete_docs, update, uplo, upload } from "@/app/api/search_utils/literature_utils";
 import { parse_date } from "@/app/lib/utils";

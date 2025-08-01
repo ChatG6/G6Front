@@ -1,16 +1,22 @@
-import {FC, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 
-interface props{
-  children:ReactNode
+// The props interface is updated to include an optional `className`.
+interface ContainerProps {
+  children: ReactNode;
+  className?: string;
 }
 
-const Container:FC<props> = ({children}) =>{
+const Container: FC<ContainerProps> = ({ children, className }) => {
+  // The passed `className` is combined with the default "container" class.
+  const combinedClassName = `container ${className || ''}`.trim();
+
   return (
     <>
-    <div className="container">
-      {children}
-    </div>
-  </>
-)}
+      <div className={combinedClassName}>
+        {children}
+      </div>
+    </>
+  );
+};
 
-export default Container
+export default Container;

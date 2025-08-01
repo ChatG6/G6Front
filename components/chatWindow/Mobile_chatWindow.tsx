@@ -77,8 +77,14 @@ const ChatWindow: FC<ChatWindowProps> = ({ className,onClose }) => {
       for(const file of files) {
         await merger.add(file);
         // Assuming savedocs is defined elsewhere
-        // const res = await savedocs('pdf','null','Chat',file.size,'now',file.name)
-        // if (res.data.message=='Saved') {console.log('done')}
+        const res = await savedocs('pdf','null','Chat',file.size,'now',file.name)
+        if (res.data.message=='Saved') {
+          console.log('done')
+           message.success(`file uploaded successfully.`);
+        }
+        else {
+            message.error(`file upload failed, try again`);
+        }
       }
 
       await merger.setMetadata({
@@ -138,8 +144,7 @@ const ChatWindow: FC<ChatWindowProps> = ({ className,onClose }) => {
     }
     sentenceRef.current = allSentenceList.filter(item => item.sentence);
     setNumPages(numPages)
-    console.log(doc)
-   message.success(`file uploaded successfully.`);
+   
   }
 
   const props: UploadProps = {
