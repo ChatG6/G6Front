@@ -211,7 +211,7 @@ export default function Header() {
                     <DropdownMenuItem>
                       <Link
                         className="header-link"
-                        href={"/api/auth/sigin"}
+                        href={"/authentication/login"}
                       >
                         Sign in
                       </Link>
