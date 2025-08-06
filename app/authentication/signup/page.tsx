@@ -40,15 +40,15 @@ const Page: React.FC = () => {
         setIsNotif(true)
       } else {
         setState('Signing Up...')
-        const btn:any = document.querySelector(".sign-btn")
-        btn.disabled = true
+       /* const btn:any = document.querySelector(".sign-btn")
+        btn.disabled = true*/
         const response = await axios.post("/api/auth/signup", {
           usr: formData.username.toString(),
           email: formData.email.toString(),
           pwd: formData.password.toString(),
         });
         setState('Sign Up')
-        btn.disabled = false
+       /* btn.disabled = false*/
 
         console.warn(response.data);
         switch (response.status) {
@@ -198,7 +198,7 @@ const Page: React.FC = () => {
             </div>
           <button 
           
-          disabled={!agreedToTerms}
+          disabled={!agreedToTerms || state==='Signing Up...'}
                     className="w-full rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             style={{
               borderRadius:"0.25rem",
