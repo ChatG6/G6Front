@@ -74,8 +74,34 @@ const validate = (formValues: Form) => {
   }
   return errors;
 };
+export const validate_login = (formValues: Form) => {
+  // errors object
+  let errors = {
+    username: "",
+    password: "",
+    email: "",
+  };
+
+  const email = formValues.email?.toString();
+  const password = formValues.password?.toString();
+
+
+
+  // validating email
+  if (!email) {
+    errors.email = "Email is required";
+  } 
+  // validating password
+if (!password) {
+    errors.password = "Password is required";
+  } 
+    
+  
+  return errors;
+};
 
 export default validate;
+
 
 export function validateAuthors(authors: string) {
   const regex = /(\w+\s+\w+,\s*\w+\s+\w+|\w+\s+\w+[^,]$)/g;

@@ -26,6 +26,7 @@ const Page: React.FC = () => {
   const [notif, setIsNotif] = useState(false);
   const [state, setState] = useState('Sign Up')
   const [msg, setMsg] = useState("")
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const success = `We have sent a verification email to:${formData.email.toString()},please check it up and verify your account`;
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -88,12 +89,24 @@ const Page: React.FC = () => {
     setMessage(validate(formData));
   };
   return (
-    <>
+    <div
+    // style={{paddingRight:"40px"}}
+    className="flex min-h-screen w-full items-center justify-center p-4"
+    >
       {notif && <Notify message={msg} dur={30} display={setIsNotif} />}
-      <section className="layout">
-        <form className="form" onSubmit={onSubmit}>
-          <h1>Signup</h1>
-          <label htmlFor="UserName">User Name</label>
+      <section className="w-full max-w-md space-y-3">
+        <form 
+          style={{border:"1px solid #cee6ff",
+          borderRadius:"0.5rem"
+        }} 
+        className="space-y-2 bg-white p-8"
+        onSubmit={onSubmit}>
+          {/*<h1>Signup</h1>*/}
+    
+                <div className="email_login_field">
+                    <label 
+          className="email_login_label"
+          htmlFor="UserName">User Name</label>
           <input
             type="text"
             onBlur={handleBlur}
@@ -101,28 +114,40 @@ const Page: React.FC = () => {
             onChange={handleChange}
             value={formData.username}
             name="username"
+            className={`${message?.username? 'email_login_input_field_invalid':'email_login_input_field'} `}
             required
 
           />
           {message.username? <p className="error-message">{message?.username}</p> : <></>}
-          {/* <p className="error-message">{message?.username}</p> */}
-
-          <label htmlFor="Email">Email</label>
+    {/* <p className="error-message">{message?.username}</p> */}
+                </div>
+        
+      
+<div className="email_login_field"> 
+ <label 
+  className="email_login_label"
+ htmlFor="Email">Email</label>
           <input
             type="email"
             onBlur={handleBlur}
             value={formData.email}
             placeholder="Email"
+            className={`${message?.email? 'email_login_input_field_invalid':'email_login_input_field'} `}
             onChange={handleChange}
             name="email"
             required
           />
           {message.email? <p className="error-message">{message?.email}</p> : <></>}
           {/* <p className="error-message">{message?.email}</p> */}
-
-          <label htmlFor="Password">Password</label>
+</div>
+         
+<div className="email_login_field"> 
+    <label 
+      className="email_login_label"
+    htmlFor="Password">Password</label>
           <input
             type="password"
+            className={`${message?.password? 'email_login_input_field_invalid':'email_login_input_field'} `}
             onBlur={handleBlur}
             placeholder="Password"
             value={formData.password}
@@ -131,9 +156,15 @@ const Page: React.FC = () => {
             required
           />
 
-          <label htmlFor="ConfirmPassword">Confirm Password</label>
+</div>
+      
+<div className="email_login_field"> 
+ <label 
+  className="email_login_label"
+ htmlFor="ConfirmPassword">Confirm Password</label>
           <input
             type="password"
+            className={`${message?.password? 'email_login_input_field_invalid':'email_login_input_field'} `}
             onBlur={handleBlur}
             value={formData.passwordC}
             placeholder="Confirm password"
@@ -143,17 +174,58 @@ const Page: React.FC = () => {
           />
           {message.password? <p className="error-message">{message?.password}</p> : <></>}
           {/* <p className="error-message">{message?.password}</p> */}
-          <button className="sign-btn" type="submit">{state}</button>
-        </form>
-        <span>
-        alredy have an account Login  &nbsp;
-        <Link className="header-link text-violet-500" href={"/api/auth/signin"} >
-          here
+</div>
+            {/* Terms of Service Checkbox */}
+            <div 
+                 style={{
+                  marginLeft: "0.2rem",
+                  marginBottom:"4px"
+                }}
+            className="flex items-center">
+                <input
+                    id="terms"
+                    name="terms"
+                    type="checkbox"
+                    checked={agreedToTerms}
+                    onChange={(e) => setAgreedToTerms(e.target.checked)}
+                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <label 
+           
+                htmlFor="terms" className="ml-2 block text-sm text-gray-700">
+                    I agree to the <Link href="https://g6pro.us/about/" className="font-medium text-blue-600 hover:underline">Terms of Service</Link>
+                </label>
+            </div>
+          <button 
+          
+          disabled={!agreedToTerms}
+                    className="w-full rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            style={{
+              borderRadius:"0.25rem",
+                backgroundColor: "#323dd6",
+                marginBottom:"4px"
+            }}
+          type="submit">{state}</button>
+              <p
+              className="text-sm text-gray-600"
+                  style={{
+                  marginLeft: "0.2rem",
+                  marginBottom:"4px"
+                }}
+              >
+        Alredy have an account? &nbsp;
+        <Link 
+        //className="header-link text-violet-500" 
+        className="header-link text-blue-600 hover:underline"
+        href={"/api/auth/signin"} >
+          Login here
         </Link>
-      </span>
+      </p>
+        </form>
+    
       </section>
 
-    </>
+    </div>
   );
 };
 

@@ -211,9 +211,9 @@ export default function Header() {
                     <DropdownMenuItem>
                       <Link
                         className="header-link"
-                        href={"/authentication/signup"}
+                        href={"/api/auth/sigin"}
                       >
-                        Sign up
+                        Sign in
                       </Link>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -330,9 +330,9 @@ export default function Header() {
                 </Link>*/}
                 <Link
                   className="hover:bg-gray-200 bg-gray-100 duration-300 text-[14px] text-[#18181B] rounded-[12px] py-2 px-4 font-normal whitespace-nowrap"
-                  href={"/authentication/signup"}
+                  href={"/api/auth/signin"}
                 >
-                  Sign up
+                  Sign in
                 </Link>
                 <Link 
                 className=""

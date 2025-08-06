@@ -53,10 +53,10 @@ export const options: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     })
   ],
- /* pages: {
-    signIn: "/login",
-    signOut: "/signout",
-  },*/
+  pages: {
+    signIn: "/authentication/login",
+    signOut: "/authentication/signout",
+  },
   secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(db),
   session: {

@@ -1,12 +1,13 @@
 import { ReactNode } from "react";
 import { Metadata } from "next";
+// import '@/app/styles/styles.css'
 
 export const metadata: Metadata = {
-  title: "Sign up",
+  title: "Sign Up",
 };
 
 export default function Layout({children}:{children:ReactNode}){
   return (
-    <>{children}</>
+    <section className="layout">{children}</section>
   )
 }
