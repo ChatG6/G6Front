@@ -258,7 +258,7 @@ const SignInPage = () => {
                 //  marginBottom:"2px"
                 }}
             className="text-sm text-gray-600">
-                Don't have an account?{' '}
+                Don&apos;t have an account?{' '}
                 <Link href="/authentication/signup" className="font-medium text-blue-600 hover:underline">
                     Register
                 </Link>
