@@ -30,8 +30,10 @@ jobs:
         run: npx prisma migrate deploy
       - name: Building the Project
         run: |
-          # This command exports the variables from the .env file
-          export $(grep -v '^#' .env | xargs)
+          # This command loads the variables from the .env file into the shell
+          set -o allexport
+          source .env
+          set +o allexport
           
           # Now run the build command with the variables available
           npm run build --if-present
