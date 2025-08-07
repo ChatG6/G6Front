@@ -89,7 +89,7 @@ const SignInPage = () => {
   const isBreakpoint = useMediaQuery(768);
    // IMPORTANT: Replace this with your actual V3 site key from the Google reCAPTCHA admin console.
     const recaptchaV3SiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-
+    console.log(recaptchaV3SiteKey)
  
   // MODIFIED: Added state for password visibility
   const [showPassword, setShowPassword] = useState(false);

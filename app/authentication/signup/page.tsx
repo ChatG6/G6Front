@@ -55,7 +55,7 @@ const Page: React.FC = () => {
   const [showPasswordc, setShowPasswordc] = useState(false);
   // IMPORTANT: Replace this with your actual V3 site key from the Google reCAPTCHA admin console.
     const recaptchaV3SiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-
+    console.log(recaptchaV3SiteKey)
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
