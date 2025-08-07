@@ -74,6 +74,75 @@ const validate = (formValues: Form) => {
   }
   return errors;
 };
+export const validate_newpassword = (formValues: Form) => {
+  // errors object
+  let errors = {
+    username: "",
+    email: "",
+    newpassword: "",
+  };
+  // password patterns
+  const pwdRegexPatterns = {
+    minLength: /^.{8,}$/,
+    upperCase: /[A-Z]/,
+    lowerCase: /[a-z]/,
+    number: /[0-9]/,
+    specialCharacter: /[!@#$%^&*(),.?|<>{}":';]/,
+  };
+  // parsing parameters
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const username = formValues.username?.toString();
+  const email = formValues.email?.toString();
+  const newpassword = formValues.password?.toString();
+  const newpasswordC = formValues.passwordC?.toString();
+
+  // validating username
+  if (!username || username === "") {
+    errors.username = "Username is required";
+  } else if (username.length < 4) {
+    errors.username = "Username should be minimum 4 characters";
+  }
+
+  // validating email
+  if (!email) {
+    errors.email = "Email is required";
+  } else if (!emailPattern.test(email.toLowerCase())) {
+    errors.email = "Email is invalid";
+  }
+
+  // validating password
+  if (newpassword !== newpasswordC) {
+    errors.newpassword = "Passwords didn't match";
+  } else if (!newpassword) {
+    errors.newpassword = "Password is required";
+  } else {
+    let pwd_message = "";
+    for (const [pattern, regex] of Object.entries(pwdRegexPatterns)) {
+      if (!regex.test(newpassword)) {
+        switch (pattern) {
+          case "minLength":
+            pwd_message = "Password must be 8 characters minimum.";
+            break;
+          case "upperCase":
+            pwd_message = "Password must contain at least 1 uppercase letter.";
+            break;
+          case "lowerCase":
+            pwd_message = "Password must contain at least 1 lowercase letter.";
+            break;
+          case "specialCharacter":
+            pwd_message = "Password must contain at least 1 special character.";
+            break;
+          case "number":
+            pwd_message = "Password must contain at least 1 number.";
+            break;
+        }
+        break;
+      }
+    }
+    errors.newpassword = pwd_message;
+  }
+  return errors;
+};
 export const validate_login = (formValues: Form) => {
   // errors object
   let errors = {
@@ -99,7 +168,29 @@ if (!password) {
   
   return errors;
 };
+export const validate_reset = (formValues: Form) => {
+  // errors object
+  let errors = {
+    email: "",
+  };
+   // parsing parameters
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const email = formValues.email?.toString();
 
+
+
+
+ // validating email
+  if (!email) {
+    errors.email = "Email is required";
+  } else if (!emailPattern.test(email.toLowerCase())) {
+    errors.email = "Email is invalid";
+  }
+  
+    
+  
+  return errors;
+};
 export default validate;
 
 

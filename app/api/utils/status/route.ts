@@ -40,7 +40,7 @@ async function handler(req: Request) {
   if (quotas.length != 0) {
   quota = quotas[0].freequota
   }
-  else {quota = 50}
+  else {quota = 5}
   if (keys.length != 0) {
     statussub = keys[0].status
   } else {
@@ -57,7 +57,7 @@ async function handler(req: Request) {
   if (quotasplg.length != 0) {
     quotaplg = quotasplg[0].freequotaplg
   }
-  else {quotaplg = 50}
+  else {quotaplg = 5}
    return NextResponse.json({ statuss: statussub,quota:quota,quotaplg:quotaplg});
    //return NextResponse.json({ statuss: 'k',quota:'q',quotaplg:'q2'});
 } 

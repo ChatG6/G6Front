@@ -9,7 +9,15 @@ export const s3_Client = {
   },
  };
 
-
+export const reCAPTCHA = {
+  credintials: {
+    site_key: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!,
+    secret_key: process.env.RECAPTCHA_SECRET_KEY!,
+  },
+  urls: {
+    verify_url: "https://www.google.com/recaptcha/api/siteverify",
+  },
+};
 
 // Semantic Scholar API
 //const SEM_api_key = 'fXtwPJIYby5MEMOJdrN067O7rtfDrs3O7TKZbzMt'

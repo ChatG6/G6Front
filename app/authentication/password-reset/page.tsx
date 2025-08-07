@@ -1,12 +1,14 @@
 "use client";
 
 // import "@/app/styles/styles.css";
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import validate from "@/app/lib/formVaild";
+import validate_newpassword from "@/app/lib/formVaild";
 import Notify from "@/components/Management/notification";
 import Link from "next/link";
+import { verifyUser } from "@/app/lib/Auth";
+import validate from "@/app/lib/formVaild";
 import Captcha from "@/components/Recaptcha";
 import { GoogleReCaptchaProvider} from "react-google-recaptcha-v3";
 const initialFormData = {
@@ -20,7 +22,6 @@ const initialErrorMessage = {
   email: "",
   password: "",
 };
-
 // Eye icons for password visibility toggle
 const EyeOffIcon = ({...props}) => (
    <svg 
@@ -47,10 +48,10 @@ const Page: React.FC = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [message, setMessage] = useState(initialErrorMessage);
   const [notif, setIsNotif] = useState(false);
-  const [state, setState] = useState('Sign Up')
+  const [state, setState] = useState('Reset password')
   const [msg, setMsg] = useState("")
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
-  const success = `We have sent a verification email to:${formData.email.toString()},please check it up and verify your account`;
+  const [token, setToken] = useState<string | null>("");
+  const [email, setEmail] = useState<string | null>("");
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordc, setShowPasswordc] = useState(false);
   // IMPORTANT: Replace this with your actual V3 site key from the Google reCAPTCHA admin console.
@@ -60,6 +61,54 @@ const Page: React.FC = () => {
         console.error("reCAPTCHA V3 Site Key is not defined. Please check your environment variables.");
         return <div>reCAPTCHA is not configured.</div>;
     }
+  //const [agreedToTerms, setAgreedToTerms] = useState(false);
+   const [verified, setIsVerfied] = useState(false);
+ // const success = `We have sent a verification email to:${formData.email.toString()},please check it up and verify your account`;
+  useEffect(() => {
+      const params = new URLSearchParams(window.location.search);
+      const urlToken = params.get("token");
+      const email = params.get("email");
+      setToken(urlToken);
+      setEmail(email);
+    }, [token]);
+    useEffect(() => {
+      if (token && email) {
+        verifyUser(token, email).then((verifyState) => {
+          if (verifyState.status === 200) {
+            setMsg("Verification done successfully");
+            setIsVerfied(true)
+            setFormData({
+                username: verifyState.data.usr,
+  email: email,
+  password: "",
+  passwordC: "",}
+            )
+            setIsNotif(true)          
+          } else if (verifyState.status === 226) {
+            setMsg("Token Expired!");
+            setIsVerfied(false)
+                      setFormData({
+                username: "",
+  email: "",
+  password: "",
+  passwordC: "",}
+            )
+            setIsNotif(true)          
+  
+          } else {
+            setMsg("Something went wrong, please try again later");
+             setIsVerfied(false)
+               setFormData({
+                username: "",
+  email: "",
+  password: "",
+  passwordC: "",}
+            )
+            setIsNotif(true)          
+          }
+        });
+      }
+    }, [token, email]);
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -71,34 +120,33 @@ const Page: React.FC = () => {
         setMsg("Fix errors to proceed")
         setIsNotif(true)
       } else {
-        setState('Signing Up...')
+        setState('Resetting password...')
        /* const btn:any = document.querySelector(".sign-btn")
         btn.disabled = true*/
-        const response = await axios.post("/api/auth/signup", {
-          usr: formData.username.toString(),
+        const response = await axios.post("/api/auth/password-reset", {
           email: formData.email.toString(),
-          pwd: formData.password.toString(),
+          password: formData.password.toString(),
         });
-        setState('Sign Up')
+        setState('Reset password')
        /* btn.disabled = false*/
 
         console.warn(response.data);
         switch (response.status) {
-          case 201:
+          case 200:
             setIsNotif(true);
-            setMsg(success)
+            setMsg(response.data.message)
             break;
-          case 226:
-            if (response.data.error.username) {
+          case 400:
+            if (response.data.message) {
               setMessage({
-                username: response.data.error?.username,
-                email: "",
+                username: "",
+                email: response.data.message,
                 password: "",
               });
             } else {
               setMessage({
-                username: "",
-                email: response.data.error?.email,
+                username: response.data.message,
+                email: "",
                 password: "",
               });
             }
@@ -106,7 +154,7 @@ const Page: React.FC = () => {
         }
       }
     } catch (error) {
-      console.error("Signup failed:", error);
+      console.error("Reset failed:", error);
     }
   };
 
@@ -121,16 +169,16 @@ const Page: React.FC = () => {
     setMessage(validate(formData));
   };
   return (
-       <GoogleReCaptchaProvider reCaptchaKey={recaptchaV3SiteKey}>
+    <GoogleReCaptchaProvider reCaptchaKey={recaptchaV3SiteKey}>
 
-       
+   
     <div
     // style={{paddingRight:"40px"}}
     className="flex min-h-screen w-full items-center justify-center p-4"
     >
       {notif && <Notify message={msg} dur={30} display={setIsNotif} />}
       <section className="w-full max-w-md space-y-3">
-        <form 
+       {verified && (<form 
           style={{border:"1px solid #cee6ff",
           borderRadius:"0.5rem"
         }} 
@@ -181,19 +229,18 @@ style={{ position: 'relative' }}
 > 
     <label 
       className="email_login_label"
-    htmlFor="Password">Password</label>
+    htmlFor="Password">New Password</label>
           <input
-              // MODIFIED: Dynamic type for password visibility
             type={showPassword ? "text" : "password"}
             className={`${message?.password? 'email_login_input_field_invalid':'email_login_input_field'} `}
             onBlur={handleBlur}
-            placeholder="Password"
+            placeholder="New Password"
             value={formData.password}
             onChange={handleChange}
             name="password"
             required
           />
-           {/* MODIFIED: Added toggle button */}
+                  {/* MODIFIED: Added toggle button */}
                     <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
@@ -209,28 +256,26 @@ style={{ position: 'relative' }}
                     >
                         {showPassword ? <EyeOffIcon className="text-gray-500" /> : <EyeIcon className="text-gray-500" />}
                     </button>
-                    
 
 </div>
-   {message.password? <p className="error-message">{message?.password}</p> : <></>}   
+      
 <div className="email_login_field"
 style={{ position: 'relative' }}
 > 
  <label 
   className="email_login_label"
- htmlFor="ConfirmPassword">Confirm Password</label>
+ htmlFor="ConfirmPassword">Confirm New Password</label>
           <input
-                      // MODIFIED: Dynamic type for password visibility
             type={showPasswordc ? "text" : "password"}
             className={`${message?.password? 'email_login_input_field_invalid':'email_login_input_field'} `}
             onBlur={handleBlur}
             value={formData.passwordC}
-            placeholder="Confirm password"
+            placeholder="Confirm new password"
             onChange={handleChange}
             name="passwordC"
             required
           />
-            {/* MODIFIED: Added toggle button */}
+           {/* MODIFIED: Added toggle button */}
                     <button
                         type="button"
                        onClick={() => setShowPasswordc(!showPasswordc)}
@@ -246,12 +291,12 @@ style={{ position: 'relative' }}
                     >
                         {showPasswordc ? <EyeOffIcon className="text-gray-500" /> : <EyeIcon className="text-gray-500" />}
                     </button>
-          
+         
           {/* <p className="error-message">{message?.password}</p> */}
 </div>
-{message.password? <p className="error-message">{message?.password}</p> : <></>}
+ {message.password? <p className="error-message">{message?.password}</p> : <></>}
             {/* Terms of Service Checkbox */}
-            <div 
+           {/*<div 
                  style={{
                   marginLeft: "0.2rem",
                   marginBottom:"4px"
@@ -268,12 +313,12 @@ style={{ position: 'relative' }}
                 <label 
            
                 htmlFor="terms" className="ml-2 block text-sm text-gray-700">
-                    I agree to <Link href="https://g6pro.us/policy/policy.html" className="font-medium text-blue-600 hover:underline">G6 Policy</Link>
+                    I agree to the <Link href="https://g6pro.us/about/" className="font-medium text-blue-600 hover:underline">Terms of Service</Link>
                 </label>
-            </div>
+            </div>*/}
           <button 
           
-          disabled={!agreedToTerms || state==='Signing Up...'}
+          disabled={state==='Resetting password...'}
                     className="w-full rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             style={{
               borderRadius:"0.25rem",
@@ -296,12 +341,12 @@ style={{ position: 'relative' }}
           Login here
         </Link>
       </p>
-        </form>
-     <Captcha action="homepage" />
+        </form>)}
+    
       </section>
-
+  <Captcha action="homepage" />
     </div>
-    </GoogleReCaptchaProvider>
+     </GoogleReCaptchaProvider>
   );
 };
 

@@ -14,13 +14,14 @@ async function handler(req: Request) {
       },
       select: {
         token: true,
+        name:true,
         expirationTime: true,
         isVerified: true,
       },
     });
     console.log(getDbToken);
     if (getDbToken?.isVerified)
-      return Response.json({ token: token }, { status: 200 });
+      return Response.json({ token: token,usr:getDbToken.name }, { status: 200 });
     const now = new Date();
     if (getDbToken?.token === token) {
       if (getDbToken && getDbToken.expirationTime)
@@ -36,7 +37,7 @@ async function handler(req: Request) {
               isVerified: true,
             },
           });
-          return Response.json({ token: token }, { status: 200 });
+          return Response.json({ token: token,usr:getDbToken.name }, { status: 200 });
         }
     } else {
       return Response.json(

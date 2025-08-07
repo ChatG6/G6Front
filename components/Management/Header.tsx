@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 //import logo from "@/public/Logo.svg";
@@ -21,6 +21,7 @@ import URLS from "@/app/config/urls";
 import axios from "axios";
 // MODIFIED: Imported icons from lucide-react for a more attractive UI
 import { Gem, Rocket, LogOut, XCircle } from "lucide-react";
+import { Button } from "../ui/button";
 
 const useMediaQuery = (width: number) => {
   const [targetReached, setTargetReached] = useState(false);
@@ -58,12 +59,13 @@ export default function Header() {
     window.location.href = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/pricing`;
     //redirect(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/pricing`)
   };
-    const [quota, setquota] = useState(50);
-      const [quotaplg, setquotaplg] = useState(50);
+    const [quota, setquota] = useState(5);
+      const [quotaplg, setquotaplg] = useState(5);
       const [substatus, setsubstatus] = useState('');
       const [up, setup] = useState(false);
       const [canc, setcanc] = useState(false);
       const [res, setres] = useState(false);
+      const redirect_url = URLS.urls.main
       useEffect(() => {
           const fetchLR = async ()=> {
             const resp = await axios.post(URLS.endpoints.status);
@@ -151,9 +153,13 @@ export default function Header() {
                     <DropdownMenuLabel>{session.user?.name}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
-                      <Link className="header-link" href={"/api/auth/signout"}>
+                               <button
+                      onClick={()=> signOut({redirect:true,callbackUrl:redirect_url})}
+                      className="header-link" 
+                      //href={"/api/auth/signout"}
+                      >
                         Sign Out
-                      </Link>
+                      </button>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <Link className="header-link" href={"/pricing"}>
@@ -312,9 +318,13 @@ export default function Header() {
         )}
      
                     <DropdownMenuItem>
-                      <Link className="header-link" href={"/api/auth/signout"}>
+                        <button
+                      onClick={()=> signOut({redirect:true,callbackUrl:redirect_url})}
+                      className="header-link" 
+                      //href={"/api/auth/signout"}
+                      >
                         Sign Out
-                      </Link>
+                      </button>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

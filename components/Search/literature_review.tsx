@@ -66,7 +66,7 @@ const LiteratureReview: FC<props> = ({
   const [errMsg, setErrMsg] = useState("");
   const [isNotif, setIsNotif] = useState(false);
   const [verifyMessage, setVerifyMessage] = useState("");
-  const [quota, setquota] = useState(50);
+  const [quota, setquota] = useState(5);
   const [status, setstatus] = useState('');
 
 

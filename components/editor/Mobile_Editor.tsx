@@ -280,7 +280,7 @@ if (title) {//console.log(title.innerHTML)
     setshareVisible(false);
   };
   const PlagiarismChecker: FC = () => {
-    const [quotaplg, setquotaplg] = useState(50);
+    const [quotaplg, setquotaplg] = useState(5);
     const [status, setstatus] = useState('');
     const [toastVisible, setToastVisible] = useState(false);
     const [output, setOutput] = useState("");

@@ -35,3 +35,7 @@ export class CustomError extends Error {
     this.cause = cause
   }
 }
+export interface commonResponse {
+  success:boolean,
+  message:string
+}

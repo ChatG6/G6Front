@@ -38,8 +38,8 @@ export const options: NextAuthOptions = {
           token: null,
           isVerified: true,
           expirationTime: null,
-          freequota: 50,
-          freequotaplg: 50
+          freequota: 5,
+          freequotaplg: 5
         };
         if (resp.status === 200) {
           return user;

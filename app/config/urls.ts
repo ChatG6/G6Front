@@ -4,6 +4,7 @@ const urls = {
 // backendUrl:"http://127.0.0.1:8000",
 backendUrl: "https://api.chatg6.ai",
   verif: `${origin}/authentication/verification`,
+  reset:`${origin}/authentication/password-reset`,
   gpt_url: "https://api.openai.com/v1/chat/completions",
   sem_url: "https://api.semanticscholar.org/graph/v1/paper/search",
   main: `${origin}`,

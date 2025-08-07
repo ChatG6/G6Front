@@ -33,7 +33,7 @@ const LiteraturePopup: FC<props> = ({onExit}) => {
   const [saveM, setSaveM] = useState<boolean>(false);
   const [saveName, setSaveName] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [quota, setquota] = useState(50);
+  const [quota, setquota] = useState(5);
   const [status, setstatus] = useState('');
   const [formData, setFormData] = useState({
     title: "",

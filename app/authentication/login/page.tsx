@@ -6,6 +6,8 @@ import Link from "next/link";
 import URLS from "@/app/config/urls";
 import { validate_login } from "@/app/lib/formVaild";
 import Notify from "@/components/Management/notification";
+import Captcha from "@/components/Recaptcha";
+import { GoogleReCaptchaProvider} from "react-google-recaptcha-v3";
 const useMediaQuery = (width: number) => {
   const [targetReached, setTargetReached] = useState(false);
 
@@ -30,16 +32,7 @@ const useMediaQuery = (width: number) => {
 
   return targetReached;
 };
-// A simple Google icon component
-/*const GoogleIcon = () => (
-    <svg className="h-5 w-5 mr-3" viewBox="0 0 24 24">
-        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
-        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
-        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
-        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
-        <path d="M1 1h22v22H1z" fill="none"></path>
-    </svg>
-);*/
+
 const GoogleIcon = () => (
 <svg 
 style={{
@@ -52,6 +45,30 @@ style={{
 }}
 width="22" height="23" fill="none"><mask id="a" maskUnits="userSpaceOnUse" x="0" y="0" width="22" height="23"><path fill-rule="evenodd" clip-rule="evenodd" d="M21.7 9.4H11.3v4.4h6c-.6 2.8-3 4.4-6 4.4-3.7 0-6.7-3-6.7-6.8 0-3.7 3-6.7 6.7-6.7 1.5 0 3 .6 4.1 1.5l3.3-3.3C16.7 1 14 0 11.3 0 5 0 0 5.1 0 11.4c0 6.3 5 11.4 11.3 11.4 5.6 0 10.7-4.1 10.7-11.4 0-.6-.1-1.4-.3-2z" fill="#fff"></path></mask><g mask="url(#a)"><path d="M-1 18.2V4.7l8.7 6.7-8.7 6.8z" fill="#FBBC05"></path></g><mask id="b" maskUnits="userSpaceOnUse" x="0" y="0" width="22" height="23"><path fill-rule="evenodd" clip-rule="evenodd" d="M21.7 9.4H11.3v4.4h6c-.6 2.8-3 4.4-6 4.4-3.7 0-6.7-3-6.7-6.8 0-3.7 3-6.7 6.7-6.7 1.5 0 3 .6 4.1 1.5l3.3-3.3C16.7 1 14 0 11.3 0 5 0 0 5.1 0 11.4c0 6.3 5 11.4 11.3 11.4 5.6 0 10.7-4.1 10.7-11.4 0-.6-.1-1.4-.3-2z" fill="#fff"></path></mask><g mask="url(#b)"><path d="M-1 4.7l8.7 6.7 3.6-3.1 12.2-2V-1H-1v5.7z" fill="#EA4335"></path></g><mask id="c" maskUnits="userSpaceOnUse" x="0" y="0" width="22" height="23"><path fill-rule="evenodd" clip-rule="evenodd" d="M21.7 9.4H11.3v4.4h6c-.6 2.8-3 4.4-6 4.4-3.7 0-6.7-3-6.7-6.8 0-3.7 3-6.7 6.7-6.7 1.5 0 3 .6 4.1 1.5l3.3-3.3C16.7 1 14 0 11.3 0 5 0 0 5.1 0 11.4c0 6.3 5 11.4 11.3 11.4 5.6 0 10.7-4.1 10.7-11.4 0-.6-.1-1.4-.3-2z" fill="#fff"></path></mask><g mask="url(#c)"><path d="M-1 18.2l15.3-12 4 .6L23.6-1v24.9H-1v-5.7z" fill="#34A853"></path></g><mask id="d" maskUnits="userSpaceOnUse" x="0" y="0" width="22" height="23"><path fill-rule="evenodd" clip-rule="evenodd" d="M21.7 9.4H11.3v4.4h6c-.6 2.8-3 4.4-6 4.4-3.7 0-6.7-3-6.7-6.8 0-3.7 3-6.7 6.7-6.7 1.5 0 3 .6 4.1 1.5l3.3-3.3C16.7 1 14 0 11.3 0 5 0 0 5.1 0 11.4c0 6.3 5 11.4 11.3 11.4 5.6 0 10.7-4.1 10.7-11.4 0-.6-.1-1.4-.3-2z" fill="#fff"></path></mask><g mask="url(#d)"><path d="M23.5 23.9L7.7 11.4l-2-1.5 17.8-5.2v19.2z" fill="#4285F4"></path></g></svg>
 );
+
+// Eye icons for password visibility toggle
+const EyeOffIcon = ({...props}) => (
+   <svg 
+   style={{
+    position:"relative",
+    top:"0.75rem",
+    left:"0.0625rem",
+     color:"#a1afc3"
+   }}
+   width="20" height="14"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M1.6 9.2h0a10 10 0 0116.8 0h0M10 4.6V1.5M6.8 5.1L5.3 2.4M3.7 6.7L1 5.1m12.2 0l1.5-2.7m1.6 4.3L19 5.1"></path><path d="M13.4 8c0 2-1.5 3.5-3.4 3.5A3.5 3.5 0 016.6 8c0-2 1.5-3.5 3.4-3.5s3.4 1.6 3.4 3.5z"></path></g></svg>
+);
+
+const EyeIcon = ({...props}) => (
+  <svg 
+     style={{
+    position:"relative",
+    top:"0.8rem",
+    left:"0.0625rem",
+    color:"#a1afc3"
+   }}
+  width="20" height="14"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M1.6 5.2h0a10 10 0 0016.8 0h0M10 9.8v3M6.8 9.2l-1.5 2.7M3.7 7.6L1 9.2m12.2 0l1.5 2.7m1.6-4.3L19 9.2"></path></g></svg>
+);
+
 const initialErrorMessage = {
   email: "",
   password: "",
@@ -62,16 +79,33 @@ const initialFormData = {
 };
 const SignInPage = () => {
   const redirect_url = URLS.urls.main;
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [formData, setFormData] = useState(initialFormData);
   const [message, setMessage] = useState(initialErrorMessage);
   const [notif, setIsNotif] = useState(false);
   const [state, setState] = useState('Login')
   const [msg, setMsg] = useState("")
-  const [rememberMe, setRememberMe] = useState(false); // New state for remember me
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const isBreakpoint = useMediaQuery(768);
+   // IMPORTANT: Replace this with your actual V3 site key from the Google reCAPTCHA admin console.
+    const recaptchaV3SiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+    if (!recaptchaV3SiteKey) {
+        console.error("reCAPTCHA V3 Site Key is not defined. Please check your environment variables.");
+        return <div>reCAPTCHA is not configured.</div>;
+    }
+  // MODIFIED: Added state for password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  // ** NEW: useEffect to load the remembered email on component mount **
+  useEffect(() => {
+    const rememberedEmail = localStorage.getItem('rememberedEmail');
+    const rememberedPassword = localStorage.getItem('rememberedPassword');
+    if (rememberedEmail && rememberedPassword) {
+      setFormData(prev => ({ ...prev, email: rememberedEmail }));
+      setFormData(prev => ({ ...prev, password: rememberedPassword }));
+      setRememberMe(true);
+    }
+  }, []); // Empty dependency array ensures this runs only once
   const handleCredentialsSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null); // Clear previous errors
@@ -83,12 +117,21 @@ const SignInPage = () => {
         setState("Login")
         setIsNotif(true)
       } else {
+        if (rememberMe) {
+        localStorage.setItem('rememberedEmail', formData.email.toString());
+        localStorage.setItem('rememberedPassword', formData.password.toString());
+      } else {
+        localStorage.removeItem('rememberedEmail');
+        localStorage.removeItem('rememberedPassword');
+
+      }
+       setState("Logging...")
           const result = await signIn("credentials", {
       username: formData.email.toString(), // next-auth uses 'username' for the email field by default
       password: formData.password.toString(),
       redirect: false, // Handle redirect manually to show errors
     });
-     setState("Logging...")
+     
     if (result?.error) {
         setError("Authentication failed. Please check your credentials.");
         setState("Login")
@@ -115,6 +158,9 @@ const SignInPage = () => {
     setMessage(validate_login(formData));
   };
   return (
+    <GoogleReCaptchaProvider reCaptchaKey={recaptchaV3SiteKey}>
+
+    
     <div 
     style={{paddingRight:isBreakpoint?"":"60px"}}
     className="flex min-h-screen w-full items-center justify-center p-4">
@@ -162,26 +208,46 @@ const SignInPage = () => {
                        // onChange={(e) => setEmail(e.target.value)}
                        onChange={handleChange}
                        onBlur={handleBlur}
-                        className="email_login_input_field"
+                                className={`${message?.email? 'email_login_input_field_invalid':'email_login_input_field'} `}
+
                        placeholder="Email address"
                         required
                     />
                 </div>
-                <div className="email_login_field">
+                {/* MODIFIED: Wrapped password input in a relative container */}
+                <div className="email_login_field" style={{ position: 'relative' }}>
                     <label htmlFor="password" className="email_login_label">Password</label>
                     <input
                         id="password"
                         name="password"
-                        type="password"
+                        // MODIFIED: Dynamic type for password visibility
+                        type={showPassword ? "text" : "password"}
                         autoComplete="current-password"
                         value={formData.password}
                          onChange={handleChange}
                        onBlur={handleBlur}
                        // onChange={(e) => setPassword(e.target.value)}
-                       className="email_login_input_field"
+                               className={`${message?.password? 'email_login_input_field_invalid':'email_login_input_field'} `}
+
                        placeholder="Password"
                         required
                     />
+                    {/* MODIFIED: Added toggle button */}
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        style={{
+                            position: 'absolute',
+                            right: '10px',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            background: 'transparent',
+                            border: 'none',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        {showPassword ? <EyeOffIcon className="text-gray-500" /> : <EyeIcon className="text-gray-500" />}
+                    </button>
                 </div>
             </div>
 
@@ -189,7 +255,7 @@ const SignInPage = () => {
             <div className="flex items-center justify-between">
                 <div 
                 style={{
-                  marginLeft: "0.2rem",
+                    marginLeft: "0.2rem",
                 //  marginBottom:"2px"
                 }}
                 className="flex items-center">
@@ -207,20 +273,20 @@ const SignInPage = () => {
                 </div>
                 <div 
                    style={{
-                  marginRight: "0.2rem",
+                    marginRight: "0.2rem",
                 //  marginBottom:"2px"
                 }}
                 className="text-sm">
-                    <button type="button" className="font-medium text-blue-600 hover:underline border-none bg-transparent p-0 cursor-pointer">
+                    <Link href={"/authentication/reset-password"} className="font-medium text-blue-600 hover:underline border-none bg-transparent p-0 cursor-pointer">
                         Forgot password?
-                    </button>
+                    </Link>
                 </div>
             </div>
 
             {/* Error Message Display */}
             {error && <p 
                 style={{
-                  marginRight: "0.2rem",
+                    marginRight: "0.2rem",
                 //  marginBottom:"2px"
                 }}
             className='text-sm text-red-600'>{error}</p>}
@@ -241,20 +307,20 @@ const SignInPage = () => {
             {/* MODIFIED: Terms of Service Note */}
             <p 
              style={{
-                  marginRight: "0.2rem",
+                    marginRight: "0.2rem",
                 //  marginBottom:"2px"
                 }}
             className="text-xs text-gray-500">
                 By signing in, you acknowledge that you have read and agree to our{' '}
-                <Link href="https://g6pro.us/about/" className="font-medium text-blue-600 hover:underline">
-                    Terms of Service
+                <Link href="https://g6pro.us/policy/policy.html" className="font-medium text-blue-600 hover:underline">
+                    Policy
                 </Link>.
             </p>
 
             {/* Link to Sign Up */}
             <p 
                    style={{
-                  marginRight: "0.2rem",
+                    marginRight: "0.2rem",
                 //  marginBottom:"2px"
                 }}
             className="text-sm text-gray-600">
@@ -264,8 +330,11 @@ const SignInPage = () => {
                 </Link>
             </p>
         </form>
+           
       </div>
+       <Captcha action="homepage" />
     </div>
+    </GoogleReCaptchaProvider>
   );
 };
 
