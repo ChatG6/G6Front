@@ -7,8 +7,8 @@ import URLS from "@/app/config/urls";
 import { reCAPTCHA } from '@/app/config/config';
 import { validate_login } from "@/app/lib/formVaild";
 import Notify from "@/components/Management/notification";
-import Captcha from "@/components/Recaptcha";
-import { GoogleReCaptchaProvider} from "react-google-recaptcha-v3";
+//import Captcha from "@/components/Recaptcha";
+//import { GoogleReCaptchaProvider} from "react-google-recaptcha-v3";
 const useMediaQuery = (width: number) => {
   const [targetReached, setTargetReached] = useState(false);
 
@@ -90,8 +90,8 @@ const SignInPage = () => {
   const isBreakpoint = useMediaQuery(768);
    // IMPORTANT: Replace this with your actual V3 site key from the Google reCAPTCHA admin console.
    // const recaptchaV3SiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-   const recaptchaV3SiteKey = reCAPTCHA.credintials.site_key
-    console.log(recaptchaV3SiteKey)
+   //const recaptchaV3SiteKey = reCAPTCHA.credintials.site_key
+   // console.log(recaptchaV3SiteKey)
  
   // MODIFIED: Added state for password visibility
   const [showPassword, setShowPassword] = useState(false);
@@ -156,14 +156,11 @@ const SignInPage = () => {
   const handleBlur = (e: unknown) => {
     setMessage(validate_login(formData));
   };
-     if (!recaptchaV3SiteKey) {
-        console.error("reCAPTCHA V3 Site Key is not defined. Please check your environment variables.");
-        return <div>reCAPTCHA is not configured.</div>;
-    }
+
     
   return (
 
-    <GoogleReCaptchaProvider reCaptchaKey={recaptchaV3SiteKey}>
+  
 
     
     <div 
@@ -337,9 +334,9 @@ const SignInPage = () => {
         </form>
            
       </div>
-       <Captcha action="homepage" />
+
     </div>
-    </GoogleReCaptchaProvider>
+
   );
 };
 

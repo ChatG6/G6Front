@@ -9,8 +9,8 @@ import Notify from "@/components/Management/notification";
 import Link from "next/link";
 import { verifyUser } from "@/app/lib/Auth";
 import validate from "@/app/lib/formVaild";
-import Captcha from "@/components/Recaptcha";
-import { GoogleReCaptchaProvider} from "react-google-recaptcha-v3";
+//import Captcha from "@/components/Recaptcha";
+//import { GoogleReCaptchaProvider} from "react-google-recaptcha-v3";
 import { reCAPTCHA } from "@/app/config/config";
 const initialFormData = {
   username: "",
@@ -57,8 +57,8 @@ const Page: React.FC = () => {
   const [showPasswordc, setShowPasswordc] = useState(false);
   // IMPORTANT: Replace this with your actual V3 site key from the Google reCAPTCHA admin console.
     //const recaptchaV3SiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-    const recaptchaV3SiteKey = reCAPTCHA.credintials.site_key
-    console.log(recaptchaV3SiteKey)
+   // const recaptchaV3SiteKey = reCAPTCHA.credintials.site_key
+    //console.log(recaptchaV3SiteKey)
 
   //const [agreedToTerms, setAgreedToTerms] = useState(false);
    const [verified, setIsVerfied] = useState(false);
@@ -167,12 +167,9 @@ const Page: React.FC = () => {
   const handleBlur = (e: unknown) => {
     setMessage(validate(formData));
   };
-      if (!recaptchaV3SiteKey) {
-        console.error("reCAPTCHA V3 Site Key is not defined. Please check your environment variables.");
-        return <div>reCAPTCHA is not configured.</div>;
-    }
+  
   return (
-    <GoogleReCaptchaProvider reCaptchaKey={recaptchaV3SiteKey}>
+ 
 
    
     <div
@@ -347,9 +344,9 @@ style={{ position: 'relative' }}
         </form>)}
     
       </section>
-  <Captcha action="homepage" />
+
     </div>
-     </GoogleReCaptchaProvider>
+
   );
 };
 
