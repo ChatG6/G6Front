@@ -30,6 +30,11 @@ jobs:
         run: npx prisma migrate deploy
       - name: Building the Project
         run: |
+          # 1. Create the .env file from your GitHub variable
+          echo "${{vars.ENV}}" > .env
+          
+          # 2. IMPORTANT: Clean the file to remove Windows-style line endings (\r)
+          sed -i 's/\r$//' .env
           # This command loads the variables from the .env file into the shell
           set -o allexport
           source .env
