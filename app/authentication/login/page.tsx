@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import URLS from "@/app/config/urls";
+import { reCAPTCHA } from '@/app/config/config';
 import { validate_login } from "@/app/lib/formVaild";
 import Notify from "@/components/Management/notification";
 import Captcha from "@/components/Recaptcha";
@@ -88,7 +89,8 @@ const SignInPage = () => {
   const [error, setError] = useState<string | null>(null);
   const isBreakpoint = useMediaQuery(768);
    // IMPORTANT: Replace this with your actual V3 site key from the Google reCAPTCHA admin console.
-    const recaptchaV3SiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+   // const recaptchaV3SiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+   const recaptchaV3SiteKey = reCAPTCHA.credintials.site_key
     console.log(recaptchaV3SiteKey)
  
   // MODIFIED: Added state for password visibility

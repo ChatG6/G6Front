@@ -11,6 +11,7 @@ import { verifyUser } from "@/app/lib/Auth";
 import validate from "@/app/lib/formVaild";
 import Captcha from "@/components/Recaptcha";
 import { GoogleReCaptchaProvider} from "react-google-recaptcha-v3";
+import { reCAPTCHA } from "@/app/config/config";
 const initialFormData = {
   username: "",
   email: "",
@@ -55,7 +56,8 @@ const Page: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordc, setShowPasswordc] = useState(false);
   // IMPORTANT: Replace this with your actual V3 site key from the Google reCAPTCHA admin console.
-    const recaptchaV3SiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+    //const recaptchaV3SiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+    const recaptchaV3SiteKey = reCAPTCHA.credintials.site_key
     console.log(recaptchaV3SiteKey)
 
   //const [agreedToTerms, setAgreedToTerms] = useState(false);
