@@ -29,7 +29,13 @@ jobs:
       - name: Refreshing Database Through Prisma
         run: npx prisma migrate deploy
       - name: Building the Project
-        run: npm run build --if-present
+        run: |
+          # This command exports the variables from the .env file
+          export $(grep -v '^#' .env | xargs)
+          
+          # Now run the build command with the variables available
+          npm run build --if-present
+        #run: npm run build --if-present
       - name: Install PM2
         run: npm install -g pm2
       - name: Refresh Deployment Setup
