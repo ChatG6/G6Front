@@ -56,10 +56,7 @@ const Page: React.FC = () => {
   // IMPORTANT: Replace this with your actual V3 site key from the Google reCAPTCHA admin console.
     const recaptchaV3SiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
-    if (!recaptchaV3SiteKey) {
-        console.error("reCAPTCHA V3 Site Key is not defined. Please check your environment variables.");
-        return <div>reCAPTCHA is not configured.</div>;
-    }
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -120,6 +117,10 @@ const Page: React.FC = () => {
   const handleBlur = (e: unknown) => {
     setMessage(validate(formData));
   };
+      if (!recaptchaV3SiteKey) {
+        console.error("reCAPTCHA V3 Site Key is not defined. Please check your environment variables.");
+        return <div>reCAPTCHA is not configured.</div>;
+    }
   return (
        <GoogleReCaptchaProvider reCaptchaKey={recaptchaV3SiteKey}>
 
