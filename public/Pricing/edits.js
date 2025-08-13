@@ -1,7 +1,7 @@
 // Replace all "Jennie AI" words with "ChatG6"
 //const URLS = require('../../app/config/urls')
 // Remove Jennie AI Header
-(function () {
+/*(function () {
   // console.log("Ban-content 🚫 script loaded");
 
   function clearContainers() {
@@ -42,7 +42,73 @@
       characterData: false,
     });
   });
+})();*/
+(function () {
+  const EPSILON = window.innerWidth <= 768 ? 30 : 60; // px
+  let lastHeight = 0;
+  let stableCount = 0; // counts consecutive times height hasn't changed
+
+  function adjustAfterHeaderRemoval() {
+    document.querySelectorAll("div.framer-9lalpx-container").forEach(el => el.remove());
+  }
+
+  function computeTrueHeight() {
+    const body = document.body;
+
+    const html = document.documentElement;
+
+    const basic = Math.max(
+      body.scrollHeight, body.offsetHeight,
+      html.clientHeight, html.scrollHeight, html.offsetHeight
+    );
+
+    let maxBottom = 0;
+    const all = body.getElementsByTagName("*");
+    for (let i = 0; i < all.length; i++) {
+      const el = all[i];
+      const cs = window.getComputedStyle(el);
+      if (cs.display === "none" || cs.visibility === "hidden") continue;
+      const rect = el.getBoundingClientRect();
+      const bottom = rect.bottom + window.scrollY;
+      if (bottom > maxBottom) maxBottom = bottom;
+    }
+
+    return Math.ceil(Math.max(basic, maxBottom)) + EPSILON;
+  }
+
+  function sendHeight(height) {
+    window.parent.postMessage({ iframeHeight: height }, "*");
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+  }
+
+  function observeAndSetHeight() {
+    adjustAfterHeaderRemoval();
+    
+    const observer = new MutationObserver(() => {
+      const height = computeTrueHeight();
+      if (height === lastHeight) {
+        stableCount++;
+      } else {
+        stableCount = 0;
+        lastHeight = height;
+        sendHeight(height);
+      }
+
+      // Stop observing if height hasn't changed for 5 consecutive mutations
+      if (stableCount >= 5) observer.disconnect();
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true, characterData: true });
+
+    // Initial measurement
+    lastHeight = computeTrueHeight();
+    sendHeight(lastHeight);
+  }
+
+  window.addEventListener("load", observeAndSetHeight);
 })();
+
 
 (function () {
   // console.log("Overrides 🎯 text‑node version loaded");

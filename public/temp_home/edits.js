@@ -83,8 +83,132 @@
     });
   });
 })();
+/*
+(function () {
+  function hideScroll() {
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.margin = "0";
+    document.documentElement.style.padding = "0";
+    document.body.style.margin = "0";
+    document.body.style.padding = "0";
+  }
 
+  document.addEventListener("DOMContentLoaded", () => {
+    hideScroll();
+
+    const observer = new MutationObserver(() => {
+      hideScroll(); // Re-apply if styles change
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      childList: true,
+      subtree: true
+    });
+  });
+})();*/
 // Remove Jennie AI Header
+/*
+(function () {
+  function removeContainers() {
+    document.querySelectorAll("div.framer-fchehk-container").forEach((el) => {
+      el.remove(); // This removes the element completely
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    removeContainers();
+
+    const observer = new MutationObserver(() => {
+      removeContainers();
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  });
+})();*/
+
+(function () {
+  // ---- tweak this if you don't want 0 padding ----
+ // const TARGET_SELECTOR = ".framer-HWVgC.framer-v-z2cvi2.framer-1in7hqk";
+   const EPSILON = window.innerWidth <= 768 ? 30 : 60; // px
+
+  function adjustAfterHeaderRemoval() {
+    // 1) Remove Framer header
+    document.querySelectorAll("div.framer-fchehk-container").forEach(el => el.remove());
+
+    // 2) Let content determine height naturally
+    document.querySelectorAll("div[data-framer-root]").forEach(el => {
+      el.style.minHeight = "auto";
+      el.style.height = "auto";
+      el.style.maxHeight = "none";
+    });
+
+        // Find the element and adjust its padding-top
+    const target1 = document.querySelector(".framer-HWVgC.framer-v-z2cvi2.framer-1in7hqk");
+    if (target1) {
+      target1.style.paddingTop = "40px"; // Or set to a smaller value if not 0
+    }
+       // Find the element and adjust its padding-top
+    const target2 = document.querySelector(".framer-HWVgC.framer-1in7hqk");
+    if (target2) {
+      target2.style.paddingTop = window.innerWidth <= 768 ? "60px" : "80px"; // Or set to a smaller value if not 0
+    }
+  }
+
+  // Computes true page height, accounting for transforms/absolute elements
+  function computeTrueHeight() {
+    const body = document.body;
+    const html = document.documentElement;
+
+    const basic = Math.max(
+      body.scrollHeight, body.offsetHeight,
+      html.clientHeight, html.scrollHeight, html.offsetHeight
+    );
+
+    let maxBottom = 0;
+    // Walk all elements once; cheap enough for one-shot measure
+    const all = body.getElementsByTagName("*");
+    for (let i = 0; i < all.length; i++) {
+      const el = all[i];
+      // Skip fully hidden
+      const cs = window.getComputedStyle(el);
+      if (cs.display === "none" || cs.visibility === "hidden") continue;
+      const rect = el.getBoundingClientRect();
+      const bottom = rect.bottom + window.scrollY;
+      if (bottom > maxBottom) maxBottom = bottom;
+    }
+
+    return Math.ceil(Math.max(basic, maxBottom)) + EPSILON;
+  }
+
+  async function setHeightOnce() {
+    adjustAfterHeaderRemoval();
+
+    // Wait for fonts to settle + a couple frames so layout is final
+    if (document.fonts && document.fonts.ready) {
+      try { await document.fonts.ready; } catch {}
+    }
+    await new Promise(r => requestAnimationFrame(() => r()));
+    await new Promise(r => requestAnimationFrame(() => r()));
+
+    const height = computeTrueHeight();
+
+    // Send height to parent (once)
+    window.parent.postMessage({ iframeHeight: height }, "*");
+
+    // Hide iframe's own scroll so parent scrolls the whole page
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+  }
+
+  // Run once after all resources load (images, etc.)
+  window.addEventListener("load", () => { setHeightOnce(); });
+})();
+/*
 (function () {
   //console.log("Ban-content 🚫 script loaded");
 
@@ -127,7 +251,7 @@
     });
   });
 })();
-
+*/
 // Links Replacer
 
 (function () {

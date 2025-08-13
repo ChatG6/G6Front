@@ -22,9 +22,23 @@ const inter = EB_Garamond({
 
 export default function  Laptop(){
   return (
-      <section className=" overflow-auto flex flex-col justify-center flex-wrap content-center text-center mt-4" >
+      <section 
+    style={{
+      marginTop:'24px'
+    }}
+      className="overflow-hidden flex flex-col justify-center flex-wrap content-center text-center mt-4" >
       
-      <div className="articles-container div-1 items-center flex-wrap flex-col flex w-full">
+      <div 
+        style={{
+          /*position:"relative",
+
+        right:'40px',*/
+        marginRight:'40px',
+         marginLeft:'10px',
+       /* paddingLeft:'40px'*/
+      
+      }}
+      className="articles-container div-1 items-center flex-wrap flex-col flex w-full">
         <span className={`${inter.className} flex`}
         style={{
           fontSize:'80px',

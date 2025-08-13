@@ -96,49 +96,78 @@
   });
 })();
 
-// Remove Jennie AI Header
 (function () {
-  //console.log("Ban-content 🚫 script loaded");
+  const EPSILON = window.innerWidth <= 768 ? 2 : 2;
+  let lastHeight = 0;
+  let stableCount = 0;
 
-  function clearContainers() {
-    document.querySelectorAll("div.framer-9lalpx-container").forEach((el) => {
-      if (el.innerHTML !== "") {
-        el.innerHTML = "";
-        //console.log("Ban-content 🚫 cleared content in:", el);
-      }
-    });
+  function adjustAfterHeaderRemoval() {
+    document.querySelectorAll("div.framer-9lalpx-container").forEach(el => el.remove());
+     // Find the element and adjust its padding-top
+    const target2 = document.querySelector(".framer-ILfcX.framer-t7dfbl");
+    if (target2) {
+      target2.style.paddingTop = window.innerWidth <= 768 ? "40px" : "40px"; // Or set to a smaller value if not 0
+    }
+   
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    clearContainers();
+  function computeTrueHeight() {
+    const body = document.body;
+    const html = document.documentElement;
 
-    const observer = new MutationObserver((mutations) => {
-      clearContainers();
+    const basic = Math.max(
+      body.scrollHeight, body.offsetHeight,
+      html.clientHeight, html.scrollHeight, html.offsetHeight
+    );
 
-      for (let m of mutations) {
-        for (let node of m.addedNodes) {
-          if (node.nodeType === 1) {
-            if (node.matches && node.matches("div.framer-9lalpx-container")) {
-              node.innerHTML = "";
-            }
-            node.querySelectorAll &&
-              node
-                .querySelectorAll("div.framer-9lalpx-container")
-                .forEach((el) => {
-                  el.innerHTML = "";
-                });
-          }
+    let maxBottom = 0;
+    const all = body.getElementsByTagName("*");
+    for (let i = 0; i < all.length; i++) {
+      const el = all[i];
+      const cs = window.getComputedStyle(el);
+      if (cs.display === "none" || cs.visibility === "hidden") continue;
+      const rect = el.getBoundingClientRect();
+      const bottom = rect.bottom + window.scrollY;
+      if (bottom > maxBottom) maxBottom = bottom;
+    }
+
+    return Math.ceil(Math.max(basic, maxBottom)) + EPSILON;
+  }
+
+  function sendHeight(height) {
+    window.parent.postMessage({ iframeHeight: height }, "*");
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+  }
+
+  function observeAndSetHeight() {
+    adjustAfterHeaderRemoval();
+
+    const checkHeight = () => {
+      const height = computeTrueHeight();
+      if (Math.abs(height - lastHeight) > 2) { // only update if > 2px diff
+        lastHeight = height;
+        stableCount = 0;
+      } else {
+        stableCount++;
+        if (stableCount >= 3) { // stable for 3 checks → send once
+          sendHeight(lastHeight);
+          observer.disconnect();
         }
       }
+    };
+
+    const observer = new MutationObserver(() => {
+      checkHeight();
     });
 
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: false,
-    });
-  });
+    observer.observe(document.body, { childList: true, subtree: true });
+    checkHeight();
+  }
+
+  window.addEventListener("load", observeAndSetHeight);
 })();
+
 // Links Replacer
 
 (function () {

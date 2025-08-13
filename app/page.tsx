@@ -1,19 +1,10 @@
-import { options } from "./api/auth/[...nextauth]/options";
-import { getServerSession } from "next-auth/next";
-//import Main from "@/components/HomePage/main";
-import dynamic from 'next/dynamic';
+import ResizableIframe from "@/components/ResizeableIframe";
 
-// Dynamically import the component without SSR
-const Main = dynamic(
-  () => import('@/components/HomePage/main'),
-  { ssr: false }
-);
-/*
-export default async function HomePage() {
-  const session = await getServerSession(options);
-  return (<Main/>);
-}*/
-export default function Frame() {
-
-  return <iframe className="w-full h-full" src="/temp_home/index.html" ></iframe>
+export default function HomePage() {
+  return (
+    <>
+      {/* Your site header comes from layout.tsx */}
+      <ResizableIframe src="/temp_home/index.html" />
+    </>
+  );
 }
