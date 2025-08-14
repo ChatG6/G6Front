@@ -110,7 +110,7 @@
     }
    
   }
-
+ // Computes true page height, accounting for transforms/absolute elements
   function computeTrueHeight() {
     const body = document.body;
     const html = document.documentElement;
@@ -121,9 +121,11 @@
     );
 
     let maxBottom = 0;
+    // Walk all elements once; cheap enough for one-shot measure
     const all = body.getElementsByTagName("*");
     for (let i = 0; i < all.length; i++) {
       const el = all[i];
+      // Skip fully hidden
       const cs = window.getComputedStyle(el);
       if (cs.display === "none" || cs.visibility === "hidden") continue;
       const rect = el.getBoundingClientRect();
@@ -134,38 +136,28 @@
     return Math.ceil(Math.max(basic, maxBottom)) + EPSILON;
   }
 
-  function sendHeight(height) {
+  async function setHeightOnce() {
+    adjustAfterHeaderRemoval();
+
+    // Wait for fonts to settle + a couple frames so layout is final
+    if (document.fonts && document.fonts.ready) {
+      try { await document.fonts.ready; } catch {}
+    }
+    await new Promise(r => requestAnimationFrame(() => r()));
+    await new Promise(r => requestAnimationFrame(() => r()));
+
+    const height = computeTrueHeight();
+
+    // Send height to parent (once)
     window.parent.postMessage({ iframeHeight: height }, "*");
+
+    // Hide iframe's own scroll so parent scrolls the whole page
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
   }
 
-  function observeAndSetHeight() {
-    adjustAfterHeaderRemoval();
-
-    const checkHeight = () => {
-      const height = computeTrueHeight();
-      if (Math.abs(height - lastHeight) > 2) { // only update if > 2px diff
-        lastHeight = height;
-        stableCount = 0;
-      } else {
-        stableCount++;
-        if (stableCount >= 3) { // stable for 3 checks → send once
-          sendHeight(lastHeight);
-          observer.disconnect();
-        }
-      }
-    };
-
-    const observer = new MutationObserver(() => {
-      checkHeight();
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-    checkHeight();
-  }
-
-  window.addEventListener("load", observeAndSetHeight);
+  // Run once after all resources load (images, etc.)
+  window.addEventListener("load", () => { setHeightOnce(); });
 })();
 
 // Links Replacer
