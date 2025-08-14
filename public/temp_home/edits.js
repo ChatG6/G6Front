@@ -83,7 +83,18 @@
     });
   });
 })();
-/*
+
+
+(function () { //console.log("Ban-content 🚫 script loaded"); 
+function clearContainers() 
+{ document.querySelectorAll("div.framer-fchehk-container").forEach((el) => 
+  { if (el.innerHTML !== "") { el.innerHTML = ""; 
+    //console.log("Ban-content 🚫 cleared content in:", el); 
+    } }); 
+    }
+     document.addEventListener("DOMContentLoaded", () => { clearContainers(); const observer = new MutationObserver((mutations) => { clearContainers(); for (let m of mutations) { for (let node of m.addedNodes) { if (node.nodeType === 1) { if (node.matches && node.matches("div.framer‑fchehk‑container")) { node.innerHTML = ""; } node.querySelectorAll && node .querySelectorAll("div.framer‑fchehk‑container") .forEach((el) => { el.innerHTML = ""; }); } } } }); observer.observe(document.body, { childList: true, subtree: true, characterData: false, }); }); })();
+
+     /*
 (function () {
   function hideScroll() {
     document.documentElement.style.overflow = "hidden";
@@ -131,6 +142,7 @@
   });
 })();*/
 
+/*
 (function () {
   // ---- tweak this if you don't want 0 padding ----
  // const TARGET_SELECTOR = ".framer-HWVgC.framer-v-z2cvi2.framer-1in7hqk";
@@ -207,7 +219,7 @@
 
   // Run once after all resources load (images, etc.)
   window.addEventListener("load", () => { setHeightOnce(); });
-})();
+})();*/
 /*
 (function () {
   //console.log("Ban-content 🚫 script loaded");
