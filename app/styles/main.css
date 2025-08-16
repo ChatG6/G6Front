@@ -2445,8 +2445,8 @@ div div.contaxt-menu-rephrase button.rephrase-btn:hover{
     border: 1px solid #cee6ff;
     font-size: 14px;
     text-align: left;
-    color: #0089ff;
-   /* color:#323dd6;*/
+    /*color: #0089ff;*/
+    color:#323dd6;
     font-weight: 600;
     margin-bottom: 0.5rem;
 }

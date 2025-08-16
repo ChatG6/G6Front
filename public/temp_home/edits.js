@@ -84,7 +84,7 @@
   });
 })();
 
-
+/*
 (function () { //console.log("Ban-content 🚫 script loaded"); 
 function clearContainers() 
 { document.querySelectorAll("div.framer-fchehk-container").forEach((el) => 
@@ -93,7 +93,7 @@ function clearContainers()
     } }); 
     }
      document.addEventListener("DOMContentLoaded", () => { clearContainers(); const observer = new MutationObserver((mutations) => { clearContainers(); for (let m of mutations) { for (let node of m.addedNodes) { if (node.nodeType === 1) { if (node.matches && node.matches("div.framer‑fchehk‑container")) { node.innerHTML = ""; } node.querySelectorAll && node .querySelectorAll("div.framer‑fchehk‑container") .forEach((el) => { el.innerHTML = ""; }); } } } }); observer.observe(document.body, { childList: true, subtree: true, characterData: false, }); }); })();
-
+*/
      /*
 (function () {
   function hideScroll() {
@@ -120,7 +120,7 @@ function clearContainers()
   });
 })();*/
 // Remove Jennie AI Header
-/*
+
 (function () {
   function removeContainers() {
     document.querySelectorAll("div.framer-fchehk-container").forEach((el) => {
@@ -140,17 +140,17 @@ function clearContainers()
       subtree: true,
     });
   });
-})();*/
+})();
 
-/*
+
 (function () {
   // ---- tweak this if you don't want 0 padding ----
  // const TARGET_SELECTOR = ".framer-HWVgC.framer-v-z2cvi2.framer-1in7hqk";
-   const EPSILON = window.innerWidth <= 768 ? 30 : 60; // px
+   const EPSILON = window.innerWidth <= 768 ? 80 : 420; // px
 
   function adjustAfterHeaderRemoval() {
     // 1) Remove Framer header
-    document.querySelectorAll("div.framer-fchehk-container").forEach(el => el.remove());
+//document.querySelectorAll("div.framer-fchehk-container").forEach(el => el.remove());
 
     // 2) Let content determine height naturally
     document.querySelectorAll("div[data-framer-root]").forEach(el => {
@@ -199,7 +199,7 @@ function clearContainers()
 
   async function setHeightOnce() {
     adjustAfterHeaderRemoval();
-
+    
     // Wait for fonts to settle + a couple frames so layout is final
     if (document.fonts && document.fonts.ready) {
       try { await document.fonts.ready; } catch {}
@@ -219,7 +219,7 @@ function clearContainers()
 
   // Run once after all resources load (images, etc.)
   window.addEventListener("load", () => { setHeightOnce(); });
-})();*/
+})();
 /*
 (function () {
   //console.log("Ban-content 🚫 script loaded");

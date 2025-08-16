@@ -110,7 +110,7 @@ export default function Header() {
  
   return (
     <header
-      className={`pt-4 h-20 flex items-center justify-around ${isBreakpoint?'':'pl-4'}`}
+      className={`h-20 flex items-center justify-around ${isBreakpoint?'pt-2':'pt-4 pl-4'}`}
       style={
 
     {

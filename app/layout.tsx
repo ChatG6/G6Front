@@ -10,7 +10,7 @@ const inter = Inter({
   display: 'swap',
 })
 export const metadata: Metadata = {
-  title: "G6 Research Platform",
+  title: "ChatG6",
   description: 'Created by G6 Team',
   icons: {
     icon: '/icon.ico', // Pointing to the correct icon
