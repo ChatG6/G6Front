@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "ChatG6",
   description: 'Created by G6 Team',
   icons: {
-    icon: '/icon.ico', // Pointing to the correct icon
+    icon: '/icon.png', // Pointing to the correct icon
   },
 };
 
