@@ -84,7 +84,7 @@
   });
 })();
 
-/*
+
 (function () { //console.log("Ban-content 🚫 script loaded"); 
 function clearContainers() 
 { document.querySelectorAll("div.framer-fchehk-container").forEach((el) => 
@@ -93,7 +93,7 @@ function clearContainers()
     } }); 
     }
      document.addEventListener("DOMContentLoaded", () => { clearContainers(); const observer = new MutationObserver((mutations) => { clearContainers(); for (let m of mutations) { for (let node of m.addedNodes) { if (node.nodeType === 1) { if (node.matches && node.matches("div.framer‑fchehk‑container")) { node.innerHTML = ""; } node.querySelectorAll && node .querySelectorAll("div.framer‑fchehk‑container") .forEach((el) => { el.innerHTML = ""; }); } } } }); observer.observe(document.body, { childList: true, subtree: true, characterData: false, }); }); })();
-*/
+
      /*
 (function () {
   function hideScroll() {
@@ -120,7 +120,7 @@ function clearContainers()
   });
 })();*/
 // Remove Jennie AI Header
-
+/*
 (function () {
   function removeContainers() {
     document.querySelectorAll("div.framer-fchehk-container").forEach((el) => {
@@ -141,16 +141,17 @@ function clearContainers()
     });
   });
 })();
-
+*/
 
 (function () {
-  // ---- tweak this if you don't want 0 padding ----
- // const TARGET_SELECTOR = ".framer-HWVgC.framer-v-z2cvi2.framer-1in7hqk";
-   const EPSILON = window.innerWidth <= 768 ? 80 : 420; // px
+  // EPSILON is now proportional to viewport width → no huge gap on small screens
+  //const EPSILON = Math.min(2, Math.floor(window.innerWidth * 0.001));
+  const EPSILON = 0; 
+  let lastHeight = 0;
 
   function adjustAfterHeaderRemoval() {
-    // 1) Remove Framer header
-//document.querySelectorAll("div.framer-fchehk-container").forEach(el => el.remove());
+    // 1) Remove Framer header if present
+    document.querySelectorAll("div.framer-fchehk-container").forEach(el => el.remove());
 
     // 2) Let content determine height naturally
     document.querySelectorAll("div[data-framer-root]").forEach(el => {
@@ -159,48 +160,44 @@ function clearContainers()
       el.style.maxHeight = "none";
     });
 
-        // Find the element and adjust its padding-top
+    // 3) Adjust padding-top for known targets
     const target1 = document.querySelector(".framer-HWVgC.framer-v-z2cvi2.framer-1in7hqk");
-    if (target1) {
-      target1.style.paddingTop = "40px"; // Or set to a smaller value if not 0
-    }
-       // Find the element and adjust its padding-top
+    if (target1) target1.style.paddingTop = "40px";
+
     const target2 = document.querySelector(".framer-HWVgC.framer-1in7hqk");
-    if (target2) {
-      target2.style.paddingTop = window.innerWidth <= 768 ? "60px" : "80px"; // Or set to a smaller value if not 0
-    }
+    if (target2) target2.style.paddingTop = window.innerWidth <= 768 ? "60px" : "80px";
   }
 
-  // Computes true page height, accounting for transforms/absolute elements
+  // Computes true page height including footer
   function computeTrueHeight() {
     const body = document.body;
     const html = document.documentElement;
 
-    const basic = Math.max(
+    let maxBottom = Math.max(
       body.scrollHeight, body.offsetHeight,
       html.clientHeight, html.scrollHeight, html.offsetHeight
     );
 
-    let maxBottom = 0;
-    // Walk all elements once; cheap enough for one-shot measure
-    const all = body.getElementsByTagName("*");
-    for (let i = 0; i < all.length; i++) {
-      const el = all[i];
-      // Skip fully hidden
-      const cs = window.getComputedStyle(el);
-      if (cs.display === "none" || cs.visibility === "hidden") continue;
-      const rect = el.getBoundingClientRect();
-      const bottom = rect.bottom + window.scrollY;
-      if (bottom > maxBottom) maxBottom = bottom;
+    // Force include footer if exists
+    const footer = document.querySelector("footer");
+    if (footer) {
+      const rect = footer.getBoundingClientRect();
+      maxBottom = Math.max(maxBottom, rect.bottom + window.scrollY);
     }
 
-    return Math.ceil(Math.max(basic, maxBottom)) + EPSILON;
+    return Math.ceil(maxBottom) + EPSILON;
+  }
+
+  function sendHeight(height) {
+    window.parent.postMessage({ iframeHeight: height }, "*");
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
   }
 
   async function setHeightOnce() {
     adjustAfterHeaderRemoval();
-    
-    // Wait for fonts to settle + a couple frames so layout is final
+
+    // Wait for fonts and 2 frames for layout stabilization
     if (document.fonts && document.fonts.ready) {
       try { await document.fonts.ready; } catch {}
     }
@@ -208,18 +205,24 @@ function clearContainers()
     await new Promise(r => requestAnimationFrame(() => r()));
 
     const height = computeTrueHeight();
+    lastHeight = height;
+    sendHeight(height);
 
-    // Send height to parent (once)
-    window.parent.postMessage({ iframeHeight: height }, "*");
-
-    // Hide iframe's own scroll so parent scrolls the whole page
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
+    // Schedule final re-checks (1s, 2s, 3s) in case footer or late images shift layout
+    [1000, 2000, 3000].forEach(delay => {
+      setTimeout(() => {
+        const h = computeTrueHeight();
+        if (h !== lastHeight) {
+          lastHeight = h;
+          sendHeight(h);
+        }
+      }, delay);
+    });
   }
 
-  // Run once after all resources load (images, etc.)
   window.addEventListener("load", () => { setHeightOnce(); });
 })();
+
 /*
 (function () {
   //console.log("Ban-content 🚫 script loaded");

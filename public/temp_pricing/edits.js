@@ -106,7 +106,7 @@ function clearContainers()
 
 
 (function () {
-  const EPSILON = window.innerWidth <= 768 ? 2 : 2;
+  const EPSILON = window.innerWidth <= 768 ? 0 : 0;
   let lastHeight = 0;
   let stableCount = 0;
 
