@@ -102,7 +102,7 @@ function clearContainers()
     //console.log("Ban-content 🚫 cleared content in:", el); 
     } }); 
     }
-     document.addEventListener("DOMContentLoaded", () => { clearContainers(); const observer = new MutationObserver((mutations) => { clearContainers(); for (let m of mutations) { for (let node of m.addedNodes) { if (node.nodeType === 1) { if (node.matches && node.matches("div.framer‑fchehk‑container")) { node.innerHTML = ""; } node.querySelectorAll && node .querySelectorAll("div.framer‑fchehk‑container") .forEach((el) => { el.innerHTML = ""; }); } } } }); observer.observe(document.body, { childList: true, subtree: true, characterData: false, }); }); })();
+     document.addEventListener("DOMContentLoaded", () => { clearContainers(); const observer = new MutationObserver((mutations) => { clearContainers(); for (let m of mutations) { for (let node of m.addedNodes) { if (node.nodeType === 1) { if (node.matches && node.matches("div.framer-9lalpx-container")) { node.innerHTML = ""; } node.querySelectorAll && node .querySelectorAll("div.framer-9lalpx-container") .forEach((el) => { el.innerHTML = ""; }); } } } }); observer.observe(document.body, { childList: true, subtree: true, characterData: false, }); }); })();
 
 
 (function () {
