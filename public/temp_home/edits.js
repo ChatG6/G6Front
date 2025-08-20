@@ -443,6 +443,57 @@ function clearContainers()
 
 // Link Replacer
 (function () {
+  const OLD_URL = "https://www.youtube.com/@whoisjenniai/videos";
+  const NEW_URL = "https://youtu.be/XWbeDHJtMBs?si=amfoV62xZGc_2rWs";
+
+  // Replace on existing links
+  function replaceLinks(root = document) {
+    root.querySelectorAll(`a[href="${OLD_URL}"]`).forEach((a) => {
+      a.href = NEW_URL;
+    });
+  }
+
+  // Initial pass
+  document.addEventListener("DOMContentLoaded", () => {
+    replaceLinks();
+
+    // Watch for dynamically-inserted links
+    const observer = new MutationObserver((mutations) => {
+      for (let m of mutations) {
+        // If new elements added, or attributes changed
+        if (m.type === "childList") {
+          m.addedNodes.forEach((node) => {
+            if (node.nodeType === 1) {
+              // Check the node itself
+              if (node.matches && node.matches(`a[href="${OLD_URL}"]`)) {
+                node.href = NEW_URL;
+              }
+              // And any descendants
+              replaceLinks(node);
+            }
+          });
+        } else if (
+          m.type === "attributes" &&
+          m.target.matches &&
+          m.attributeName === "href" &&
+          m.target.matches(`a[href="${OLD_URL}"]`)
+        ) {
+          m.target.href = NEW_URL;
+        }
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["href"],
+    });
+  });
+})();
+
+// Link Replacer
+(function () {
   const OLD_URL = "https://app.jenni.ai";
   const NEW_URL = "https://chatg6.ai";
 
@@ -665,3 +716,4 @@ function clearContainers()
     });
   });
 })();
+

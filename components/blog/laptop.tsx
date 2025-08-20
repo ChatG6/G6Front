@@ -22,6 +22,7 @@ const inter = EB_Garamond({
 
 export default function  Laptop(){
   return (
+    
       <section 
     style={{
       marginTop:'24px'
