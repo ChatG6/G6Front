@@ -414,7 +414,7 @@ function clearContainers()
     a.addEventListener("click", (e) => e.preventDefault());
     a.style.pointerEvents = "none";
     a.style.opacity = "0.8";
-    console.log("Disabled ▶", a);
+   // console.log("Disabled ▶", a);
   }
 
   // 3) Scan the container and disable all links except those with target="_top"
@@ -425,7 +425,7 @@ function clearContainers()
     container.querySelectorAll("a[href]").forEach((a) => {
       // skip any link with target="_top"
       if (a.getAttribute("target") === "_top") {
-        console.log("Kept enabled ▶", a);
+       // console.log("Kept enabled ▶", a);
         return;
       }
       disableLink(a);
@@ -616,6 +616,7 @@ function clearContainers()
 })();
 
 // Video remover
+/*
 (function () {
   // CSS selector to match YouTube iframes
   const YT_IFRAME_SELECTOR = 'iframe[src^="https://www.youtube.com/embed/"]';
@@ -623,10 +624,10 @@ function clearContainers()
   // Remove or disable one iframe:
   function disableIframe(iframe) {
     // Option A: fully remove from DOM
-    iframe.remove();
+    //iframe.remove();
 
     // — or, Option B: neutralize it instead of removing:
-    // iframe.src = "";                  // clear the src
+    iframe.src = "https://www.youtube.com/embed/XWbeDHJtMBs?si=hzoCpDnXgca0lyX3?iv_load_policy=3&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;autoplay=1";                  // clear the src
     // iframe.style.display = "none";    // hide it
     // iframe.allow = "";                // remove permissions
     // iframe.removeAttribute("title");  // strip title
@@ -666,6 +667,284 @@ function clearContainers()
     });
   });
 })();
+*/
+/*
+(function () {
+  const ORIGINAL_URL = "https://www.youtube.com/embed/BBI-WnfcC1U?iv_load_policy=3&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;autoplay=1";
+  const NEW_URL = "https://www.youtube.com/embed/XWbeDHJtMBs?si=hzoCpDnXgca0lyX3?iv_load_policy=3&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;autoplay=1";
+  function overrideButtonClick(button) {
+    button.addEventListener("click", (e) => {
+      e.stopPropagation(); // stop any other handlers
+      e.preventDefault();  // block default action
+
+      const iframe = button.parentElement.querySelector("iframe");
+      if (iframe) {
+        iframe.src = NEW_URL; // force new URL
+        iframe.style.display = "block"; // show it
+      }
+      // Hide the button now that the video is playing
+        button.style.display = "none";
+    }, true); // <-- use capture to override before site scripts
+  }
+
+  function scanAndAttach(root = document) {
+    root.querySelectorAll("article button").forEach(overrideButtonClick);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    scanAndAttach();
+
+    // Watch for dynamically added buttons
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((m) => {
+        if (m.type === "childList") {
+          m.addedNodes.forEach((node) => {
+            if (node.nodeType === 1) {
+              node.querySelectorAll &&
+                node.querySelectorAll("article button").forEach(overrideButtonClick);
+            }
+          });
+        }
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+})();
+
+*/
+// Global loading flag
+// Utility to check if any iframe is still in "loading" state
+function anyIframeLoading() {
+  const iframes = document.querySelectorAll("iframe");
+  for (let iframe of iframes) {
+    if (iframe.dataset.loading === "true") return true;
+  }
+  return false;
+}
+
+(function() {
+  // Video URLs for each container
+  const VIDEO_CONTAINERS = [
+    { className: "framer-aaw2r0-container", url: "https://www.youtube.com/embed/XWbeDHJtMBs?autoplay=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1" },
+    { className: "framer-15smsej-container", url: "https://www.youtube.com/embed/sn4uNFhZz3A?autoplay=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1" },
+    { className: "framer-ib5v53-container", url: "https://www.youtube.com/embed/9gJuv3f3mw0?autoplay=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1" },
+    { className: "framer-18vmk0g-container", url: "https://www.youtube.com/embed/SXpNBXBVYbk?autoplay=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1" },
+    { className: "framer-1o1v8sm-container", url: "https://www.youtube.com/embed/DWQqNju77W8?autoplay=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1" },
+    { className: "framer-wz03p2-container", url: "https://www.youtube.com/embed/JJ2JCV10CMU?autoplay=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1" },
+    { className: "framer-y3jgn4-container", url: "https://www.youtube.com/embed/XWbeDHJtMBs?autoplay=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1" },
+  ];
+
+  // Attach click handler for a single container
+  function attachHandler(containerClass, videoUrl) {
+    const container = document.querySelector(`.${containerClass}`);
+    if (!container) return;
+
+    const article = container.querySelector("article");
+    if (!article) return;
+
+    const button = article.querySelector("button");
+    const thumbnail = article.querySelector("div");
+    const iframe = article.querySelector("iframe");
+    if (!button || !iframe) return;
+
+    iframe.dataset.loaded = "false";
+    iframe.dataset.loading = "false";
+
+    button.addEventListener("click", e => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Ignore click if this iframe is currently loading
+      if (iframe.dataset.loading === "true") return;
+
+      iframe.dataset.loading = "true"; // Lock this iframe
+      if (thumbnail) thumbnail.style.display = "none";
+      button.style.display = "none";
+
+      // Reset iframe src and show it
+      iframe.src = "";
+      iframe.style.display = "block";
+      setTimeout(() => {
+        iframe.src = videoUrl;
+      }, 80);
+
+      iframe.onload = () => {
+        iframe.dataset.loaded = "true";
+        iframe.dataset.loading = "false"; // Unlock
+      };
+    });
+  }
+
+  // Initialize all containers
+  function init() {
+    VIDEO_CONTAINERS.forEach(vc => attachHandler(vc.className, vc.url));
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    init();
+
+    // MutationObserver for dynamically added containers
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(m => {
+        if (m.type === "childList") {
+          m.addedNodes.forEach(node => {
+            if (node.nodeType === 1) {
+              VIDEO_CONTAINERS.forEach(vc => {
+                if (node.classList.contains(vc.className) || node.querySelector(`.${vc.className}`)) {
+                  attachHandler(vc.className, vc.url);
+                }
+              });
+            }
+          });
+        }
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+})();
+
+
+/*
+(function () {
+  // List of allowed URLs for your 6 videos
+  const ALLOWED_URLS = [
+     "https://www.youtube.com/embed/XWbeDHJtMBs?autoplay=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1",
+    "https://www.youtube.com/embed/sn4uNFhZz3A?autoplay=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1",
+    "https://www.youtube.com/embed/9gJuv3f3mw0?autoplay=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1",
+    "https://www.youtube.com/embed/SXpNBXBVYbk?autoplay=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1",
+    "https://www.youtube.com/embed/DWQqNju77W8?autoplay=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1",
+    "https://www.youtube.com/embed/JJ2JCV10CMU?autoplay=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1",
+     "https://www.youtube.com/embed/XWbeDHJtMBs?autoplay=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1",
+  ];
+
+  function replaceAllIframes() {
+    const articles = document.querySelectorAll("article");
+    articles.forEach((article, index) => {
+      let iframe = article.querySelector("iframe");
+      if (!iframe) {
+        iframe = document.createElement("iframe");
+        iframe.allow =
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+        iframe.allowFullscreen = true;
+        iframe.style.position = "absolute";
+        iframe.style.top = 0;
+        iframe.style.left = 0;
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        iframe.style.border = "none";
+        article.appendChild(iframe);
+      }
+      // Assign the allowed URL for this index
+      iframe.src = ALLOWED_URLS[index] || ALLOWED_URLS[0];
+      iframe.style.display = "none"; // keep hidden until button click
+    });
+  }
+
+  function handleButtonClick(button, index) {
+    button.addEventListener(
+      "click",
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Ensure all iframes have allowed URLs
+        replaceAllIframes();
+
+        const article = button.closest("article");
+        if (!article) return;
+
+        const iframe = article.querySelector("iframe");
+        iframe.style.display = "block"; // show it
+        // Hide the play button
+        button.style.display = "none";
+      },
+      true
+    );
+  }
+
+  function attachButtons(root = document) {
+    const articles = Array.from(root.querySelectorAll("article"));
+    articles.forEach((article, index) => {
+      const button = article.querySelector("button");
+      if (button) handleButtonClick(button, index);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    replaceAllIframes();
+    attachButtons();
+
+    // Observe dynamically added articles/buttons
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((m) => {
+        if (m.type === "childList") {
+          m.addedNodes.forEach((node) => {
+            if (node.nodeType === 1) {
+              replaceAllIframes();
+              attachButtons(node);
+            }
+          });
+        }
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+})();*/
+/*
+(function () {
+  // Define the link to replace
+  const OLD_LINK = "https://www.youtube.com/embed/BBI-WnfcC1U?iv_load_policy=3&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;autoplay=1";
+  const NEW_LINK = "https://youtu.be/XWbeDHJtMBs?si=hzoCpDnXgca0lyX3";
+
+  // Replace in element attributes
+  function replaceAttributes(el) {
+    if (!el.getAttributeNames) return;
+    el.getAttributeNames().forEach((attr) => {
+      const val = el.getAttribute(attr);
+      if (val && val.includes(OLD_LINK)) {
+        el.setAttribute(attr, val.replaceAll(OLD_LINK, NEW_LINK));
+      }
+    });
+  }
+
+  // Replace in text nodes
+  function replaceText(node) {
+    if (node.nodeType === Node.TEXT_NODE && node.nodeValue.includes(OLD_LINK)) {
+      node.nodeValue = node.nodeValue.replaceAll(OLD_LINK, NEW_LINK);
+    }
+  }
+
+  // Scan whole DOM subtree
+  function scanAndReplace(root = document) {
+    if (!root) return;
+    if (root.nodeType === Node.TEXT_NODE) {
+      replaceText(root);
+    } else if (root.nodeType === Node.ELEMENT_NODE) {
+      replaceAttributes(root);
+      root.childNodes.forEach(scanAndReplace);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // Initial pass
+    scanAndReplace(document.body);
+
+    // Watch for dynamically added content
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((m) => {
+        m.addedNodes.forEach((node) => {
+          scanAndReplace(node);
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+})();
+*/
 
 // Inline logo replacer
 
