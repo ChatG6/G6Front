@@ -746,20 +746,17 @@ function anyIframeLoading() {
     const button = article.querySelector("button");
     const thumbnail = article.querySelector("div");
     const iframe = article.querySelector("iframe");
-    if (!button || !iframe) return;
+    if (!button || !iframe || !thumbnail) return;
 
     iframe.dataset.loaded = "false";
     iframe.dataset.loading = "false";
 
-    button.addEventListener("click", e => {
-      e.preventDefault();
-      e.stopPropagation();
-
+    function playVideo() {
       // Ignore click if this iframe is currently loading
       if (iframe.dataset.loading === "true") return;
 
       iframe.dataset.loading = "true"; // Lock this iframe
-      if (thumbnail) thumbnail.style.display = "none";
+      thumbnail.style.display = "none";
       button.style.display = "none";
 
       // Reset iframe src and show it
@@ -767,12 +764,25 @@ function anyIframeLoading() {
       iframe.style.display = "block";
       setTimeout(() => {
         iframe.src = videoUrl;
-      }, 80);
+      }, 50);
 
       iframe.onload = () => {
         iframe.dataset.loaded = "true";
         iframe.dataset.loading = "false"; // Unlock
       };
+    }
+
+    // Handle both button and thumbnail clicks
+    button.addEventListener("click", e => {
+      e.preventDefault();
+      e.stopPropagation();
+      playVideo();
+    });
+
+    thumbnail.addEventListener("click", e => {
+      e.preventDefault();
+      e.stopPropagation();
+      playVideo();
     });
   }
 
@@ -804,7 +814,6 @@ function anyIframeLoading() {
     observer.observe(document.body, { childList: true, subtree: true });
   });
 })();
-
 
 /*
 (function () {
