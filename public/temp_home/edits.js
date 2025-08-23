@@ -83,6 +83,53 @@
     });
   });
 })();
+(function () {
+  const NEW_LOGO_SRC = "/logo-chatg6-svg.svg"; // your custom logo
+  let replaced = false;
+  let observer;
+
+  function replaceLogo() {
+    if (replaced) return;
+
+    const logoDiv = document.querySelector(".framer-1l6g8kh");
+    if (!logoDiv) return;
+
+    const oldSvg = logoDiv.querySelector("svg");
+    if (oldSvg) {
+      const newImg = document.createElement("img");
+      newImg.src = NEW_LOGO_SRC;
+      newImg.alt = "My Custom Logo";
+      newImg.style.cssText = `
+        max-height:50px;
+        width:100px;
+        display:block;
+        position:relative;
+        top:15%;
+      `;
+
+      oldSvg.parentNode.replaceChild(newImg, oldSvg);
+
+      replaced = true;
+      if (observer) observer.disconnect();
+    }
+  }
+
+  // Preload the logo to avoid flicker
+  const preload = new Image();
+  preload.src = NEW_LOGO_SRC;
+
+  // Try replacing immediately (before DOMContentLoaded if possible)
+  if (document.readyState !== "loading") {
+    requestAnimationFrame(replaceLogo);
+  } else {
+    document.addEventListener("DOMContentLoaded", replaceLogo);
+  }
+
+  // Observe dynamic changes as fallback
+  observer = new MutationObserver(() => replaceLogo());
+  observer.observe(document.body, { childList: true, subtree: true });
+})();
+
 /*
 (function () {
   function hideContainers() {
@@ -1271,38 +1318,6 @@ function anyIframeLoading() {
     observer.observe(document.body, { childList: true, subtree: true });
   });
 })();
-(function () {
-  const NEW_LOGO_SRC = "/logo-chatg6-svg.svg"; // your custom logo
-
-  function replaceLogo() {
-    // Find the specific container
-    const logoDiv = document.querySelector(".framer-1l6g8kh");
-    if (!logoDiv) return;
-
-    // Look for the svg inside
-    const oldSvg = logoDiv.querySelector("svg");
-    if (oldSvg) {
-      // Create replacement <img>
-      const newImg = document.createElement("img");
-      newImg.src = NEW_LOGO_SRC;
-      newImg.alt = "My Custom Logo";
-      newImg.style.maxHeight = "50px";
-      newImg.style.width = "100px";
-      newImg.style.display = "block";
-      newImg.style.position = "relative"
-      newImg.style.top = "15%"
-      // Replace svg with img
-      oldSvg.parentNode.replaceChild(newImg, oldSvg);
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", replaceLogo);
-
-  // In case the logo is injected dynamically
-  const observer = new MutationObserver(() => replaceLogo());
-  observer.observe(document.body, { childList: true, subtree: true });
-})();
-
 
 // Inline logo replacer
 
