@@ -1,4 +1,57 @@
 // Replace all "Jennie AI" words with "ChatG6"
+(function () {
+  const NEW_LOGO_SRC = "/logo-chatg6-svg.svg"; 
+  let inserted = false;
+  let observer;
+
+  function insertLogo() {
+    if (inserted) return;
+
+    const logoDiv = document.querySelector(".framer-1l6g8kh");
+    if (!logoDiv) return;
+
+    // Remove old instantly
+    const oldSvg = logoDiv.querySelector("svg");
+    if (oldSvg) oldSvg.style.visibility = "hidden";
+
+    // Create new logo
+    const newImg = document.createElement("img");
+    newImg.src = NEW_LOGO_SRC;
+    newImg.alt = "My Custom Logo";
+    newImg.style.cssText = `
+      max-height:50px;
+      width:100px;
+      display:block;
+      position:relative;
+      top:15%;
+    `;
+
+    // Insert new logo right after old (or replace if exists)
+    if (oldSvg && oldSvg.parentNode) {
+      oldSvg.parentNode.replaceChild(newImg, oldSvg);
+    } else {
+      logoDiv.appendChild(newImg);
+    }
+
+    inserted = true;
+    if (observer) observer.disconnect();
+  }
+
+  // Preload new logo so it’s ready when inserted
+  const preload = new Image();
+  preload.src = NEW_LOGO_SRC;
+  preload.onload = insertLogo;
+
+  // Safety: if preload didn’t fire fast enough, still try
+  if (document.readyState !== "loading") {
+    requestAnimationFrame(insertLogo);
+  } else {
+    document.addEventListener("DOMContentLoaded", insertLogo);
+  }
+
+  observer = new MutationObserver(() => insertLogo());
+  observer.observe(document.body, { childList: true, subtree: true });
+})();
 
 (function () {
   // console.log("Overrides 🎯 text-node version loaded");
@@ -82,52 +135,6 @@
       characterData: true,
     });
   });
-})();
-(function () {
-  const NEW_LOGO_SRC = "/logo-chatg6-svg.svg"; // your custom logo
-  let replaced = false;
-  let observer;
-
-  function replaceLogo() {
-    if (replaced) return;
-
-    const logoDiv = document.querySelector(".framer-1l6g8kh");
-    if (!logoDiv) return;
-
-    const oldSvg = logoDiv.querySelector("svg");
-    if (oldSvg) {
-      const newImg = document.createElement("img");
-      newImg.src = NEW_LOGO_SRC;
-      newImg.alt = "My Custom Logo";
-      newImg.style.cssText = `
-        max-height:50px;
-        width:100px;
-        display:block;
-        position:relative;
-        top:15%;
-      `;
-
-      oldSvg.parentNode.replaceChild(newImg, oldSvg);
-
-      replaced = true;
-      if (observer) observer.disconnect();
-    }
-  }
-
-  // Preload the logo to avoid flicker
-  const preload = new Image();
-  preload.src = NEW_LOGO_SRC;
-
-  // Try replacing immediately (before DOMContentLoaded if possible)
-  if (document.readyState !== "loading") {
-    requestAnimationFrame(replaceLogo);
-  } else {
-    document.addEventListener("DOMContentLoaded", replaceLogo);
-  }
-
-  // Observe dynamic changes as fallback
-  observer = new MutationObserver(() => replaceLogo());
-  observer.observe(document.body, { childList: true, subtree: true });
 })();
 
 /*
