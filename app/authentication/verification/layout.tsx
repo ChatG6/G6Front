@@ -11,6 +11,7 @@ export default function LoginLayout({
   children: React.ReactNode;
 }) {
   return (
-      <main>{children}</main>
+      <main>
+        {children}</main>
   );
 }

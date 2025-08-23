@@ -342,7 +342,7 @@ export default function Header() {
                   className="hover:bg-gray-200 bg-gray-100 duration-300 text-[14px] text-[#18181B] rounded-[12px] py-2 px-4 font-normal whitespace-nowrap"
                   href={"/api/auth/signin"}
                 >
-                  Sign in
+                  Log In
                 </Link>
                 <Link 
                 className=""
@@ -397,6 +397,12 @@ export default function Header() {
                 href={"/pricing"}
               >
                 Pricing
+              </Link>
+              <Link
+                className="hover:bg-gray-200 duration-300 text-[15.5px] text-[#3f3f46] rounded-[6px] p-[3px] px-3 font-normal whitespace-nowrap"
+                href={"/"}
+              >
+                Teams
               </Link>
               <Link
                 className="hover:bg-gray-200 duration-300 text-[15.5px] text-[#3f3f46] rounded-[6px] p-[3px] px-3 font-normal whitespace-nowrap"

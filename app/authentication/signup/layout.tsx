@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 import { Metadata } from "next";
+import Header from "@/components/Management/Header";
+import AuthProvider from "@/app/context/AuthProvider";
 // import '@/app/styles/styles.css'
 
 
@@ -10,8 +12,9 @@ export const metadata: Metadata = {
 export default function Layout({children}:{children:ReactNode}){
   
   return (
-  
- <section className="layout">{children}</section>
+  <><AuthProvider>
+      <Header />
+    </AuthProvider><section className="layout">{children}</section></>
    
    
   )

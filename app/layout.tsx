@@ -27,10 +27,12 @@ export default function RootLayout({children}:PropsWithChildren) {
             enableSystem
             disableTransitionOnChange
           > */}
-        <AuthProvider>
+        {/*<AuthProvider>
           <Header />
-        </AuthProvider>
+        </AuthProvider>*/}
+        <AuthProvider>
           <main>{children}</main>
+        </AuthProvider>
           {/* </ThemeProvider> */}
       </body>
     </html>

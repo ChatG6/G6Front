@@ -299,8 +299,8 @@ function clearContainers()
     },
     {
       textRegex: /Start writing/i,
-     newHref: "https://chatg6.ai/editor",
-       //newHref: "http://localhost:3000/editor",
+     // newHref: "https://chatg6.ai/editor",
+       newHref: "http://localhost:3000/editor",
     },
     {
       textRegex: /Learn more/i,
@@ -518,7 +518,7 @@ function clearContainers()
 (function () {
   const OLD_URL = "https://app.jenni.ai";
   //const NEW_URL = "https://chatg6.ai";
-  const NEW_URL = "https://chatg6.ai/authentication/login";
+  const NEW_URL = "http://localhost:3000/authentication/login";
   // Replace on existing links
   function replaceLinks(root = document) {
     root.querySelectorAll(`a[href="${OLD_URL}"]`).forEach((a) => {
@@ -569,13 +569,12 @@ function clearContainers()
 (function () {
   // List of mappings: [oldURL, newPath]
   const URL_MAPPINGS = [
-    ["./pricing", "/pricing"],
+    ["./pricing", "http://localhost:3000/pricing"],
     ["./about", "/"],
     ["./teams", "/"],
-     ["./blog", "/blog"],
+   //  ["./blog", "/blog"],
      ["./", "/"],
       ["https://app.jenni.ai/home", "/authentication/signup"],
-       ["https://jenni.ai/blog", "/blog"],
   ];
 
   function replaceLinks(root = document) {
@@ -792,7 +791,7 @@ function clearContainers()
   );
 
           } else {
-            window.top.location.href = "https://chatg6.ai/pricing";
+            window.top.location.href = "/pricing";
           }
         });
 
@@ -941,14 +940,14 @@ function clearContainers()
       //const startWritingLink = signUpBtnContainer;
       const startWritingLink = signUpBtnContainer.cloneNode(true);
       //const startWritingLink = signUpBtnContainer;
-startWritingLink.href = "https://chatg6.ai/editor";
+startWritingLink.href = "/editor";
 const h3 = startWritingLink.querySelector("h3");
 if (h3) h3.textContent = "Start Writing";
 
 startWritingLink.addEventListener("click", (e) => {
   e.preventDefault();
   e.stopImmediatePropagation();
-  window.top.location.href = "https://chatg6.ai/editor";
+  window.top.location.href = "/editor";
 });
 
 signUpBtnContainer.replaceWith(startWritingLink);
@@ -1031,7 +1030,7 @@ signUpBtnContainer.replaceWith(startWritingLink);
   );
 
           } else {
-            window.top.location.href = "https://chatg6.ai/pricing";
+            window.top.location.href = "/pricing";
           }
         });
       }
@@ -1052,49 +1051,6 @@ signUpBtnContainer.replaceWith(startWritingLink);
     if (e.data?.type === "APP_SESSION_UPDATE") {
       updateHamburgerMenu(e.data.payload);
     }
-  });
-})();
-(function () {
-  function disableTestimonialLinks(root = document) {
-    root.querySelectorAll('a[data-framer-name="Card/Testimonial"]').forEach((card) => {
-      if (card.getAttribute("data-disabled") === "true") return; // prevent duplicate work
-
-      card.removeAttribute("href");
-      card.style.pointerEvents = "none";
-      card.style.cursor = "default";
-      card.setAttribute("data-disabled", "true");
-
-      card.addEventListener(
-        "click",
-        (e) => {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          return false;
-        },
-        true
-      );
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    disableTestimonialLinks();
-
-    const observer = new MutationObserver((mutations) => {
-      for (let m of mutations) {
-        if (m.type === "childList") {
-          m.addedNodes.forEach((node) => {
-            if (node.nodeType === 1) {
-              disableTestimonialLinks(node);
-            }
-          });
-        }
-      }
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
   });
 })();
 
