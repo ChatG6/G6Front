@@ -52,7 +52,34 @@
   observer = new MutationObserver(() => insertLogo());
   observer.observe(document.body, { childList: true, subtree: true });
 })();
+(function () {
+  function disableLinks() {
+    const container = document.querySelector(".framer-1qpkv68");
+    if (!container) return;
 
+    container.querySelectorAll("a").forEach((a) => {
+      // prevent multiple bindings
+      if (a.getAttribute("data-disabled") === "true") return;
+
+      // Neutralize the href
+      a.href = "javascript:void(0)";
+      a.setAttribute("data-disabled", "true");
+
+      // Stop click navigation
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return false;
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", disableLinks);
+
+  // Observe mutations in case Framer re-renders the links
+  const observer = new MutationObserver(() => disableLinks());
+  observer.observe(document.body, { childList: true, subtree: true });
+})();
 (function () {
   // console.log("Overrides 🎯 text-node version loaded");
 
