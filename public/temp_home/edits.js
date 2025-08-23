@@ -383,10 +383,10 @@ function clearContainers()
      newHref: "https://chatg6.ai/editor",
        //newHref: "http://localhost:3000/editor",
     },
-    {
+    /*{
       textRegex: /Learn more/i,
       newHref: "https://chatg6.ai/",
-    },
+    },*/
   ];
 
   // 2) Apply rule(s) to a single <a> element
@@ -1402,4 +1402,3 @@ function anyIframeLoading() {
     });
   });
 })();
-
